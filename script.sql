@@ -2,10 +2,11 @@ CREATE DATABASE fantasyone;
 
 use fantasyone;
 
-CREATE TABLE users (userid varchar(15) PRIMARY KEY,
-    first_name varchar(30),
-    last_name varchar(30), 
+CREATE TABLE users (username varchar(15) PRIMARY KEY,
+    first_name varchar(30) DEFAULT NULL,
+    last_name varchar(30) DEFAULT NULL, 
     email_id varchar(30), 
+    password varchar,
     dob date, 
     CONSTRAINT check_userid CHECK ( userid like '%[^0-9]%' ),
     CONSTRAINT check_email CHECK (email_id like '%_@__%.__%'),
@@ -89,13 +90,14 @@ INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Lance Stroll",30,5.3);
 
 
 CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
-        total_points int, 
-        weekly_score int,
-        driver1 int,
-        driver2 int, 
-        driver3 int,
-        driver4 int,
-        driver5 int,
+        total_points int DEFAULT 0, 
+        weekly_score int DEFAULT 0,
+        team_name varchar(20), 
+        driver1 int DEFAULT NULL,
+        driver2 int DEFAULT NULL, 
+        driver3 int DEFAULT NULL,
+        driver4 int DEFAULT NULL,
+        driver5 int DEFAULT NULL,
         league_id1 int DEFAULT NULL,
         league_id2 int DEFAULT NULL,
         league_id3 int DEFAULT NULL, 
@@ -109,8 +111,22 @@ CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY,
         FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID));
 
 CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
-        Type boolean);
+        Type boolean DEFAULT NULL);
 
+inserting into Teams:
+insert into Teams (driver1, driver2, driver3, driver4, driver5) VALUES(1,2,3,4,5);
+
+inserting into Leagues:
+insert into Leagues (Type) VALUES(1);
+1 - Classic
+0 - H2H
 
 Command for calculating the weely points of each team 
 select SUM(b.Tot_points) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
+
+Leader board for a league:
+select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
+
+Ranking all the leagues:
+select SUM(a.total_points) as Sum, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID AND b.Type = 1 GROUP BY b.LeagueID ;
+(only for Classic Leagues)
