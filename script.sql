@@ -88,3 +88,29 @@ INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Lance Stroll",30,5.3);
 
 
 
+CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
+        total_points int, 
+        weekly_score int,
+        driver1 int,
+        driver2 int, 
+        driver3 int,
+        driver4 int,
+        driver5 int,
+        league_id1 int DEFAULT NULL,
+        league_id2 int DEFAULT NULL,
+        league_id3 int DEFAULT NULL, 
+        FOREIGN KEY d1 (driver1) REFERENCES Drivers(DriverID),
+        FOREIGN KEY d2 (driver2) REFERENCES Drivers(DriverID),
+        FOREIGN KEY d3 (driver3) REFERENCES Drivers(DriverID),
+        FOREIGN KEY d4 (driver4) REFERENCES Drivers(DriverID),
+        FOREIGN KEY d5 (driver5) REFERENCES Drivers(DriverID),
+        FOREIGN KEY l1 (league_id1) REFERENCES Leagues(LeagueID),
+        FOREIGN KEY l2 (league_id2) REFERENCES Leagues(LeagueID),
+        FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID));
+
+CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
+        Type boolean);
+
+
+Command for calculating the weely points of each team 
+select SUM(b.Tot_points) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
