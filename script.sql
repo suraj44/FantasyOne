@@ -121,7 +121,7 @@ insert into Leagues (Type) VALUES(1);
 1 - Classic
 0 - H2H
 
-Command for calculating the weely points of each team 
+Command for calculating the weekly points of each team 
 select SUM(b.Tot_points) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
 
 Leader board for a league:
@@ -130,3 +130,39 @@ select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, League
 Ranking all the leagues:
 select SUM(a.total_points) as Sum, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID AND b.Type = 1 GROUP BY b.LeagueID ;
 (only for Classic Leagues)
+
+Ordering drivers by their Cost:
+select * from Drivers
+ORDER BY Cost DESC;
+
+Ordering drivers by their First Name:
+select * from Drivers
+ORDER BY first_name;
+
+Ordering drivers by Last Name:
+select * from Drivers
+ORDER BY last_name;
+
+Viewing drivers in a certain price range(Below 10 for example):
+select * from Drivers
+where Cost < 10;
+
+Updating Driver Total Points after Admin has Updated Weekly Points:
+UPDATE Drivers 
+SET Tot_Points = Tot_Points + Week_Points;
+
+Admin command for updating Driver Weekly weekly_score(35 is the score for example):
+UPDATE Drivers
+SET Week_Points = 35;
+
+
+Updating Team Total Points after Admin has Updated Weekly Points:
+UPDATE Teams 
+SET total_points = total_points + weekly_score;
+
+
+Viewing the top 100 teams:
+
+select * from Teams
+ORDER BY total_points DESC
+LIMIT 1, 100;
