@@ -87,6 +87,50 @@ INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Brendon Hartley",39,6.1);
 INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Sergey Sirotkin",21,5.1);
 INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Lance Stroll",30,5.3);
 
+UPDATE Drivers
+SET Week_Points = 35 where DriverID = 1;
+UPDATE Drivers
+SET Week_Points = 17 where DriverID = 2;
+UPDATE Drivers
+SET Week_Points = 23 where DriverID = 3;
+UPDATE Drivers
+SET Week_Points = 33 where DriverID = 4;
+UPDATE Drivers
+SET Week_Points = 28 where DriverID = 5;
+UPDATE Drivers
+SET Week_Points = 10 where DriverID = 6;
+UPDATE Drivers
+SET Week_Points = 13 where DriverID = 7;
+UPDATE Drivers
+SET Week_Points = 18 where DriverID = 8;
+UPDATE Drivers
+SET Week_Points = 22 where DriverID = 9;
+UPDATE Drivers
+SET Week_Points = 37 where DriverID = 10;
+UPDATE Drivers
+SET Week_Points = 30 where DriverID = 11;
+UPDATE Drivers
+SET Week_Points = 12 where DriverID = 12;
+UPDATE Drivers
+SET Week_Points = -2 where DriverID = 13;
+UPDATE Drivers
+SET Week_Points = 9 where DriverID = 14;
+UPDATE Drivers
+SET Week_Points = -6 where DriverID = 15;
+UPDATE Drivers
+SET Week_Points = 14 where DriverID = 16;
+UPDATE Drivers
+SET Week_Points = 26 where DriverID = 17;
+UPDATE Drivers
+SET Week_Points = 26 where DriverID = 18;
+UPDATE Drivers
+SET Week_Points = 22 where DriverID = 19;
+UPDATE Drivers
+SET Week_Points = 13 where DriverID = 20;
+
+
+
+
 
 
 CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
@@ -121,11 +165,64 @@ insert into Leagues (Type) VALUES(1);
 1 - Classic
 0 - H2H
 
+
+
+Displaying the total particpants in a league for a given league ID:
+select COUNT(*) from Teams where league_id1 = OR league_id2 = OR league_id3 = ;
+
 Command for calculating the weekly points of each team 
 select SUM(b.Tot_points) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
 
+select SUM(b.Week_Points) as Team_Weekly_Score, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
+
+select SUM(b.Week_Points) as Team_Weekly_Score into tmp_score from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
+
+
+UPDATE  Teams set weekly_score = (select SUM(b.Week_Points) as Team_Weekly_Score from (select * from Teams) as a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) AND a.TeamID = Teams.TeamID);
+
+Command for Updating the value a team on a weekly basis
+UPDATE  Teams set Team_Value = (select SUM(b.Cost) as Team_Weekly_Score from (select * from Teams) as a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) AND a.TeamID = Teams.TeamID);
+
+
+select * from Teams into tmp_score WHERE 1=0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Command for calculating the team value:
+select SUM(b.Cost) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
+
 Leader board for a league:
 select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
+
+Calculating the number of teams in a league:
+select COUNT(a.TeamID) as League_Count, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID GROUP BY LeagueID;
+
+Leader board for a league:
+select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
+
 
 Ranking all the leagues:
 select SUM(a.total_points) as Sum, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID AND b.Type = 1 GROUP BY b.LeagueID ;
@@ -153,7 +250,7 @@ SET Tot_Points = Tot_Points + Week_Points;
 
 Admin command for updating Driver Weekly weekly_score(35 is the score for example):
 UPDATE Drivers
-SET Week_Points = 35;
+SET Week_Points = 35 where DriverID = 1;
 
 
 Updating Team Total Points after Admin has Updated Weekly Points:
