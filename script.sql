@@ -6,7 +6,7 @@ CREATE TABLE users (username varchar(15) PRIMARY KEY,
     first_name varchar(30) DEFAULT NULL,
     last_name varchar(30) DEFAULT NULL, 
     email_id varchar(30), 
-    password varchar,
+    password varchar(255),
     dob date, 
     CONSTRAINT check_userid CHECK ( userid like '%[^0-9]%' ),
     CONSTRAINT check_email CHECK (email_id like '%_@__%.__%'),
@@ -59,10 +59,10 @@ DELIMITER $$
 CREATE TRIGGER test_cost_insert BEFORE INSERT ON Drivers
 FOR EACH ROW
 BEGIN
-	IF NEW.Cost NOT BETWEEN 0 AND 20 THEN
-		SIGNAL SQLSTATE '12345'
-		SET MESSAGE_TEXT = 'Driver Cost must be between 0 and 20.';
-	END IF;
+	IF NEW.Cost NOT BETWEEN 0 AND 40 THEN
+        SIGNAL SQLSTATE '12345'
+        SET MESSAGE_TEXT = 'Driver Cost must be between 0 and 20.';
+        END IF;
 END$$
 DELIMITER ;
 
@@ -132,7 +132,7 @@ SET Week_Points = 13 where DriverID = 20;
 
 
 
-
+Old way of creating teams:
 CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
         total_points int DEFAULT 0, 
         weekly_score int DEFAULT 0,
@@ -154,8 +154,29 @@ CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY,
         FOREIGN KEY l2 (league_id2) REFERENCES Leagues(LeagueID),
         FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID));
 
+New way of creating teams:
+CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
+        total_points int DEFAULT 0, 
+        weekly_score int DEFAULT 0,
+        team_value int DEFAULT 0,
+        team_name varchar(20));
+
 CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
         Type boolean DEFAULT NULL);
+
+Creating table that links teams and drivers:
+CREATE TABLE Team_Driver_Link (team_id int,
+        driver_id int,
+        PRIMARY KEY (team_id, driver_id),
+        FOREIGN KEY driver (driver_id) REFERENCES Drivers(DriverID),
+        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID));
+
+Creating table that links teams and leagues:
+CREATE TABLE Team_League_Link (team_id int,
+        league_id int,
+        PRIMARY KEY (team_id, league_id),
+        FOREIGN KEY league (league_id) REFERENCES Leagues(LeagueID),
+        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID));
 
 inserting into Teams:
 insert into Teams (driver1, driver2, driver3, driver4, driver5) VALUES(1,2,3,4,5);
@@ -165,8 +186,8 @@ insert into Leagues (Type) VALUES(1);
 1 - Classic
 0 - H2H
 
-
-
+OLD - 
+****
 Displaying the total particpants in a league for a given league ID:
 select COUNT(*) from Teams where league_id1 = OR league_id2 = OR league_id3 = ;
 
@@ -177,8 +198,22 @@ select SUM(b.Week_Points) as Team_Weekly_Score, a.TeamID from Teams a, Drivers b
 
 select SUM(b.Week_Points) as Team_Weekly_Score into tmp_score from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
 
-
 UPDATE  Teams set weekly_score = (select SUM(b.Week_Points) as Team_Weekly_Score from (select * from Teams) as a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) AND a.TeamID = Teams.TeamID);
+****
+NEW
+UPDATING TEAM WEEKLY POINTS
+select a.team_id, sum(b.Week_Points) as Team_Weekly_Score from Team_Driver_Link a, Drivers b WHERE (a.driver_id = b.DriverID) GROUP BY a.team_id;
+UPDATE  Teams set weekly_score = (select SUM(b.Week_Points) as Team_Weekly_Score from Team_Driver_Link a, Drivers b WHERE (a.driver_id= b.DriverID) AND a.team_id = Teams.TeamID);
+
+UPDATING TEAM VAL
+UPDATE  Teams set team_value = (select SUM(b.Cost) as Team_Weekly_Score from Team_Driver_Link a, Drivers b WHERE (a.driver= b.DriverID) AND a.TeamID = Teams.TeamID);
+
+To insert a team into a league or a driver into a team, update the Team_League_Link or Team_Driver_Link table
+
+
+
+
+
 
 Command for Updating the value a team on a weekly basis
 UPDATE  Teams set Team_Value = (select SUM(b.Cost) as Team_Weekly_Score from (select * from Teams) as a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) AND a.TeamID = Teams.TeamID);
@@ -218,15 +253,26 @@ Leader board for a league:
 select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
 
 Calculating the number of teams in a league:
+OLD:
 select COUNT(a.TeamID) as League_Count, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID GROUP BY LeagueID;
 
-Leader board for a league:
-select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
+NEW:
+select COUNT(a.team_id) as league_count , b.LeagueID from Team_League_Link a, Leagues b where a.league_id = b.LeagueID GROUP BY LeagueID;
 
+
+Leader board for a league:
+OLD:
+select a.TeamID, a.total_points, a.weekly_score, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID order by a.total_points desc;
+NEW:
+select a.TeamID, a.weekly_score from Teams a, Team_League_Link b where b.league_id = 1 order by a.weekly_score desc;
 
 Ranking all the leagues:
+OLD:
 select SUM(a.total_points) as Sum, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID AND b.Type = 1 GROUP BY b.LeagueID ;
 (only for Classic Leagues)
+
+NEW:
+select SUM(a.total_points) as Sum, b.LeagueID from (select a.TeamID, a.total_points, b.league_id from Teams a, Team_League_Link b where a.TeamID = b.team_id) as a, Leagues b where a.league_id = b.LeagueID and b.Type = 1 GROUP BY b.LeagueID;e
 
 Ordering drivers by their Cost:
 select * from Drivers
