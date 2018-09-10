@@ -3,16 +3,88 @@ CREATE DATABASE fantasyone;
 use fantasyone;
 
 CREATE TABLE users (username varchar(15) PRIMARY KEY,
-    first_name varchar(30) DEFAULT NULL,
+    first_name varchar(30) NOT NULL,
     last_name varchar(30) DEFAULT NULL, 
     email_id varchar(30), 
-    password varchar(255),
-    dob date, 
+    password varchar(255) NOT NULL,
+    dob date,
+    UNIQUE(email_id),
+    FOREIGN KEY t1 (team1) REFERENCES Teams(TeamID) ON DELETE SET NULL, 
+    FOREIGN KEY t2 (team2) REFERENCES Teams(TeamID) ON DELETE SET NULL,
+    FOREIGN KEY t3 (team3) REFERENCES Teams(TeamID) ON DELETE SET NULL,
     CONSTRAINT check_userid CHECK ( userid like '%[^0-9]%' ),
     CONSTRAINT check_email CHECK (email_id like '%_@__%.__%'),
     CONSTRAINT check_age CHECK (((YEAR(CURRENT_DATE) - YEAR(dob) = 16) AND (MONTH(CURRENT_DATE)  >= MONTH(dob)) AND (DAY(CURRENT_DATE) >= DAY(dob))) OR (YEAR(CURRENT_DATE) - YEAR(dob) > 16)));
 
+
+CREATE TABLE Drivers( DriverID int AUTO_INCREMENT PRIMARY KEY, 
+	Name varchar(20),
+	Tot_Points int(3),
+	Cost decimal,
+	CONSTRAINT check_cost CHECK (Cost BETWEEN 0 AND 30));
+
+ALTER TABLE Drivers
+ADD Week_Points int(3) DEFAULT 0;
+
+ALTER TABLE Drivers
+MODIFY Cost float;
+
+Old way of creating teams:
+CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
+        total_points int DEFAULT 0, 
+        weekly_score int DEFAULT 0,
+        team_name varchar(20), 
+        driver1 int DEFAULT NULL,
+        driver2 int DEFAULT NULL, 
+        driver3 int DEFAULT NULL,
+        driver4 int DEFAULT NULL,
+        driver5 int DEFAULT NULL,
+        league_id1 int DEFAULT NULL,
+        league_id2 int DEFAULT NULL,
+        league_id3 int DEFAULT NULL, 
+        FOREIGN KEY d1 (driver1) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY d2 (driver2) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY d3 (driver3) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY d4 (driver4) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY d5 (driver5) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY l1 (league_id1) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
+        FOREIGN KEY l2 (league_id2) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
+        FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID) ON DELETE SET NULL);
+
+New way of creating teams:
+CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
+        total_points int DEFAULT 0, 
+        weekly_score int DEFAULT 0,
+        team_value int DEFAULT 0,
+        team_name varchar(20));
+
+CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
+        Type boolean DEFAULT NULL);
+
+Creating table that links teams and drivers:
+CREATE TABLE Team_Driver_Link (team_id int,
+        driver_id int,
+        PRIMARY KEY (team_id, driver_id),
+        FOREIGN KEY driver (driver_id) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
+        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID) ON DELETE SET NULL);
+
+Creating table that links teams and leagues:
+CREATE TABLE Team_League_Link (team_id int,
+        league_id int,
+        PRIMARY KEY (team_id, league_id),
+        FOREIGN KEY league (league_id) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
+        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID) ON DELETE SET NULL);
+
+
 DELIMITER $$
+CREATE TRIGGER test_cost_insert BEFORE INSERT ON Drivers
+FOR EACH ROW
+BEGIN
+    IF NEW.Cost NOT BETWEEN 0 AND 30 THEN
+        SIGNAL SQLSTATE '12345'
+        SET MESSAGE_TEXT = 'Driver Cost must be between 0 and 30.';
+        END IF;
+END$$
 
 CREATE TRIGGER test_email_before_insert BEFORE INSERT ON users
 FOR EACH ROW
@@ -41,29 +113,6 @@ BEGIN
     END IF;
 END$$
 
-DELIMITER ;
-
-CREATE TABLE Drivers( DriverID int AUTO_INCREMENT PRIMARY KEY, 
-	Name varchar(20),
-	Tot_Points int(3),
-	Cost decimal,
-	CONSTRAINT check_cost CHECK (Cost BETWEEN 0 AND 20));
-
-ALTER TABLE Drivers
-ADD Week_Points int(3) DEFAULT 0;
-
-ALTER TABLE Drivers
-MODIFY Cost float;
-
-DELIMITER $$
-CREATE TRIGGER test_cost_insert BEFORE INSERT ON Drivers
-FOR EACH ROW
-BEGIN
-	IF NEW.Cost NOT BETWEEN 0 AND 40 THEN
-        SIGNAL SQLSTATE '12345'
-        SET MESSAGE_TEXT = 'Driver Cost must be between 0 and 20.';
-        END IF;
-END$$
 DELIMITER ;
 
 INSERT INTO Drivers (Name,Tot_Points,Cost) VALUES("Lewis Hamilton",314,30.6);
@@ -132,51 +181,7 @@ SET Week_Points = 13 where DriverID = 20;
 
 
 
-Old way of creating teams:
-CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
-        total_points int DEFAULT 0, 
-        weekly_score int DEFAULT 0,
-        team_name varchar(20), 
-        driver1 int DEFAULT NULL,
-        driver2 int DEFAULT NULL, 
-        driver3 int DEFAULT NULL,
-        driver4 int DEFAULT NULL,
-        driver5 int DEFAULT NULL,
-        league_id1 int DEFAULT NULL,
-        league_id2 int DEFAULT NULL,
-        league_id3 int DEFAULT NULL, 
-        FOREIGN KEY d1 (driver1) REFERENCES Drivers(DriverID),
-        FOREIGN KEY d2 (driver2) REFERENCES Drivers(DriverID),
-        FOREIGN KEY d3 (driver3) REFERENCES Drivers(DriverID),
-        FOREIGN KEY d4 (driver4) REFERENCES Drivers(DriverID),
-        FOREIGN KEY d5 (driver5) REFERENCES Drivers(DriverID),
-        FOREIGN KEY l1 (league_id1) REFERENCES Leagues(LeagueID),
-        FOREIGN KEY l2 (league_id2) REFERENCES Leagues(LeagueID),
-        FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID));
 
-New way of creating teams:
-CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
-        total_points int DEFAULT 0, 
-        weekly_score int DEFAULT 0,
-        team_value int DEFAULT 0,
-        team_name varchar(20));
-
-CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
-        Type boolean DEFAULT NULL);
-
-Creating table that links teams and drivers:
-CREATE TABLE Team_Driver_Link (team_id int,
-        driver_id int,
-        PRIMARY KEY (team_id, driver_id),
-        FOREIGN KEY driver (driver_id) REFERENCES Drivers(DriverID),
-        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID));
-
-Creating table that links teams and leagues:
-CREATE TABLE Team_League_Link (team_id int,
-        league_id int,
-        PRIMARY KEY (team_id, league_id),
-        FOREIGN KEY league (league_id) REFERENCES Leagues(LeagueID),
-        FOREIGN KEY team (team_id) REFERENCES Teams(TeamID));
 
 inserting into Teams:
 insert into Teams (driver1, driver2, driver3, driver4, driver5) VALUES(1,2,3,4,5);
