@@ -28,4 +28,11 @@ Refer - https://github.com/i0natan/nodebestpractices/blob/master/sections/securi
 
 8. Try incorporating the MVC philosophy as far as possible.
 
+9. Structuring our **M**odels(VC) - http://timjrobinson.com/how-to-structure-your-nodejs-models-2/
+
 These are just a few practices I thought would be good to follow which would be of great use when we actually start developing software later on
+
+
+### Doubts that were cleared by stackoverflow/Google
+
+1. exact working of ```exports``` and ```require()``` - https://stackoverflow.com/questions/5311334/what-is-the-purpose-of-node-js-module-exports-and-how-do-you-use-it?rq=1

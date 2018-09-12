@@ -1,3 +1,8 @@
+CREATE USER 'k1ng'@'localhost' IDENTIFIED BY 'kyrgios';
+
+GRANT ALL PRIVILEGES ON * . * TO 'k1ng'@'localhost';
+
+
 CREATE DATABASE fantasyone;
 
 use fantasyone;
@@ -272,7 +277,7 @@ NEW:
 select a.TeamID, a.weekly_score from Teams a, Team_League_Link b where b.league_id = 1 order by a.weekly_score desc;
 
 Ranking all the leagues:
-OLD:
+OLD
 select SUM(a.total_points) as Sum, b.LeagueID from Teams a, Leagues b where a.league_id1 = b.LeagueID AND b.Type = 1 GROUP BY b.LeagueID ;
 (only for Classic Leagues)
 
