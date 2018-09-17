@@ -13,21 +13,25 @@ sql.connect(function (err) {
     } else {
         console.log("Connected to FantasyOne database.")
     }
+        
 });
 
-function getAllDrivers() {
-    drivers = function() {
-        sql.query('SELECT * from Drivers', function(err, drivers) {
-            if(err) {
-                console.log(err);
-            } else {
-            return rows;
-            }
-    });
-    return drivers;
+// From what I've understood:
+
+// Because Node works asychronously, we need to use a callback.
+// If you simply tried to return result, the problem is of the scope of the variable
+// So in the return statement of this function, I'm actually calling the callback() function which is defined at line #47
+// and that function passes the value of result to the global variable L.
+function getAllDrivers(callback) {
+    sql.query('SELECT * from Drivers', function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
 }
-    console.log(drivers[0]);
-};
+
 
 
 
@@ -39,5 +43,12 @@ var Driver = {
     week_points : 0
 };
 
+var L;
+
+getAllDrivers(function(result){
+    //console.log(result);
+    L = result;
+    console.log(L[0]);
+})
+
 module.exports = Driver;
-getAllDrivers();
