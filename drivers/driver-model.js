@@ -93,14 +93,15 @@ var L;
 //     console.log("Weekly score has been updated.");
 // })
 
-// getAllDrivers(function(result){
-//     //console.log(result);
-//     L = result;
-//     console.log(L[0]);
-// })
+
+getAllDrivers(function(result){
+        module.exports.getDrivers = result;
+        return L;
+    })
+
 
 // getDriversSortedByTotalPoints(function(result) {
 //     console.log(result);
 // })
 
-module.exports = Driver;
+//module.exports = {getDrivers :  getDrivers()}

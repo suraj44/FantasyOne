@@ -2,6 +2,11 @@
 A web application simulating an online F1 Fantasy game.
 
 
+### Development model being followed:
+
+![MVC](https://mdn.mozillademos.org/files/14456/MVC%20Express.png)
+
+
 ### For development:
 As the app isn't fully developed yet, I thought I would use the README as a scratch card of sorts to note down import things like coding style philosophy and maybe an explanation to how certain features are implemented. 
 

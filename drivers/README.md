@@ -17,3 +17,9 @@ TODO for MJ: Try exporting the results of getAllDrivers() to the controller file
 Started writing the ```updateDriverWeeklyScore()``` function. Learnt how to 'mark' the datatypes of the function parameters for the compiler. Not only datatypes of parameters, but things like if the function is a constructor or something similar can be marked as well. Refer [THIS](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler) for more details of the same. 
 Refer [THIS](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) for the different datatypes JavasScript has
 Completed ```updateDriverWeeklyScore()``` and ```getDriversSortedByTotalPoints```.
+
+### 03/10/2018
+Figured out how to export data from the model to the controller!
+Need to shift the logic from lib/router to drivers/router though
+So now, we can get whatever data we want from DB.
+Next step would be to write an onClick() function to chnage a particular value in the database (weeklyScore function is already written so test with that)
