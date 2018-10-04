@@ -38,6 +38,7 @@ function getAllDrivers(callback) {
     })
 }
 
+
 /**
  * Function that fetches all drivers from the database, ordered by total points
  */
@@ -63,12 +64,12 @@ function getDriversSortedByTotalPoints(callback) {
  * @param {Number} newScore The new score of the corresponding driver
  * @return {void} No return value222
  */
-function updateDriverWeeklyScore(driverID, newScore, callback){
+function updateDriverWeeklyScore(driverID, newScore, res, callback){
     sql.query('UPDATE Drivers SET Week_Points = ? WHERE DriverID = ?', [newScore, driverID], function (err) {
         if(err) {
             throw err;
         }
-        return callback(err);
+        return callback(err, res);
 
     })
 }
@@ -100,6 +101,29 @@ getAllDrivers(function(result){
     })
 
 
+/**
+ * @param {Number} driverID The ID of the driver whose score needs to be updated
+ * @param {Number} newScore The new score of the corresponding driver
+ * @return {boolean}
+ */
+var updateWeeklyScore = function (driverID, newScore, res) {
+    console.log("I am here")
+    updateDriverWeeklyScore(driverID, newScore, res,  function(err, res) {
+        if(err === null) {
+            module.exports.weeklyScoreResult = true;
+            console.log("Database was updated successfully.")
+            res.redirect("/");
+        }
+        else {
+            module.exports.weeklyScoreResult = false;
+            res.redirect("update_weekly_score");
+            console.log("Error in updating database: " + err);
+        }
+    })
+
+}
+
+module.exports.updateWeeklyScore = updateWeeklyScore;
 // getDriversSortedByTotalPoints(function(result) {
 //     console.log(result);
 // })

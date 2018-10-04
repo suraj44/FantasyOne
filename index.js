@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const app = express();
 const routes = require('./lib/route.js'); 
 const driver_routes = require('./drivers/driver-route.js')
@@ -20,7 +21,7 @@ app.use(stylus.middleware(
     , compile: compile
     }
   ))
-  app
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'views')));
 app.use('/',routes);
 app.use('/drivers', driver_routes)
