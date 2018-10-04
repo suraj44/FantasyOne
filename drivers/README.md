@@ -23,3 +23,9 @@ Figured out how to export data from the model to the controller!
 Need to shift the logic from lib/router to drivers/router though
 So now, we can get whatever data we want from DB.
 Next step would be to write an onClick() function to chnage a particular value in the database (weeklyScore function is already written so test with that)
+
+
+### 04/10/2018
+So if you go to ```/drivers/update_weekly_score``` , you can update the weekly score of a specified driver using
+the front end. Only weird thing is i had to pass the "response" from the controller to the model because there's absolutely
+no clean way of passing information from a asychronous function (the callback) to a synchronous function (the controller)
