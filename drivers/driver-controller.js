@@ -5,32 +5,22 @@ module.exports.updateWeeklyScore = function(req,res) {
     driverID = req.body.DriverID;
     newScore = req.body.Weekly_Score;
 
-    model.updateWeeklyScore(driverID, newScore, res)
+    model.updateDriverWeeklyScore(driverID, newScore, function(err) {
+        if(err) {
+            console.log(err);
+        }
+    })
 
-    // if(model.weeklyScoreResult) {
-    //     console.log("Controller received true")
-    //     res.redirect("/");
-    // } else { 
-    //     console.log("Controller received error")
-    //     res.redirect("update_weekly_score");
-    // }
+    model.updateDriverTotalScore(driverID, function(err) {
+        if(err) {
+            res.redirect("update_weekly_score");
+            console.log("Error in updating database: " + err);
+        } else {
+            console.log("Database was updated successfully.")
+            res.redirect("/");
+            
+        }
+    })
+    //model.updateWeeklyScore(driverID, newScore, res);
 
 }
-
-// module.exports = function(app) {
-
-//     var DriverController = {
-//         updateWeeklyScore : function(req, res) {
-//             driverID = req.body.DriverID;
-//             newScore = req.body.Weekly_Score;
-
-//             if(model.updateWeeklyScore(driverID, newScore)) {
-//                 res.redirect("/");
-//             } else { 
-//                 res.redirect("/update_weekly_score");
-//             }
-
-//         }
-//     }
-//     return DriverController;
-// }
