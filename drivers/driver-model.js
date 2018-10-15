@@ -62,14 +62,25 @@ function getDriversSortedByTotalPoints(callback) {
 /**
  * @param {Number} driverID The ID of the driver whose score needs to be updated
  * @param {Number} newScore The new score of the corresponding driver
+ * @param {SQL Query Result} res
  * @return {void} No return value222
  */
-function updateDriverWeeklyScore(driverID, newScore, res, callback){
+function updateDriverWeeklyScore(driverID, newScore, callback){
     sql.query('UPDATE Drivers SET Week_Points = ? WHERE DriverID = ?', [newScore, driverID], function (err) {
         if(err) {
             throw err;
         }
-        return callback(err, res);
+        return callback(err);
+
+    })
+}
+
+function updateDriverTotalScore(driverID, callback){
+    sql.query('UPDATE Drivers SET Tot_Points = Tot_Points + Week_Points WHERE DriverID = ?', [driverID], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
 
     })
 }
@@ -97,35 +108,12 @@ var L;
 
 getAllDrivers(function(result){
         module.exports.getDrivers = result;
-        return L;
     })
 
 
-/**
- * @param {Number} driverID The ID of the driver whose score needs to be updated
- * @param {Number} newScore The new score of the corresponding driver
- * @return {boolean}
- */
-var updateWeeklyScore = function (driverID, newScore, res) {
-    console.log("I am here")
-    updateDriverWeeklyScore(driverID, newScore, res,  function(err, res) {
-        if(err === null) {
-            module.exports.weeklyScoreResult = true;
-            console.log("Database was updated successfully.")
-            res.redirect("/");
-        }
-        else {
-            module.exports.weeklyScoreResult = false;
-            res.redirect("update_weekly_score");
-            console.log("Error in updating database: " + err);
-        }
-    })
 
-}
 
-module.exports.updateWeeklyScore = updateWeeklyScore;
-// getDriversSortedByTotalPoints(function(result) {
-//     console.log(result);
-// })
-
-//module.exports = {getDrivers :  getDrivers()}
+module.exports.updateDriverWeeklyScore = updateDriverWeeklyScore;
+module.exports.updateDriverTotalScore = updateDriverTotalScore;
+//module.exports.updateTotalScore = updateTotalScore;
+module.exports.getAllDrivers = getAllDrivers;

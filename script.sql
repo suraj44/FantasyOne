@@ -319,3 +319,6 @@ Viewing the top 100 teams:
 select * from Teams
 ORDER BY total_points DESC
 LIMIT 1, 100;
+
+Creating admin TABLE
+CREATE TABLE administrator (username varchar(20), pass varchar(100));

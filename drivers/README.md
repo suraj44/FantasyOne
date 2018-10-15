@@ -29,3 +29,8 @@ Next step would be to write an onClick() function to chnage a particular value i
 So if you go to ```/drivers/update_weekly_score``` , you can update the weekly score of a specified driver using
 the front end. Only weird thing is i had to pass the "response" from the controller to the model because there's absolutely
 no clean way of passing information from a asychronous function (the callback) to a synchronous function (the controller)
+
+### 15/10/2018
+Moved the function of redirecting to a particular URL out of model after learning more about how call backs can be used
+Added functionality for an admin to log in, however as of now there is no admin session.
+Need to create a session using token and then basically finish admin interface in one module and that will be good to go.
