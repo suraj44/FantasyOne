@@ -14,6 +14,9 @@ CREATE TABLE users (username varchar(15) PRIMARY KEY,
     password varchar(255) NOT NULL,
     dob date,
     UNIQUE(email_id),
+    team1 int,
+    team2 int,
+    team3 int,
     FOREIGN KEY t1 (team1) REFERENCES Teams(TeamID) ON DELETE SET NULL, 
     FOREIGN KEY t2 (team2) REFERENCES Teams(TeamID) ON DELETE SET NULL,
     FOREIGN KEY t3 (team3) REFERENCES Teams(TeamID) ON DELETE SET NULL,
@@ -69,14 +72,12 @@ CREATE TABLE Leagues (LeagueID int AUTO_INCREMENT PRIMARY KEY,
 Creating table that links teams and drivers:
 CREATE TABLE Team_Driver_Link (team_id int,
         driver_id int,
-        PRIMARY KEY (team_id, driver_id),
         FOREIGN KEY driver (driver_id) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
         FOREIGN KEY team (team_id) REFERENCES Teams(TeamID) ON DELETE SET NULL);
 
 Creating table that links teams and leagues:
 CREATE TABLE Team_League_Link (team_id int,
         league_id int,
-        PRIMARY KEY (team_id, league_id),
         FOREIGN KEY league (league_id) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
         FOREIGN KEY team (team_id) REFERENCES Teams(TeamID) ON DELETE SET NULL);
 

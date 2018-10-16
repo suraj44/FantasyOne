@@ -25,7 +25,7 @@ app.use(stylus.middleware(
     , compile: compile
     }
   ))
-
+app.use(express.static('public'))
 app.use(session({secret: SECRET_KEY, resave :false, saveUninitialized: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'views')));
