@@ -1,4 +1,3 @@
-const sha1 = require('sha1');
 const mysql = require("mysql")
 
 const sql = mysql.createConnection({

@@ -8,10 +8,11 @@ const path = require('path');
 const stylus = require('stylus')
 const nib = require('nib')
 const SECRET_KEY = '\xd6\xca\xbb\xa7u\xaa\x8a\xec\xf4\xb4#\xdf'
-
+const session = require('express-session')
 
 app.set('views', __dirname + '/templates')
-app.set('view engine', 'jade')
+app.set('view engine', 'ejs')
+
 
 
 function compile(str, path) {

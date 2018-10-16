@@ -16,6 +16,4 @@ router.get('/update_weekly_score', function(req,res) {
     res.sendFile('/views/form.html',{ root: __dirname })
 })
 
-router.post('/update_weekly_score', controller.updateWeeklyScore)
-
 module.exports = router;

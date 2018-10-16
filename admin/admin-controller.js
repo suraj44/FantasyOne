@@ -8,7 +8,7 @@ exports.sign_in = function(req, res) {
         } else {
             req.session.username = req.body.username;
             console.log(result);
-            return res.status(200).send();
+            return res.redirect('home');
         }
     });
 }

@@ -85,26 +85,15 @@ function updateDriverTotalScore(driverID, callback){
     })
 }
 
+function updateDriverPrice(newPrice, driverID, callback) {
+    sql.query('UPDATE Drivers SET Cost = ? WHERE DriverID = ?', [newPrice, driverID], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
 
-var Driver = {
-    id : 0,
-    name : "",
-    total_points : 0,
-    cost : 0.0,
-    week_points : 0
-};
-
-var L;
-
-// Uncomment whichever function call you want, to test the corresponding function.
-
-// updateDriverWeeklyScore(1, 20.2, function(error) {
-//     if(error) {
-//         throw error
-//     }
-//     console.log("Weekly score has been updated.");
-// })
-
+    })
+}
 
 getAllDrivers(function(result){
         module.exports.getDrivers = result;
@@ -115,5 +104,6 @@ getAllDrivers(function(result){
 
 module.exports.updateDriverWeeklyScore = updateDriverWeeklyScore;
 module.exports.updateDriverTotalScore = updateDriverTotalScore;
+module.exports.updateDriverPrice = updateDriverPrice;
 //module.exports.updateTotalScore = updateTotalScore;
 module.exports.getAllDrivers = getAllDrivers;
