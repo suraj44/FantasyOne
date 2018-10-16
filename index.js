@@ -7,6 +7,8 @@ const admin_routes = require('./admin/routes.js')
 const path = require('path');
 const stylus = require('stylus')
 const nib = require('nib')
+const SECRET_KEY = '\xd6\xca\xbb\xa7u\xaa\x8a\xec\xf4\xb4#\xdf'
+
 
 app.set('views', __dirname + '/templates')
 app.set('view engine', 'jade')
@@ -22,10 +24,14 @@ app.use(stylus.middleware(
     , compile: compile
     }
   ))
+
+app.use(session({secret: SECRET_KEY, resave :false, saveUninitialized: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'views')));
 app.use('/',routes);
 app.use('/drivers', driver_routes)
 app.use('/admin', admin_routes)
+
+
 console.log("The connection is on localhost:3000");
 app.listen(3000);

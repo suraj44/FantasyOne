@@ -28,4 +28,15 @@ function getAdminPassword(username,  callback) {
     })
 }
 
+function doesUserExist(username, password, callback) {
+    sql.query('SELECT username, email_id from users where username = ? AND password = ?',[username, password] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
+}
+
 module.exports.getAdminPassword = getAdminPassword;
+module.exports.doesUserExist = doesUserExist;

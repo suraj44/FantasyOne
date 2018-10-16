@@ -31,6 +31,15 @@ the front end. Only weird thing is i had to pass the "response" from the control
 no clean way of passing information from a asychronous function (the callback) to a synchronous function (the controller)
 
 ### 15/10/2018
-Moved the function of redirecting to a particular URL out of model after learning more about how call backs can be used
+1. Moved the function of redirecting to a particular URL out of model after learning more about how call backs can be used
 Added functionality for an admin to log in, however as of now there is no admin session.
 Need to create a session using token and then basically finish admin interface in one module and that will be good to go.
+
+2. We could have used cookies and facilitated login using "sessions" which we learnt in application layer class. Instead, we'll be using a token based approach called [JWT](jwt.io). 
+
+
+### 16/10/2018
+Turns out JWT cookies are too complicated to use. Ditched using them, but kept the same directory structure. 
+Used express-session instead. Way easier, takes care of creating and destroying session cookies on its own.
+Need to add a little bit more info while logging in (was it username or password that was wrong)
+Now that login is set, finishing admin side should be peace.
