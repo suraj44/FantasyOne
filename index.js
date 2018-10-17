@@ -15,16 +15,14 @@ app.set('view engine', 'ejs')
 
 
 
-function compile(str, path) {
-    return stylus(str)
-      .set('filename', path)
-      .use(nib())
-  }
-app.use(stylus.middleware(
-    { src: __dirname + '/public'
-    , compile: compile
-    }
-  ))
+// Fix directories for static files
+app.use("/lib", express.static(__dirname + '/templates/lib'));
+app.use("/img", express.static(__dirname + '/templates/img'));
+app.use("/css", express.static(__dirname + '/templates/css'));
+app.use("/js", express.static(__dirname + '/templates/js'));
+
+
+  
 app.use(express.static('public'))
 app.use(session({secret: SECRET_KEY, resave :false, saveUninitialized: true}));
 app.use(bodyParser.urlencoded({extended: true}));
