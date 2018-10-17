@@ -1,8 +1,9 @@
 const router = require('express').Router()
-//const model = require('./admin-model')
+const model = require('./admin-model')
 const controller = require('./admin-controller')
 const driver_model = require('../drivers/driver-model')
 const driver_controller = require('../drivers/driver-controller')
+const sha1 = require('sha1')
 router.get('/login',function(req,res)
 {
 		res.sendFile(__dirname +  "/templates/admin-login.html")
@@ -34,16 +35,15 @@ router.get('/lol', function(req,res,next) {
 router.get('/home',function(req,res,next) {
 	controller.loginRequied(req,res,next);
 	}, function(req,res) {
+		console.log(req.session.admin);
 	driver_model.getAllDrivers(function(result) {
+		
 		res.render('admin/home',
 		{AllDrivers: result}
 		)
 	})
 	});
-router.post('/login', function(req,res) {
-	username = req.body.username;
-	password = req.body.password;
-	
+router.post('/login', function(req,res) {	
 	controller.sign_in(req,res);
 })
 // why doesn't using this directly work?
@@ -102,6 +102,47 @@ router.post('/update_driver_price', function(req,res,next) {
         }
     })
 })
+
+router.get('/add_new', function(req,res,next) {
+	controller.loginRequied(req,res,next);
+	},function(req,res) {
+    res.sendFile('/templates/admin-register.html',{ root: __dirname })
+})
+
+router.post('/add_new', function(req,res,next) {
+	controller.loginRequied(req,res,next);
+	}, function(req, res){
+		username = req.body.username;
+		first_name = req.body.first_name;
+		last_name = req.body.last_name;
+		email_id = req.body.email_id;
+		password = sha1(req.body.password);
+		dob = req.body.dob;
+		if(req.body.admin=="on")
+			admin =1;
+		else
+			admin = 0;
+		driver_model.add
+		console.log(dob);
+		model.addNewAdmin(username, first_name, last_name, email_id, password, dob, admin, function(err)  {
+			if(err==null) {
+				res.redirect("home");
+			} else {
+				res.status(401).json({ message: 'Database was not updated'});
+			}
+		})
+		// driver_model.updateDriverPrice(newPrice, driverID, function(err) {
+		// 	if(err) {
+		// 		res.redirect("update_driver_price");
+		// 		console.log("Error in updating database: " + err);
+		// 	} else {
+		// 		console.log("Database was updated successfully.")
+		// 		res.redirect("/admin/home");
+				
+		// 	}
+		// })
+})
+
 
 
 router.get('/logout' ,function(req, res) {

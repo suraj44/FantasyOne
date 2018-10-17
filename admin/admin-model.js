@@ -28,7 +28,7 @@ function getAdminPassword(username,  callback) {
 }
 
 function doesUserExist(username, password, callback) {
-    sql.query('SELECT username, email_id from users where username = ? AND password = ?',[username, password] ,function(err, results){
+    sql.query('SELECT username, admin from users where username = ? AND password = ?',[username, password] ,function(err, results){
         if (err) {
             throw err;
         }
@@ -37,5 +37,16 @@ function doesUserExist(username, password, callback) {
     })
 }
 
+function addNewAdmin(username, first_name, last_name, email_id, password, dob, admin, callback) {
+    sql.query('INSERT INTO users values(?,?,?,?,?,?,?)',[username, first_name, last_name, email_id, password, dob, admin] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(err);
+    })
+}
+
 module.exports.getAdminPassword = getAdminPassword;
 module.exports.doesUserExist = doesUserExist;
+module.exports.addNewAdmin = addNewAdmin;
