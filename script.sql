@@ -232,31 +232,6 @@ UPDATE  Teams set Team_Value = (select SUM(b.Cost) as Team_Weekly_Score from (se
 
 select * from Teams into tmp_score WHERE 1=0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Command for calculating the team value:
 select SUM(b.Cost) as Sum, a.TeamID from Teams a, Drivers b WHERE (a.driver1 = b.DriverID OR a.driver2 = b.DriverID OR a.driver3 = b.DriverID or a.driver4 = b.DriverID or a.driver5 = b.DriverID) GROUP BY a.TeamID;
 
@@ -323,3 +298,16 @@ LIMIT 1, 100;
 
 Creating admin TABLE
 CREATE TABLE administrator (username varchar(20), pass varchar(100));
+
+create table criteria
+ ( 
+  race_points int,
+  quali_points int,
+  overtakes int, 
+  beat_team_race tinyint,
+  beat_team_quali tinyint,
+  driverid int, 
+  week_points int,
+  FOREIGN KEY driver_criteria(driverid) REFERENCES Drivers(DriverID)
+  );
+

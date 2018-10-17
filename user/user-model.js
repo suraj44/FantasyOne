@@ -27,7 +27,8 @@ function doesUserExist(username, password, callback) {
 }
 
 function addNewUser(username, first_name, last_name, email_id, password, dob, admin, callback) {
-    sql.query('INSERT INTO users values(?,?,?,?,?,?,?)',[username, first_name, last_name, email_id, password, dob, admin] ,function(err, results){
+    sql.query('INSERT INTO users(username,first_name,last_name,email_id,password,dob,admin) values(?,?,?,?,?,?,?)',[username, first_name, last_name, email_id, password, dob, admin] ,function(err, results){
+        console.log(err);
         return callback(err);
     })
 }
