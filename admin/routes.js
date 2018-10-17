@@ -128,19 +128,9 @@ router.post('/add_new', function(req,res,next) {
 			if(err==null) {
 				res.redirect("home");
 			} else {
-				res.status(401).json({ message: 'Database was not updated'});
+				res.status(401).json({ message: 'User with that username already exists'});
 			}
 		})
-		// driver_model.updateDriverPrice(newPrice, driverID, function(err) {
-		// 	if(err) {
-		// 		res.redirect("update_driver_price");
-		// 		console.log("Error in updating database: " + err);
-		// 	} else {
-		// 		console.log("Database was updated successfully.")
-		// 		res.redirect("/admin/home");
-				
-		// 	}
-		// })
 })
 
 
