@@ -4,6 +4,7 @@ const app = express();
 const routes = require('./lib/route.js'); 
 const driver_routes = require('./drivers/driver-route.js')
 const admin_routes = require('./admin/routes.js')
+const user_routes = require('./user/routes.js')
 const path = require('path');
 const stylus = require('stylus')
 const nib = require('nib')
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use('/',routes);
 app.use('/drivers', driver_routes)
 app.use('/admin', admin_routes)
-
+app.use('/user', user_routes)
 
 console.log("The connection is on localhost:3000");
 app.listen(3000);
