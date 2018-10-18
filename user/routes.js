@@ -26,4 +26,20 @@ router.get('/home', function(req,res,next) {
 router.get('/logout', function(req,res) {
     controller.logout(req,res);
 })
+
+router.get('/create_team1', function(req,res) {
+    controller.create_team1_page(req,res);
+})
+
+router.post('/create_team1', function(req,res) {
+    controller.create_team1(req,res);
+})
+
+// router.get('/create_team2', function(req,res) {
+//     controller.create_team2_page(req,res);
+// })
+
+router.post('/create_team2', function(req,res) {
+    controller.create_team2(req,res);
+})
 module.exports = router;

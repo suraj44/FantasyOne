@@ -38,6 +38,16 @@ function getAllDrivers(callback) {
     })
 }
 
+function getDriverID(driverName, callback) {
+    sql.query('SELECT DriverID from Drivers where Name = ?',[driverName], function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
 
 /**
  * Function that fetches all drivers from the database, ordered by total points
@@ -106,3 +116,4 @@ module.exports.updateDriverTotalScore = updateDriverTotalScore;
 module.exports.updateDriverPrice = updateDriverPrice;
 //module.exports.updateTotalScore = updateTotalScore;
 module.exports.getAllDrivers = getAllDrivers;
+module.exports.getDriverID = getDriverID;

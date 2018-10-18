@@ -33,5 +33,15 @@ function addNewUser(username, first_name, last_name, email_id, password, dob, ad
     })
 }
 
+function doesUserHaveTeam(username, callback) {
+    sql.query('select team_id from users where username = ?', [username],function(err, results){
+        if(err)
+            throw err;
+        console.log(err);
+        return callback(err);
+    })
+}
+
 module.exports.doesUserExist = doesUserExist;
 module.exports.addNewUser = addNewUser;
+module.exports.doesUserHaveTeam = doesUserHaveTeam;

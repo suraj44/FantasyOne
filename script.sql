@@ -388,3 +388,6 @@ update Drivers set img = "/driver-img/ocon.jpg" where DriverID =11;
 
 
  update Drivers set img = "/driver-img/stroll.jpg" where DriverID =20;
+
+
+alter table Teams add unique(team_name);
