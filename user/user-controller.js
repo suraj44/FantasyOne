@@ -1,5 +1,7 @@
 const model = require('./user-model');
 const sha1 = require('sha1');
+var path = require('path');
+var appDir = path.dirname(require.main.filename);
 exports.sign_in = function(req, res) {
     model.doesUserExist(req.body.username, sha1(req.body.password), function(result) {
         if(result.length ==0) {
@@ -21,6 +23,10 @@ exports.loginRequied = function(req,res, next) {
     }
 }
 
+exports.register_page = function(req,res) {
+    res.render(appDir +  "/templates/form/user-register")
+}
+
 exports.register = function(req, res) {
     username = req.body.username;
     first_name = req.body.first_name;
@@ -40,7 +46,7 @@ exports.register = function(req, res) {
 }
 
 exports.login_page = function(req,res) {
-    res.render(__dirname +  "/templates/user-login")
+    res.render(appDir + "/templates/form/user-login")
 }
 exports.home_page = function(req,res) {
     res.render(__dirname +  "/templates/user-home")

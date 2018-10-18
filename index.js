@@ -17,10 +17,11 @@ app.set('view engine', 'ejs')
 
 
 // Fix directories for static files
-app.use("/lib", express.static(__dirname + '/templates/lib'));
-app.use("/img", express.static(__dirname + '/templates/img'));
-app.use("/css", express.static(__dirname + '/templates/css'));
-app.use("/js", express.static(__dirname + '/templates/js'));
+app.use("/lib", express.static(__dirname + '/templates/home-page/lib'));
+app.use("/img", express.static(__dirname + '/templates/home-page/img'));
+app.use("/css", express.static(__dirname + '/templates/home-page/css'));
+app.use("/js", express.static(__dirname + '/templates/home-page/js'));
+app.use("/form", express.static(__dirname + '/templates/form'));
 
 
   

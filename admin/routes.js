@@ -4,10 +4,11 @@ const controller = require('./admin-controller')
 const driver_model = require('../drivers/driver-model')
 const driver_controller = require('../drivers/driver-controller')
 const sha1 = require('sha1')
+var path = require('path');
+var appDir = path.dirname(require.main.filename);
 router.get('/login',function(req,res)
 {
-		res.sendFile(__dirname +  "/templates/admin-login.html")
-	
+		res.render(appDir + "/templates/form/admin-login");
 });
 
 router.get('/login_success',function(req,res)

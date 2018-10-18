@@ -3,15 +3,9 @@ const sha1 = require('sha1')
 const model = require('./user-model')
 const controller = require('./user-controller')
 
-router.get('/register',function(req,res)
-{
-    res.render(__dirname +  "/templates/user-register")
+router.get('/register', function(req,res) {
+    controller.register_page(req,res);
 });
-router.get('/register',function(req,res)
-{
-    res.render(__dirname +  "/templates/user-login")
-});
-
 
 router.post('/register', function(req,res) {
     controller.register(req,res)});
