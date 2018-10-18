@@ -65,18 +65,17 @@ function getDriversSortedByTotalPoints(callback) {
  * @param {SQL Query Result} res
  * @return {void} No return value222
  */
-function updateDriverWeeklyScore(driverID, newScore, callback){
-    sql.query('UPDATE Drivers SET Week_Points = ? WHERE DriverID = ?', [newScore, driverID], function (err) {
+function updateDriverWeeklyScore(week_no, driverID,race_finish, qualifying_finish, no_overtakes, beat_teammate_race, beat_teammate_qualifying, week_score, callback){
+    sql.query('INSERT INTO criteria values(?,?,?,?,?,?,?,?)', [week_no, driverID,race_finish, qualifying_finish, no_overtakes, beat_teammate_race, beat_teammate_qualifying, week_score], function (err) {
         if(err) {
             throw err;
         }
         return callback(err);
-
     })
 }
 
-function updateDriverTotalScore(driverID, callback){
-    sql.query('UPDATE Drivers SET Tot_Points = Tot_Points + Week_Points WHERE DriverID = ?', [driverID], function (err) {
+function updateDriverTotalScore(callback){
+    sql.query('UPDATE Drivers SET Tot_Points  = (select SUM(week_points) from criteria where criteria.driverid = Drivers.DriverID)', [driverID], function (err) {
         if(err) {
             throw err;
         }

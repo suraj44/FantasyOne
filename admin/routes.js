@@ -51,24 +51,84 @@ router.post('/login', function(req,res) {
 // router.post('/login', controller.sign_in(req,res));
 
 // Update the Weekly Score of a driver
-router.get('/update_weekly_score', function(req,res,next) {
-	controller.loginRequied(req,res,next);
-	},function(req,res) {
-    res.sendFile('/templates/driver_weekly_score.html',{ root: __dirname })
+router.get('/update_weekly_score',function(req,res) {
+		res.render(appDir + "/templates/form/update_weekly_score");
 })
 router.post('/update_weekly_score', function(req,res,next) {
 	controller.loginRequied(req,res,next);
 	}, function(req, res){
+	week_no = req.body.week_no;
 	driverID = req.body.DriverID;
-    newScore = req.body.Weekly_Score;
+	race_finish = req.body.race_finish;
+	qualifying_finish = req.body.qualifying_finish;
+	no_overtakes = req.body.no_overtakes;
+	if(req.body.beat_teammate_race=="on") {
+		beat_teammate_race = 1;
+	}
+	else {
+		beat_teammate_race = 0;
+	}
 
-    driver_model.updateDriverWeeklyScore(driverID, newScore, function(err) {
+	if(req.body.beat_teammate_qualifying=="on") {
+		beat_teammate_qualifying = 1;
+	}
+	else {
+		beat_teammate_qualifying = 0;
+	}
+	
+	switch(race_finish) {
+		case 1:
+			race_finish = 25;
+			break;
+		case 2:
+			race_finish = 18;
+			break;
+		case 3:
+			race_finish = 15;
+			break;
+		case 4:
+			race_finish = 12;
+			break;
+		case 5:
+			race_finish = 10;
+			break;
+		case 6:
+			race_finish = 8;
+			break;
+		case 7:
+			race_finish = 6;
+			break;
+		case 8:
+			race_finish = 4;
+			break;
+		case 9:
+			race_finish = 2;
+			break;
+		case 10:
+			race_finish = 1;
+			break;
+		default:
+			race_finish = 0;
+			break;
+	}
+
+	if(qualifying_finish <=10) {
+		qualifying_finish = 11 -qualifying_finish;
+	} else {
+		qualifying_finish = 0;
+	}
+
+	week_score = race_finish + qualifying_finish + 2*no_overtakes + 3*beat_teammate_race + 2*beat_teammate_qualifying;
+	
+
+
+    driver_model.updateDriverWeeklyScore(week_no, driverID,race_finish, qualifying_finish, no_overtakes, beat_teammate_race, beat_teammate_qualifying, week_score, function(err) {
         if(err) {
             console.log(err);
         }
     })
 
-    driver_model.updateDriverTotalScore(driverID, function(err) {
+    driver_model.updateDriverTotalScore(function(err) {
         if(err) {
             res.redirect("update_weekly_score");
             console.log("Error in updating database: " + err);

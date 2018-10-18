@@ -22,6 +22,7 @@ app.use("/img", express.static(__dirname + '/templates/home-page/img'));
 app.use("/css", express.static(__dirname + '/templates/home-page/css'));
 app.use("/js", express.static(__dirname + '/templates/home-page/js'));
 app.use("/form", express.static(__dirname + '/templates/form'));
+app.use("/driver_img", express.static(__dirname + '/templates/driver/img'));
 
 
   

@@ -301,13 +301,90 @@ CREATE TABLE administrator (username varchar(20), pass varchar(100));
 
 create table criteria
  ( 
+  week_no int,
+  driverid int, 
   race_points int,
   quali_points int,
   overtakes int, 
   beat_team_race tinyint,
   beat_team_quali tinyint,
-  driverid int, 
   week_points int,
   FOREIGN KEY driver_criteria(driverid) REFERENCES Drivers(DriverID)
   );
 
+
+alter table Drivers drop column Week_Points;
+
+alter table Drivers alter Tot_Points set default 0;
+
+alter table Drivers add column img varchar(30);
+
+ update Drivers set img = "/driver-img/hamilton.jpg" where DriverID =1;
+
+ update Drivers set img = "/driver-img/vettel.jpg" where DriverID =2;
+
+ update Drivers set img = "/driver-img/vettel.jpg" where DriverID =2;
+
+ update Drivers set img = "/driver-img/kimi.jpg" whereDriverID =3;
+
+ update Drivers set img = "/driver-img/ricciardo.jpg" where DriverID =4;
+
+
+ update Drivers set img = "/driver-img/bottas.jpg" where DriverID =5;
+
+
+ update Drivers set img = "/driver-img/verstappen.jpg"where DriverID =5;
+
+
+ update Drivers set img = "/driver-img/verstappen.jpg"where DriverID =6;
+
+
+ update Drivers set img = "/driver-img/bottas.jpg" where DriverID =5;
+
+
+
+ update Drivers set img = "/driver-img/alonso.jpg" where DriverID =7;
+
+
+ update Drivers set img = "/driver-img/vandoorne.jpg" where DriverID =8;
+
+
+ update Drivers set img = "/driver-img/hulkenburg.jpg"where DriverID =9;
+
+
+ update Drivers set img = "/driver-img/carlos-sainz.jpg" where DriverID =10;
+
+
+
+update Drivers set img = "/driver-img/ocon.jpg" where DriverID =11;
+
+
+
+ update Drivers set img = "/driver-img/perez.jpg" where DriverID =12;
+
+
+
+ update Drivers set img = "/driver-img/magnussen.jpg" where DriverID =13;
+
+
+ update Drivers set img = "/driver-img/grosjean.jpg" where DriverID =14;
+
+ update Drivers set img = "/driver-img/leclerc.jpg" where DriverID =15;
+
+
+ update Drivers set img = "/driver-img/gasly.jpg" where DriverID =16;
+
+
+ update Drivers set img = "/driver-img/ericsson.jpg" where DriverID =16;
+
+
+ update Drivers set img = "/driver-img/gasly.jpg" where DriverID =17;
+
+
+ update Drivers set img = "/driver-img/hartley.jpg" where DriverID =18;
+
+
+ update Drivers set img = "/driver-img/sirotkin.jpg" where DriverID =19;
+
+
+ update Drivers set img = "/driver-img/stroll.jpg" where DriverID =20;
