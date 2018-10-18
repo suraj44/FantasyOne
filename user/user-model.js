@@ -21,7 +21,7 @@ function doesUserExist(username, password, callback) {
         if (err) {
             throw err;
         }
-
+        console.log(results);
         return callback(results);
     })
 }
@@ -34,11 +34,13 @@ function addNewUser(username, first_name, last_name, email_id, password, dob, ad
 }
 
 function doesUserHaveTeam(username, callback) {
-    sql.query('select team_id from users where username = ?', [username],function(err, results){
+    sql.query('select team1 from users where username = ?', [username],function(err, results){
         if(err)
-            throw err;
-        console.log(err);
-        return callback(err);
+            {
+                throw err;
+                console.log(err);
+            }
+        return callback(results);
     })
 }
 
