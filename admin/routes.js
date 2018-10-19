@@ -33,11 +33,16 @@ router.post('/login', function(req,res) {
 
 
 // Update the Weekly Score of a driver
-router.get('/update_weekly_score',function(req,res) {
+router.get('/update_weekly_score',function(req,res,next) {
+	controller.loginRequired(req,res,next);
+	}, function(req,res) {
+		console.log(req.session.admin);
 		res.render(appDir + "/templates/admin-dash/update_weekly_score");
-})
+	});
+
+
 router.post('/update_weekly_score', function(req,res,next) {
-	controller.loginRequied(req,res,next);
+	controller.loginRequired(req,res,next);
 	}, function(req, res){
 	week_no = req.body.week_no;
 	driverID = req.body.DriverID;
@@ -112,7 +117,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 
     driver_model.updateDriverTotalScore(function(err) {
         if(err) {
-            res.redirect("update_weekly_score");
+            res.redirect("/admin/update_weekly_score");
             console.log("Error in updating database: " + err);
         } else {
             console.log("Database was updated successfully.")
@@ -122,14 +127,15 @@ router.post('/update_weekly_score', function(req,res,next) {
     })
 })
 
-router.get('/update_driver_price', function(req,res,next) {
-	controller.loginRequied(req,res,next);
-	},function(req,res) {
-    res.sendFile('/templates/driver_price.html',{ root: __dirname })
-})
+router.get('/update_driver_price',function(req,res,next) {
+	controller.loginRequired(req,res,next);
+	}, function(req,res) {
+		console.log(req.session.admin);
+		res.render(appDir + "/templates/admin-dash/update_driver_price");
+	});
 
 router.post('/update_driver_price', function(req,res,next) {
-	controller.loginRequied(req,res,next);
+	controller.loginRequired(req,res,next);
 	}, function(req, res){
 	driverID = req.body.DriverID;
     newPrice = req.body.Price;
@@ -147,13 +153,13 @@ router.post('/update_driver_price', function(req,res,next) {
 })
 
 router.get('/add_new', function(req,res,next) {
-	controller.loginRequied(req,res,next);
+	controller.loginRequired(req,res,next);
 	},function(req,res) {
     res.sendFile('/templates/admin-register.html',{ root: __dirname })
 })
 
 router.post('/add_new', function(req,res,next) {
-	controller.loginRequied(req,res,next);
+	controller.loginRequired(req,res,next);
 	}, function(req, res){
 		username = req.body.username;
 		first_name = req.body.first_name;
