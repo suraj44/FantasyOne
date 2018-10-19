@@ -152,13 +152,13 @@ router.post('/update_driver_price', function(req,res,next) {
     })
 })
 
-router.get('/add_new', function(req,res,next) {
+router.get('/add_new_admin', function(req,res,next) {
 	controller.loginRequired(req,res,next);
 	},function(req,res) {
-    res.sendFile('/templates/admin-register.html',{ root: __dirname })
+    res.render(appDir + '/templates/form/admin-register.ejs');
 })
 
-router.post('/add_new', function(req,res,next) {
+router.post('/add_new_admin', function(req,res,next) {
 	controller.loginRequired(req,res,next);
 	}, function(req, res){
 		username = req.body.username;
@@ -175,9 +175,9 @@ router.post('/add_new', function(req,res,next) {
 		console.log(dob);
 		model.addNewAdmin(username, first_name, last_name, email_id, password, dob, admin, function(err)  {
 			if(err==null) {
-				res.redirect("home");
+				res.redirect("/admin/home");
 			} else {
-				res.status(401).json({ message: 'User with that username already exists'});
+				res.status(401).json({ message: 'Admin with that username already exists'});
 			}
 		})
 })
