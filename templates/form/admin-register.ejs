@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>User Login</title>
+	<title>User Registration</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -31,23 +31,41 @@
 </head>
 <body>
 
-	<form class="form-signin" action="/admin/login" method="POST">
+	<form class="form-signin" action="/admin/register" method="POST">
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form validate-form">
 				<span class="contact100-form-title">
-					Administrator Login
+					Admin Registration
 				</span>
 
-				<div class="wrap-input100 bg1" data-validate="Please Type Your Name">
+				<div class="wrap-input100 bg1" data-validate="Please Type Your Username">
 					<span class="label-input100">Username *</span>
 					<input class="input100" type="text" name="username" placeholder="Enter Your Username" required>
+                </div>
+                <div class="wrap-input100 bg1" data-validate="Please Type Your First Name">
+					<span class="label-input100">First Name *</span>
+					<input class="input100" type="text" name="first_name" placeholder="Enter Your First Name" required>
+                </div>
+                <div class="wrap-input100 bg1" data-validate="Please Type Your Last Name">
+					<span class="label-input100">Last Name *</span>
+					<input class="input100" type="text" name="last_name" placeholder="Enter Your Last Name" required>
+                </div>
+                
+                <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
+					<span class="label-input100">Email *</span>
+					<input class="input100" type="email" name="email_id" placeholder="Enter Your Email ">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate="Please Type Your Password">
 					<span class="label-input100">Password *</span>
 					<input class="input100" type="password" name="password" placeholder="Enter Your Password " required>
-				</div>
+                </div>
+                
+                <div class="wrap-input100 bg1" data-validate="Please Choose your Date of Birth">
+					<span class="label-input100">Date of Birth *</span>
+					<input class="input100" type="date" name="dob" placeholder="Enter Choose your Date of Birth" required>
+                </div>
 
 				<div class="container-contact100-form-btn">
 					<button class="contact100-form-btn">

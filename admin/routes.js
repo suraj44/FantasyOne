@@ -6,6 +6,15 @@ const driver_controller = require('../drivers/driver-controller')
 const sha1 = require('sha1')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
+
+router.get('/register', function(req,res) {
+    controller.register_page(req,res);
+});
+
+router.post('/register', function(req,res) {
+    controller.register(req,res)});
+
+
 router.get('/login',function(req,res)
 {
 		res.render(appDir + "/templates/form/admin-login");
@@ -17,22 +26,6 @@ router.get('/login_success',function(req,res)
 	
 });
 
-
-//router.post('/login', controller.sign_in(req,res));
-
-
- router.get('/lol', function(req,res,next) {
-	 controller.loginRequied(req,res,next);
- }, function(req,res) {
-	 res.redirect('login_success')
- });
-
-
-router.get('/lol', function(req,res,next) {
-	controller.loginRequied(req,res,next);
-	}, function(req,res) {
-	res.redirect('login_success')
-	});
 router.get('/home',function(req,res,next) {
 	controller.loginRequied(req,res,next);
 	}, function(req,res) {
@@ -47,8 +40,7 @@ router.get('/home',function(req,res,next) {
 router.post('/login', function(req,res) {	
 	controller.sign_in(req,res);
 })
-// why doesn't using this directly work?
-// router.post('/login', controller.sign_in(req,res));
+
 
 // Update the Weekly Score of a driver
 router.get('/update_weekly_score',function(req,res) {
