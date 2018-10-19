@@ -20,22 +20,12 @@ router.get('/login',function(req,res)
 		res.render(appDir + "/templates/form/admin-login");
 });
 
-router.get('/login_success',function(req,res)
-{
-		res.sendFile(__dirname +  "/templates/success.html")
-	
-});
-
 router.get('/home',function(req,res,next) {
-	controller.loginRequied(req,res,next);
+	controller.loginRequired(req,res,next);
 	}, function(req,res) {
 		console.log(req.session.admin);
-	driver_model.getAllDrivers(function(result) {
-		
-		res.render('admin/home',
-		{AllDrivers: result}
-		)
-	})
+		res.render(appDir + "/templates/admin-dash/home");
+	
 	});
 router.post('/login', function(req,res) {	
 	controller.sign_in(req,res);

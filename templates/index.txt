@@ -1,7 +1,0 @@
-<html>
-    <h3>Welcome to Fantasy One!</h3>
-
-    <br>
-
-    <a href = "/admin/login">Login as an admin</a> 
-</html>

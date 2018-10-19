@@ -177,7 +177,7 @@ exports.login_page = function(req,res) {
     res.render(appDir + "/templates/form/user-login")
 }
 exports.home_page = function(req,res) {
-    res.render(__dirname +  "/templates/user-home", {})
+    res.render(appDir +  "/templates/user/user-home", {})
 }
 
 exports.logout = function(req, res) {

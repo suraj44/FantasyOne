@@ -42,7 +42,7 @@ exports.sign_in = function(req, res) {
     });
 }
 
-exports.loginRequied = function(req,res, next) {
+exports.loginRequired = function(req,res, next) {
     if(req.session.username && req.session.admin==1) {
         next();
     } else {
