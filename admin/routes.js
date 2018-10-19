@@ -34,7 +34,7 @@ router.post('/login', function(req,res) {
 
 // Update the Weekly Score of a driver
 router.get('/update_weekly_score',function(req,res) {
-		res.render(appDir + "/templates/form/update_weekly_score");
+		res.render(appDir + "/templates/admin-dash/update_weekly_score");
 })
 router.post('/update_weekly_score', function(req,res,next) {
 	controller.loginRequied(req,res,next);
