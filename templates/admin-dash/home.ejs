@@ -160,35 +160,43 @@
                                     <h3>
                                         DataTables</h3>
                                 </div>
+                                <div class="module-body table">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display"
+                                            width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                         Driver ID
+                                                    </th>
+                                                    <th>
+                                                        Name 
+                                                    </th>
+                                                    <th>
+                                                        Total Points
+                                                    </th>
+                                                    <th>
+                                                        Price
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <% for(var i=0; i < AllDrivers.length; i++) { %> 
+                                                        <tr class = "odd gradeX">
+                                                            <td> <%= AllDrivers[i].DriverID %></td>
+                                                            <td> <%= AllDrivers[i].Name %></td>
+                                                            <td> <%= AllDrivers[i].Tot_Points %></td>
+                                                            <td class = "center"> <%= AllDrivers[i].Cost %></td>
+                                                 
+                                                            
+                                                        </tr>
+                                                       <% } %>
+                                            </tbody>
+                                            </tfoot>
+                                        </table>
                             </div>
                             <!--/.module-->
                         </div>
                         <!--/.content-->
-
-<table>
-        <tr>
-          <th> 
-            Sl No
-          </th>
-          <th> 
-            Name
-          </th>
-          <th> 
-            Total Points
-          </th>
-          <th> 
-            Price
-          </th>
-        </tr>
-        <% for(var i=0; i < AllDrivers.length; i++) { %> 
-          <tr>
-              <td> <%= AllDrivers[i].DriverID %></td>
-              <td> <%= AllDrivers[i].Name %></td>
-              <td> <%= AllDrivers[i].Tot_Points %></td>
-              <td> <%= AllDrivers[i].Cost %></td>
-          </tr>
-         <% } %>
-      </table>
                     </div>
                     <!--/.span9-->
                 </div>
