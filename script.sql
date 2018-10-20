@@ -16,7 +16,7 @@ CREATE TABLE users (username varchar(15) PRIMARY KEY,
     UNIQUE(email_id),
     team1 int,
     team2 int,
-    team3 int,
+    team3 int,EXIT
     FOREIGN KEY t1 (team1) REFERENCES Teams(TeamID) ON DELETE SET NULL, 
     FOREIGN KEY t2 (team2) REFERENCES Teams(TeamID) ON DELETE SET NULL,
     FOREIGN KEY t3 (team3) REFERENCES Teams(TeamID) ON DELETE SET NULL,

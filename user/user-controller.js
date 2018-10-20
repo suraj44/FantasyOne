@@ -13,12 +13,13 @@ exports.sign_in = function(req, res) {
             req.session.username = req.body.username;
             req.session.admin = 0;
             model.doesUserHaveTeam(req.body.username, function(result) {
-                if(result==1) {
+                if(result.length==1) {
                     return res.redirect('home');
                 } else {
                     return res.redirect('create_team1')
                 }
             })
+        // return res.redirect('home');
         }
     });
 }

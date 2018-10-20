@@ -34,6 +34,15 @@ function getTeamID(teamName, callback) {
     })
 }
 
+function getAllTeamAvgPoints(callback) {
+    sql.query('select AVG(total_points) as avgpts from Teams;' ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
 function insertDriverIntoTeam(teamID, driverID, callback) {
     sql.query('INSERT INTO Team_Driver_Link(team_id, driver_id) values(?,?)',[teamID, driverID] ,function(err, results){
         if (err) {
@@ -43,6 +52,7 @@ function insertDriverIntoTeam(teamID, driverID, callback) {
     })
 }
 
+module.exports.getAllTeamAvgPoints = getAllTeamAvgPoints;
 module.exports.createTeam = createTeam;
 module.exports.getTeamID = getTeamID;
 module.exports.insertDriverIntoTeam = insertDriverIntoTeam;

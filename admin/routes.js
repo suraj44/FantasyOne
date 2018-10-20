@@ -4,6 +4,7 @@ const controller = require('./admin-controller')
 const driver_model = require('../drivers/driver-model')
 const driver_controller = require('../drivers/driver-controller')
 const user_model = require('../user/user-model')
+const team_model = require('../team/team-model')
 const sha1 = require('sha1')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
@@ -28,10 +29,14 @@ router.get('/home',function(req,res,next) {
 		driver_model.getAllDrivers(function(result) {
 			drivers = result;
 			user_model.getUserCount(function(result) {
-				//console.log(result);
-			res.render((appDir +  "/templates/admin-dash/home"),
-			{AllDrivers: drivers, userCount : result[0].user_count}
-			)	
+				userCount = result[0].user_count;
+				team_model.getAllTeamAvgPoints(function(result) {
+					avgpts = result[0].avgpts;
+					res.render((appDir +  "/templates/admin-dash/home"),
+			{AllDrivers: drivers, userCount : userCount, avgpts: avgpts}
+			)
+				})
+				
 			})
 		})
 	
