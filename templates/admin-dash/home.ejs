@@ -164,6 +164,31 @@
                             <!--/.module-->
                         </div>
                         <!--/.content-->
+
+<table>
+        <tr>
+          <th> 
+            Sl No
+          </th>
+          <th> 
+            Name
+          </th>
+          <th> 
+            Total Points
+          </th>
+          <th> 
+            Price
+          </th>
+        </tr>
+        <% for(var i=0; i < AllDrivers.length; i++) { %> 
+          <tr>
+              <td> <%= AllDrivers[i].DriverID %></td>
+              <td> <%= AllDrivers[i].Name %></td>
+              <td> <%= AllDrivers[i].Tot_Points %></td>
+              <td> <%= AllDrivers[i].Cost %></td>
+          </tr>
+         <% } %>
+      </table>
                     </div>
                     <!--/.span9-->
                 </div>

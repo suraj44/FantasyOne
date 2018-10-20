@@ -23,8 +23,13 @@ router.get('/login',function(req,res)
 router.get('/home',function(req,res,next) {
 	controller.loginRequired(req,res,next);
 	}, function(req,res) {
-		console.log(req.session.admin);
-		res.render(appDir + "/templates/admin-dash/home");
+		//console.log(req.session.admin);
+		driver_model.getAllDrivers(function(result) {
+			//console.log(result);
+			res.render((appDir +  "/templates/admin-dash/home"),
+			{AllDrivers: result}
+			)
+		})
 	
 	});
 router.post('/login', function(req,res) {	
@@ -33,11 +38,15 @@ router.post('/login', function(req,res) {
 
 
 // Update the Weekly Score of a driver
-router.get('/update_weekly_score',function(req,res,next) {
-	controller.loginRequired(req,res,next);
-	}, function(req,res) {
-		console.log(req.session.admin);
-		res.render(appDir + "/templates/admin-dash/update_weekly_score");
+router.get('/update_weekly_score', function(req,res) {
+		//console.log(req.session.admin);
+		driver_model.getAllDrivers(function(result) {
+			//console.log(result);
+			res.render((appDir +  "/templates/admin-dash/update_test"),
+			{AllDrivers: result}
+			)
+		})
+		//res.render(appDir + "/templates/admin-dash/update_test");
 	});
 
 

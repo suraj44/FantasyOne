@@ -10,6 +10,14 @@ const stylus = require('stylus')
 const nib = require('nib')
 const SECRET_KEY = '\xd6\xca\xbb\xa7u\xaa\x8a\xec\xf4\xb4#\xdf'
 const session = require('express-session')
+var jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const { window } = new JSDOM();
+const { document } = (new JSDOM('')).window;
+global.document = document;
+var $ = require("jquery")(window);
+
+
 
 app.set('views', __dirname + '/templates')
 app.set('view engine', 'ejs')
@@ -19,7 +27,7 @@ app.set('view engine', 'ejs')
 // Fix directories for static files
 app.use("/home-page", express.static(__dirname + '/templates/home-page'));
 app.use("/form", express.static(__dirname + '/templates/form'));
-app.use("/driver_img", express.static(__dirname + '/templates/driver/img'));
+app.use("/driver-img", express.static(__dirname + '/templates/driver/img'));
 app.use("/admin-dash", express.static(__dirname + '/templates/admin-dash'));
 
 

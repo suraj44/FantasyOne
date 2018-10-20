@@ -43,7 +43,7 @@ function getDriverID(driverName, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        
         return callback(results);
     })
 }
