@@ -3,6 +3,7 @@ const model = require('./admin-model')
 const controller = require('./admin-controller')
 const driver_model = require('../drivers/driver-model')
 const driver_controller = require('../drivers/driver-controller')
+const user_model = require('../user/user-model')
 const sha1 = require('sha1')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
@@ -25,10 +26,13 @@ router.get('/home',function(req,res,next) {
 	}, function(req,res) {
 		//console.log(req.session.admin);
 		driver_model.getAllDrivers(function(result) {
-			//console.log(result);
+			drivers = result;
+			user_model.getUserCount(function(result) {
+				//console.log(result);
 			res.render((appDir +  "/templates/admin-dash/home"),
-			{AllDrivers: result}
-			)
+			{AllDrivers: drivers, userCount : result[0].user_count}
+			)	
+			})
 		})
 	
 	});
