@@ -28,10 +28,81 @@
 	<link rel="stylesheet" type="text/css" href="/form/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/form/css/main.css">
 <!--===============================================================================================-->
+
+<script
+src="https://code.jquery.com/jquery-3.3.1.slim.js"
+integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+crossorigin="anonymous"></script>
+
+<script>
+	Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+$(function() {
+	var limit = 5;
+	var arr = [];
+$('input.single-checkbox').on('change', function(evt) {
+	console.log($("#budget")[0].value)
+	console.log(this.parentNode.parentNode.cells[2].innerHTML)
+	// If the checkbox is selected (not unselected), update the value of available budget
+	if(($("input[name='driver']:checked").length) <= limit) {
+	if(this.checked ) {
+		$("#budget").val($("#budget")[0].value - this.parentNode.parentNode.cells[2].innerHTML)
+		arr.push(parseFloat(this.parentNode.parentNode.cells[0].innerHTML))
+	} else {
+		$("#budget").val(parseFloat($("#budget")[0].value) +  parseFloat(this.parentNode.parentNode.cells[2].innerHTML))
+		arr.remove(parseFloat(this.parentNode.parentNode.cells[0].innerHTML))
+	}
+   }
+	if($("input[name='driver']:checked").length >limit) {
+
+		
+       this.checked = false;
+   }
+
+
+	if(parseFloat($("#budget")[0].value) < 0) {
+		$("#budget").css('color','red')
+	} else {
+		$("#budget").css('color','black')
+	}
+	$("#driverarr").val(arr)
+	console.log(arr)
+});
+});
+
+ function checkForTheCondition() {
+	 if($("#budget")[0].value <0) {
+		alert("You either have exceeded budget your budget and hence this is not a valid team");
+		return false;
+	 }
+	 if(($("input[name='driver']:checked").length) < 5) {
+		alert("You selected fewer than 5 drivers and hence this is not a valid team");
+		return false;
+	 }
+	// if($("#budget")[0].value >=0 && ($("input[name='driver']:checked").length)) {
+	// 	return true;
+	// } else {
+		
+	// 	return false;
+	// }
+	
+	return true;
+ }
+
+</script>
+
 </head>
 <body>
 
-	<form class="form-signin" action="/user/create_team1" method="POST">
+	<form class="form-signin" onsubmit="return checkForTheCondition();" action="/user/create_team1" method="POST">
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form validate-form">
@@ -44,6 +115,44 @@
 					<input class="input100" type="text" name="team_name" placeholder="Enter Your Team's Name" required>
 				</div>
 
+				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Team's Name">
+					<span class="label-input100">Select 5 Drivers *</span>
+
+
+				<div>
+					<p>Available Budget:</p>
+					<input id = "budget" value = "70">	
+				</div>
+				<table>
+					<tr>
+					<th> 
+						ID
+					</th>
+					<th> 
+						Name
+					</th>
+
+					<th> 
+						Price
+					</th>
+					<th> 
+						Select
+					</th>
+					</tr>
+					<% for(var i=0; i < AllDrivers.length; i++) { %> 
+					<tr>
+						<td> <%= AllDrivers[i].DriverID %></td>
+						<td> <%= AllDrivers[i].Name %></td>
+						<td> <%= AllDrivers[i].Cost %></td>
+						<td><input class = "single-checkbox" type="checkbox" name="driver" id = "<%= AllDrivers[i].DriverID %>" />&nbsp;</td>
+						
+					</tr>
+					<% } %>
+				</table>
+
+				
+				</div>
+				<input id = "driverarr" name = "driverarr" type = "hidden" val = "" >
 
 				<div class="container-contact100-form-btn">
 					<button class="contact100-form-btn">

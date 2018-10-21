@@ -34,7 +34,7 @@ function addNewUser(username, first_name, last_name, email_id, password, dob, ad
 }
 
 function doesUserHaveTeam(username, callback) {
-    sql.query('select team from users where username = ?', [username],function(err, results){
+    sql.query('select TeamID from Teams where user_name = ?', [username],function(err, results){
         if(err)
             {
                 throw err;

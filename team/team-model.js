@@ -16,8 +16,8 @@ sql.connect(function (err) {
         
 });
 
-function createTeam(teamName, callback) {
-    sql.query('INSERT INTO Teams(team_name) values(?)',[teamName] ,function(err, results){
+function createTeam(teamName, user_name, callback) {
+    sql.query('INSERT INTO Teams(team_name, user_name) values(?, ?)',[teamName, user_name] ,function(err, results){
         // if (err) {
         //     throw err;
         // }sele
@@ -25,8 +25,8 @@ function createTeam(teamName, callback) {
     })
 }
 
-function getTeamID(teamName, callback) {
-    sql.query('SELECT TeamID from Teams where team_name = ?',[teamName] ,function(err, results){
+function getTeamID(teamName, user_name, callback) {
+    sql.query('SELECT TeamID from Teams where team_name = ? AND user_name = ? ',[teamName, user_name] ,function(err, results){
         if (err) {
             throw err;
         }

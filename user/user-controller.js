@@ -13,6 +13,7 @@ exports.sign_in = function(req, res) {
             req.session.username = req.body.username;
             req.session.admin = 0;
             model.doesUserHaveTeam(req.body.username, function(result) {
+                console.log(result)
                 if(result.length==1) {
                     return res.redirect('home');
                 } else {
@@ -55,19 +56,64 @@ exports.register = function(req, res) {
 }
 
 exports.create_team1_page = function(req,res) {
-    res.render(appDir +  "/templates/form/create_team1")
+
+    driver_model.getAllDrivers(function(result) {
+        //console.log(result);
+        res.render((appDir +  "/templates/form/create_team1"),
+        {AllDrivers: result}
+        )
+    })
 }
 exports.create_team1 = function(req,res) {
     team_name = req.body.team_name;
-    req.session.team_name = team_name;
-    team_model.createTeam(team_name, function(err) {
+    user_name = req.session.username;
+    console.log("username " + user_name)
+    console.log(req.body)
+    console.log(req.body.driverarr.split(","))
+    drivers = req.body.driverarr.split(",");
+    for(i=0 ; i < 5; i++) {
+        drivers[i] = parseFloat(drivers[i]);
+    }
+    console.log(drivers)
+
+    team_model.createTeam(team_name, user_name, function(err) {
+        console.log(err)
         if(err==null) {
             
-            driver_model.getAllDrivers(function(result) {
-                console.log(result);
-                res.render((appDir +  "/templates/form/create_team2"),
-                {AllDrivers: result, team_name:team_name}
-                )
+            team_model.getTeamID(team_name, user_name,  function(teamID) {
+                team_model.insertDriverIntoTeam(teamID[0].TeamID, drivers[0], function(result) {
+                    team_model.insertDriverIntoTeam(teamID[0].TeamID, drivers[1], function(result) {
+                        team_model.insertDriverIntoTeam(teamID[0].TeamID, drivers[2], function(result) {
+                            team_model.insertDriverIntoTeam(teamID[0].TeamID, drivers[3], function(result) {
+                                team_model.insertDriverIntoTeam(teamID[0].TeamID, drivers[4], function(result) {
+                                    res.redirect('home');
+                                })
+                            })
+                        })
+                    })
+                })
+            
+                // driver_model.getDriverID(driver1, function(result) {
+                //     team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+                //         driver_model.getDriverID(driver2, function(result) {
+                //             team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+                //                 driver_model.getDriverID(driver3, function(result) {
+                //                     team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+                //                         driver_model.getDriverID(driver4, function(result) {
+                //                             team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+                //                                 driver_model.getDriverID(driver5, function(result) {
+                //                                     team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+                //                                         res.redirect('home');
+                //                                     })
+                //                                 })
+                //                             })
+                //                         })
+                //                     })
+                //                 })
+                //             })
+                //         })
+                //     })
+                // })
             })
             // res.render((appDir +  "/templates/form/create_team2") ,{AllDrivers: result, team_name: team_name});
             
@@ -75,6 +121,9 @@ exports.create_team1 = function(req,res) {
             res.status(401).json({ message: 'Team with that name already exists!'})
         }
     })
+
+    
+
     
 }
 
