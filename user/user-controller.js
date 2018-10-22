@@ -15,7 +15,7 @@ exports.sign_in = function(req, res) {
             model.doesUserHaveTeam(req.body.username, function(result) {
                 console.log(result)
                 if(result.length==1) {
-                    return res.redirect('home');
+                    return res.render(appDir + "/templates/user-dash/home.ejs");
                 } else {
                     return res.redirect('create_team1')
                 }
@@ -25,7 +25,7 @@ exports.sign_in = function(req, res) {
     });
 }
 
-exports.loginRequied = function(req,res, next) {
+exports.loginRequired = function(req,res, next) {
     if(req.session.username) {
         next();
     } else {
