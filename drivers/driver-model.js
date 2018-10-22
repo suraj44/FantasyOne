@@ -38,6 +38,16 @@ function getAllDrivers(callback) {
     })
 }
 
+function getAllDriversbyConstructor(callback) {
+    sql.query('SELECT * from Drivers order by constructor, Name', function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
+}
+
 function getDriverID(driverName, callback) {
     sql.query('SELECT DriverID from Drivers where Name = ?',[driverName], function(err, results){
         if (err) {
@@ -110,7 +120,7 @@ getAllDrivers(function(result){
 
 
 
-
+module.exports.getAllDriversbyConstructor = getAllDriversbyConstructor
 module.exports.updateDriverWeeklyScore = updateDriverWeeklyScore;
 module.exports.updateDriverTotalScore = updateDriverTotalScore;
 module.exports.updateDriverPrice = updateDriverPrice;

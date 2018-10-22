@@ -372,3 +372,68 @@ alter table Teams add unique(team_name);
 
 
 alter table Teams add column user_name varchar(30);
+
+alter table Drivers add column constructor varchar(30);
+
+update Drivers set constructor = "Petronas Mercedes-AMG" where Name = "Valtteri Bottas";
+
+update Drivers set constructor = "Petronas Mercedes-AMG" where Name = "Lewis Hamilton";
+
+update Drivers set constructor = "Scuderia Ferrari" where Name = "Kimi Raikkonen";
+
+
+update Drivers set constructor = "Scuderia Ferrari" where Name = "Sebastian Vettel";
+
+update Drivers set constructor = "Aston Martin Red Bull Racing" where Name = "Max Verstappen";
+
+
+update Drivers set constructor = "Aston Martin Red Bull Racing" where Name = "Daniel Ricciardo";
+
+update Drivers set constructor = "Racing Point Force India" where Name = "Sergio Perez";
+
+
+update Drivers set constructor = "Racing Point Force India" where Name = "Esteban Ocon";
+
+
+update Drivers set constructor = "Renault F1 Racing" where Name = "Carlos Sainz";
+
+
+update Drivers set constructor = "Renault F1 Racing" where Name = "Nico Hulkenburg";
+
+
+update Drivers set constructor = "Haas F1 Racing" where Name = "Kevin Magnussen";
+
+
+
+update Drivers set constructor = "McLaren Renault" where Name = "Stoffel Vandoorne";
+
+
+update Drivers set constructor = "McLaren Renault" where Name = "Fernando Alonso";
+
+
+update Drivers set constructor = "Scuderia Toro Rosso" where Name = "Fernando Alonso";
+
+update Drivers set constructor = "McLaren Renault" where Name = "Fernando Alonso";
+
+
+update Drivers set constructor = "Scuderia Toro Rosso" where Name = "Brendon Hartley";
+
+
+update Drivers set constructor = "Scuderia Toro Rosso" where Name = "Pierre Gasly";
+
+
+update Drivers set constructor = "Sauber" where Name = "Marcus Ericsson";
+
+
+update Drivers set constructor = "Sauber" where Name = "Charles LeClerc";
+
+
+update Drivers set constructor = "Williams" where Name = "Sergey Sirotkin";
+
+
+update Drivers set constructor = "Williams" where Name = "Lance Stroll";
+
+
+
+
+update Drivers set constructor = "Haas F1 Racing" where Name = "Romain Grosjean";

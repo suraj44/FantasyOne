@@ -49,7 +49,7 @@ router.post('/login', function(req,res) {
 // Update the Weekly Score of a driver
 router.get('/update_weekly_score', function(req,res) {
 		//console.log(req.session.admin);
-		driver_model.getAllDrivers(function(result) {
+		driver_model.getAllDriversbyConstructor(function(result) {
 			//console.log(result);
 			res.render((appDir +  "/templates/admin-dash/update_test"),
 			{AllDrivers: result}
@@ -146,7 +146,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 })
 
 router.get('/update_driver_price', function(req,res) {
-		driver_model.getAllDrivers(function(result) {
+		driver_model.getAllDriversbyConstructor(function(result) {
 			res.render((appDir +  "/templates/admin-dash/update_price_test"),
 			{AllDrivers: result}
 			)
