@@ -124,7 +124,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 	}
 
 	week_score = race_finish + qualifying_finish + 2*no_overtakes + 3*beat_teammate_race + 2*beat_teammate_qualifying;
-	
+	console.log(week_score)
 
 
     driver_model.updateDriverWeeklyScore(week_no, driverID,race_finish, qualifying_finish, no_overtakes, beat_teammate_race, beat_teammate_qualifying, week_score, function(err) {

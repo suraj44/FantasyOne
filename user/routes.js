@@ -19,7 +19,7 @@ router.post('/login', function(req,res) {
 })
 
 router.get('/home', function(req,res,next) {
-    controller.loginRequied(req,res,next);}, function(req,res) {
+    controller.loginRequired(req,res,next);}, function(req,res) {
     controller.home_page(req,res);
 })
 

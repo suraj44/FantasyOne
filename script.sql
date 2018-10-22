@@ -37,28 +37,6 @@ ADD Week_Points int(3) DEFAULT 0;
 ALTER TABLE Drivers
 MODIFY Cost float;
 
-Old way of creating teams:
-CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
-        total_points int DEFAULT 0, 
-        weekly_score int DEFAULT 0,
-        team_name varchar(20), 
-        driver1 int DEFAULT NULL,
-        driver2 int DEFAULT NULL, 
-        driver3 int DEFAULT NULL,
-        driver4 int DEFAULT NULL,
-        driver5 int DEFAULT NULL,
-        league_id1 int DEFAULT NULL,
-        league_id2 int DEFAULT NULL,
-        league_id3 int DEFAULT NULL, 
-        FOREIGN KEY d1 (driver1) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
-        FOREIGN KEY d2 (driver2) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
-        FOREIGN KEY d3 (driver3) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
-        FOREIGN KEY d4 (driver4) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
-        FOREIGN KEY d5 (driver5) REFERENCES Drivers(DriverID) ON DELETE SET NULL,
-        FOREIGN KEY l1 (league_id1) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
-        FOREIGN KEY l2 (league_id2) REFERENCES Leagues(LeagueID) ON DELETE SET NULL,
-        FOREIGN KEY l3 (league_id3) REFERENCES Leagues(LeagueID) ON DELETE SET NULL);
-
 New way of creating teams:
 CREATE TABLE Teams (TeamID int AUTO_INCREMENT PRIMARY KEY, 
         total_points int DEFAULT 0, 
