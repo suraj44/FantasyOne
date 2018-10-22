@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Score</title>
+
+    <link type="text/css" href="/admin-dash/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="/admin-dash/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="/admin-dash/css/theme.css" rel="stylesheet">
+    <link type="text/css" href="/admin-dash/images/icons/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+        rel='stylesheet'>
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.js"
+        integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+        crossorigin="anonymous"></script>
+
+        <!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/form/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+        <!-- <link rel="stylesheet" type="text/css" href="/form/vendor/bootstrap/css/bootstrap.min.css"> -->
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="/form/css/util.css">
+        <link rel="stylesheet" type="text/css" href="/form/css/main.css">
+    <!--===============================================================================================-->
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<style>
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
+
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-content{
+    height: 800px;
+    overflow-y: auto;
+}
+</style>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+
+  $(function() {
+
+
+    $(".btn").click(function(e){
+  e.preventDefault();
+  var $this = $(this);
+  var fileName = $(this).data("book-id");
+  console.log(fileName);
+  $modal = $("#my_modal");
+
+   $modal.modal('toggle', $(this));
+
+ $("#my_modal").data("book-id", fileName).modal("toggle", $this);
+
+});
+    $('#my_modal').on('show.bs.modal', function(e) {
+      console.log("hello")
+      console.log(e)
+      var bookId = $(this).data('book-id');
+      console.log(bookId)
+      $(e.currentTarget).find('input[name="DriverID"]').val(bookId);
+  });
+
+  });
+
+  
+</script>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                    <i class="icon-reorder shaded"></i></a><a class="brand" href="index.html">FantasyOne</a>
+            </div>
+        </div>
+        <!-- /navbar-inner -->
+    </div>
+    <!-- /navbar -->
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <div class="sidebar">
+                        <ul class="widget widget-menu unstyled">
+                            <li><a href="/admin/home">Dashboard Home</a>
+                            </li>
+                            <li class="active"><a href="#">Update Weekly Score</a>
+                            </li>
+                            <li><a href="/admin/update_driver_price">Update Driver Prices</a>
+                            </li>
+                            <li><a href="/admin/add_new_admin">Add New Admin</a>
+                            </li>
+                            <li><a href="/admin/logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.sidebar-->
+                </div>
+                <!--/.span3-->
+                <div class="span9">
+                    <h4>UPDATE WEEKLY SCORE</h4>
+                    <div class="content">
+                        <div class="module">
+                            <div class="module-body">
+                            <% for(var i=0; i < AllDrivers.length; i++) { %>  
+                            <% if (i%2==0) { %>
+                                <div class="row-fluid">
+                            <% } %>
+                                    <div class="span6">
+                                        <div class="media user">
+                                            <a class="media-avatar pull-left" href="#">
+                                                <img src= <%= AllDrivers[i].img %> >
+                                            </a>
+                                            <div class="media-body">
+                                                <h3 class="media-title">
+                                                    <%= AllDrivers[i].Name %>
+                                                </h3>
+                                                <!-- <p>
+                                                    Petronas Mercedes-AMG</p> -->
+                                                    <div class="media-option btn-group shaded-icon">
+                                                            <button class="btn" data-toggle="modal" data-book-id=<%= i %> data-target = "#my_modal">
+                                                                UPDATE
+                                                            </button>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <% if (i%2==1) { %>
+                                </div>
+                            <% } %>
+                                
+                            <% } %>
+                                <!--/.row-fluid-->
+                                <br />
+                                
+                                <!--/.row-fluid-->
+                                <br />
+                                <div class="pagination pagination-centered">
+                                    <ul>
+                                        <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.content-->
+                </div>
+                <!--/.span9-->
+            </div>
+        </div>
+        <!--/.container-->
+    </div>
+    <!--/.wrapper-->
+    <!-- Modal -->
+    <div class="modal hide" id="my_modal">
+            <div class="modal-dialog">
+              <div class="modal-content" >
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <!-- <h4 class="modal-title">Modal header</h4> -->
+                </div>
+                
+			<form class="contact100-form validate-form" action="/admin/update_driver_price" method="POST">
+				<span class="contact100-form-title">
+					Update Driver Price
+				</span>
+
+				<!-- <div class="wrap-input100 validate-input bg1" data-validate="Please Type the Week Number">
+					<span class="label-input100">Week Number *</span>
+					<input class="input100" type="number" name="week_no" placeholder="Enter the Week Number" required>
+                </div> -->
+                <div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Driver ID *</span>
+					<div>
+                            <input type="text" name="DriverID" value=""/>
+						<div class="dropDownSelect2"></div>
+					</div>
+                </div>
+                <div class="wrap-input100 validate-input bg1 " data-validate="Please Type the New Price">
+					<span class="label-input100">New Price *</span>
+					<input class="input100" type="number" name="Price" placeholder="Enter the New Price" required>
+                </div>
+
+
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</form>
+
+                <div class="modal-body">
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+    <script src="/admin-dash/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="/admin-dash/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="/admin-dash/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/admin-dash/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+</body>

@@ -370,4 +370,5 @@ update Drivers set img = "/driver-img/ocon.jpg" where DriverID =11;
 
 alter table Teams add unique(team_name);
 
+
 alter table Teams add column user_name varchar(30);

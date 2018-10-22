@@ -96,9 +96,9 @@ function updateDriverTotalScore(callback){
 
 function updateDriverPrice(newPrice, driverID, callback) {
     sql.query('UPDATE Drivers SET Cost = ? WHERE DriverID = ?', [newPrice, driverID], function (err) {
-        if(err) {
-            throw err;
-        }
+        // if(err) {
+        //     throw err;
+        // }
         return callback(err);
 
     })
