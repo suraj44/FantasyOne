@@ -55,6 +55,31 @@ function getUserCount(callback) {
     })
 }
 
+function getUserTeam(teamID, callback) {
+    sql.query('select a.Name, a.Tot_Points, a.Cost, a. constructor, a.img from Drivers a, Team_Driver_Link b where a.DriverID = b.driver_id and b.team_id = ?' , [teamID], function(err, results){
+        if(err)
+            {
+                throw err;
+                console.log(err);
+            }
+        return callback(results);
+    })
+}
+
+function getTeamValue(teamID, callback) {
+    
+    sql.query('select SUM(Cost) as team_value from Drivers a, Team_Driver_Link b where a.DriverID = b.driver_id and b.team_id = ?' , [teamID], function(err, results){
+        if(err)
+            {
+                throw err;
+                console.log(err);
+            }
+        return callback(results);
+    })
+}
+
+module.exports.getTeamValue = getTeamValue;
+module.exports.getUserTeam = getUserTeam;
 module.exports.getUserCount = getUserCount
 module.exports.doesUserExist = doesUserExist;
 module.exports.addNewUser = addNewUser;

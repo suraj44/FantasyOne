@@ -15,7 +15,13 @@ exports.sign_in = function(req, res) {
             model.doesUserHaveTeam(req.body.username, function(result) {
                 console.log(result)
                 if(result.length==1) {
-                    return res.render(appDir + "/templates/user-dash/home.ejs");
+                    model.getUserTeam(result[0].TeamID, function(team) {
+                        model.getTeamValue(result[0].TeamID, function(team_val) {
+                            team_val = (team_val[0].team_value).toFixed(2);
+                            return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val});
+                        })
+                        
+                    })
                 } else {
                     return res.redirect('create_team1')
                 }
