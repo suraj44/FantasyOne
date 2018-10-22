@@ -145,11 +145,12 @@ router.post('/update_weekly_score', function(req,res,next) {
     })
 })
 
-router.get('/update_driver_price',function(req,res,next) {
-	controller.loginRequired(req,res,next);
-	}, function(req,res) {
-		console.log(req.session.admin);
-		res.render(appDir + "/templates/admin-dash/update_driver_price");
+router.get('/update_driver_price', function(req,res) {
+		driver_model.getAllDrivers(function(result) {
+			res.render((appDir +  "/templates/admin-dash/update_price_test"),
+			{AllDrivers: result}
+			)
+		})
 	});
 
 router.post('/update_driver_price', function(req,res,next) {
