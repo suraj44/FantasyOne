@@ -13,6 +13,7 @@
             rel='stylesheet'>
     </head>
     <body>
+        
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -44,6 +45,12 @@
             <!-- /navbar-inner -->
         </div>
         <!-- /navbar -->
+        <% if (message != null) { %>
+            <div class="alert alert-success">
+                    <strong>Your league code is: <%= message %></strong> <br>  Share your league code with your friends!
+            </div>
+            
+        <% }%>
         <div class="wrapper">
             <div class="container">
                 <div class="row">
@@ -52,7 +59,7 @@
                             <ul class="widget widget-menu unstyled">
                                 <li class="active"><a href="#">Home
                                 </a></li>
-                                <li><a href="#"></i>News Feed </a>
+                                <li><a href="/user/create_league"></i>Create a League </a>
                                 </li>
                             </ul>
                             <!--/.widget-nav-->

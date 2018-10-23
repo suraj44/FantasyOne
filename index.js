@@ -9,7 +9,8 @@ const path = require('path');
 const stylus = require('stylus')
 const nib = require('nib')
 const SECRET_KEY = '\xd6\xca\xbb\xa7u\xaa\x8a\xec\xf4\xb4#\xdf'
-const session = require('express-session')
+const session = require('express-session');
+
 var jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();

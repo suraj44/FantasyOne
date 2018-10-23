@@ -1,6 +1,7 @@
 const model = require('./user-model');
 const team_model = require('../team/team-model')
 const driver_model = require('../drivers/driver-model')
+const league_model = require('../leagues/league-model')
 const sha1 = require('sha1');
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
@@ -12,21 +13,22 @@ exports.sign_in = function(req, res) {
         else {
             req.session.username = req.body.username;
             req.session.admin = 0;
-            model.doesUserHaveTeam(req.body.username, function(result) {
-                console.log(result)
-                if(result.length==1) {
-                    model.getUserTeam(result[0].TeamID, function(team) {
-                        model.getTeamValue(result[0].TeamID, function(team_val) {
-                            team_val = (team_val[0].team_value).toFixed(2);
-                            return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val});
-                        })
+            // model.doesUserHaveTeam(req.body.username, function(result) {
+            //     console.log(result)
+            //     if(result.length==1) {
+            //         model.getUserTeam(result[0].TeamID, function(team) {
+            //             model.getTeamValue(result[0].TeamID, function(team_val) {
+            //                 team_val = (team_val[0].team_value).toFixed(2);
+            //                 message = null;
+            //                 return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val, message: message});
+            //             })
                         
-                    })
-                } else {
-                    return res.redirect('create_team1')
-                }
-            })
-        // return res.redirect('home');
+            //         })
+            //     } else {
+            //         return res.redirect('create_team1')
+            //     }
+            // })
+         return res.redirect('home');
         }
     });
 }
@@ -142,98 +144,99 @@ exports.create_team1 = function(req,res) {
 
 // }
 
-exports.create_team2 = function(req,res) {
-    driver1 = req.body.driver1;
-    driver2 = req.body.driver2;
-    driver3 = req.body.driver3;
-    driver4 = req.body.driver4;
-    driver5 = req.body.driver5;
+// exports.create_team2 = function(req,res) {
+//     driver1 = req.body.driver1;
+//     driver2 = req.body.driver2;
+//     driver3 = req.body.driver3;
+//     driver4 = req.body.driver4;
+//     driver5 = req.body.driver5;
     
-    duplicate_check = new Set([driver1,driver2,driver3,driver4,driver5]);
-    if(duplicate_check.size != 5) {
-        res.status(401).json({ message: 'Your team has duplicate drivers'});
-    } else {
-        console.log("GG");
-        console.log(req.session.team_name);
-        // for (let item of duplicate_check.values()) {
-        //     team_model.getTeamID(req.session.team_name, function(teamID) {
-        //         console.log(teamID[0].TeamID);
-        //         driver_model.getDriverID(item, function(result) {
-        //             console.log(result);
-        //             team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-        //                 console.log(driver1);
-        //             })
-        //         })
-        //     })
-        // }
+//     duplicate_check = new Set([driver1,driver2,driver3,driver4,driver5]);
+//     if(duplicate_check.size != 5) {
+//         res.status(401).json({ message: 'Your team has duplicate drivers'});
+//     } else {
+//         console.log("GG");
+//         console.log(req.session.team_name);
 
-        team_model.getTeamID(req.session.team_name, function(teamID) {
+//         team_model.getTeamID(req.session.team_name, function(teamID) {
             
-            driver_model.getDriverID(driver1, function(result) {
-                team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-                    driver_model.getDriverID(driver2, function(result) {
-                        team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-                            driver_model.getDriverID(driver3, function(result) {
-                                team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-                                    driver_model.getDriverID(driver4, function(result) {
-                                        team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-                                            driver_model.getDriverID(driver5, function(result) {
-                                                team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
-                                                    res.redirect('home');
-                                                })
-                                            })
-                                        })
-                                    })
-                                })
-                            })
+//             driver_model.getDriverID(driver1, function(result) {
+//                 team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+//                     driver_model.getDriverID(driver2, function(result) {
+//                         team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+//                             driver_model.getDriverID(driver3, function(result) {
+//                                 team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+//                                     driver_model.getDriverID(driver4, function(result) {
+//                                         team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+//                                             driver_model.getDriverID(driver5, function(result) {
+//                                                 team_model.insertDriverIntoTeam(teamID[0].TeamID, result[0].DriverID, function(result) {
+//                                                     res.redirect('home');
+//                                                 })
+//                                             })
+//                                         })
+//                                     })
+//                                 })
+//                             })
+//                         })
+//                     })
+//                 })
+//             })
+//         })
+    
+// }
+
+exports.createLeague_page = function(req,res) {
+    res.render(appDir + "/templates/form/create_league")
+}
+
+exports.createLeague = function(req, res) {
+    league_name = req.body.league_name;
+    league_model.createLeague(function() {
+        league_model.getLeagueID(function(ID) {
+            ID = ID[0].league_id;
+            league_code = sha1(ID).slice(0,10);
+            league_model.insertLeagueCode(ID, league_code, function() {
+                league_model.insertLeagueName(ID, league_name, function() {
+                    team_model.getTeamIDfromUser(req.session.username, function(teamID) {
+                        teamID = teamID[0].TeamID
+                        league_model.insertTeamintoLeague(teamID, ID, function () {
+                            req.session.message = league_code;
+                            res.redirect('home')
+                            console.log(league_code)
                         })
                     })
                 })
             })
         })
-        // console.log(duplicate_check.values()[0]);
-        // team_model.getTeamID(req.session.team_name, function(teamID) {
-        //     driver_model.getDriverID(driver1, function(result) {
-        //         team_model.insertDriverIntoTeam(teamID, result, function(result) {
-        //             console.log(driver1);
-        //         })
-        //     })
-        //     driver_model.getDriverID(driver2, function(result) {
-        //         team_model.insertDriverIntoTeam(teamID, result, function(result) {
-        //             console.log(driver2);
-        //         })
-        //     })
-        //     driver_model.getDriverID(driver3, function(result) {
-        //         team_model.insertDriverIntoTeam(teamID, result, function(result) {
-        //             console.log(driver3);
-        //         })
-        //     })
-        //     driver_model.getDriverID(driver4, function(result) {
-        //         team_model.insertDriverIntoTeam(teamID, result, function(result) {
-        //             console.log(driver4);
-        //         })
-        //     })
-        //     driver_model.getDriverID(driver5, function(result) {
-        //         team_model.insertDriverIntoTeam(teamID, result, function(result) {
-        //             console.log(driver5);
-        //         })
-        //     })
-        // })
-
-
-    }
-
-    function hasDuplicates(array) {
-        return (new Set(array)).size !== array.length;
-    }
-    
+    })
 }
+
 
 exports.login_page = function(req,res) {
     res.render(appDir + "/templates/form/user-login")
 }
 exports.home_page = function(req,res) {
-    res.render(appDir +  "/templates/user/user-home", {})
+    if(req.session.message) {
+        message = req.session.message;
+        req.session.message = null;
+    } else {
+        message = null;
+    }
+    model.doesUserHaveTeam(req.session.username, function(result) {
+        console.log(result)
+        if(result.length==1) {
+            model.getUserTeam(result[0].TeamID, function(team) {
+                model.getTeamValue(result[0].TeamID, function(team_val) {
+                    team_val = (team_val[0].team_value).toFixed(2);
+                    return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val, message: message});
+                })
+                
+            })
+        } else {
+            return res.redirect('create_team1')
+        }
+    })
+    //res.render((appDir +  "/templates/user-dash/home"), {message:message})
 }
 
 exports.logout = function(req, res) {

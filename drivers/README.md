@@ -43,3 +43,17 @@ Turns out JWT cookies are too complicated to use. Ditched using them, but kept t
 Used express-session instead. Way easier, takes care of creating and destroying session cookies on its own.
 Need to add a little bit more info while logging in (was it username or password that was wrong)
 Now that login is set, finishing admin side should be peace.
+
+
+
+Creating a league:
+
+Generate a league code
+Insert the a new league in leagues table
+Insert the person who created this league and the league ID into Team_League_Link
+Retrieve League Code on front end
+
+
+Joining a league:
+get league id from league code
+insert caller's team id into league
