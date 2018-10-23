@@ -47,7 +47,12 @@
         <!-- /navbar -->
         <% if (message != null) { %>
             <div class="alert alert-success">
+                <% if (msg_code==1) { %>
                     <strong>Your league code is: <%= message %></strong> <br>  Share your league code with your friends!
+                <% } %>
+                <% if (msg_code==2) { %>
+                    <strong>You have joined the league <%= message %> </strong> <br> 
+                <% } %>
             </div>
             
         <% }%>
@@ -60,6 +65,8 @@
                                 <li class="active"><a href="#">Home
                                 </a></li>
                                 <li><a href="/user/create_league"></i>Create a League </a>
+                                </li>
+                                <li><a href="/user/join_league"></i>Join a League </a>
                                 </li>
                             </ul>
                             <!--/.widget-nav-->

@@ -51,6 +51,29 @@ function getLeagueID(callback) {
         }
     })
 }
+
+function getLeagueIDfromCode(code, callback) {
+    sql.query('select LeagueID as league_id from Leagues where LeagueCode = ?' ,[code], function(err, results){
+        if(err)
+            {
+                console.log(err);
+            }
+        else {
+            return callback(results);
+        }
+    })
+}
+function getLeagueName(league_id, callback) {
+    sql.query('select LeagueName  from Leagues where LeagueID = ?' ,[league_id], function(err, results){
+        if(err)
+            {
+                console.log(err);
+            }
+        else {
+            return callback(results);
+        }
+    })
+}
 function insertLeagueCode(ID, code, callback) {
     sql.query('update Leagues set LeagueCode = ? where LeagueID = ?' , [code, ID],function(err, results){
         if(err)
@@ -86,6 +109,8 @@ function insertTeamintoLeague(teamID, leagueID, callback) {
     })
 }
 
+module.exports.getLeagueName = getLeagueName;
+module.exports.getLeagueIDfromCode = getLeagueIDfromCode;
 module.exports.insertLeagueName = insertLeagueName;
 module.exports.insertTeamintoLeague = insertTeamintoLeague;
 module.exports.insertLeagueCode = insertLeagueCode;

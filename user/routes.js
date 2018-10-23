@@ -35,14 +35,6 @@ router.post('/create_team1', function(req,res) {
     controller.create_team1(req,res);
 })
 
-// router.get('/create_team2', function(req,res) {
-//     controller.create_team2_page(req,res);
-// })
-
-// router.post('/create_team2', function(req,res) {
-//     controller.create_team2(req,res);
-// })
-
 
 router.get('/create_league', function(req,res) {
     controller.createLeague_page(req,res);
@@ -50,5 +42,13 @@ router.get('/create_league', function(req,res) {
 
 router.post('/create_league', function(req,res) {
     controller.createLeague(req,res);
+})
+
+router.get('/join_league', function(req,res) {
+    controller.joinLeague_page(req,res);
+})
+
+router.post('/join_league', function(req,res) {
+    controller.joinLeague(req,res);
 })
 module.exports = router;
