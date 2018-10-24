@@ -78,9 +78,23 @@ function getTeamValue(teamID, callback) {
     })
 }
 
+function getCurrentWeek(callback) {
+    sql.query('select MAX(week_no) as max_week from criteria', function(err,results) {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            return callback(results);
+        }
+    })
+}
+
 module.exports.getTeamValue = getTeamValue;
 module.exports.getUserTeam = getUserTeam;
 module.exports.getUserCount = getUserCount
 module.exports.doesUserExist = doesUserExist;
 module.exports.addNewUser = addNewUser;
 module.exports.doesUserHaveTeam = doesUserHaveTeam;
+module.exports.getCurrentWeek = getCurrentWeek;

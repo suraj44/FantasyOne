@@ -175,7 +175,10 @@ exports.home_page = function(req,res) {
                     league_model.getTeamLeagues(req.session.username, function(leagueNames) {
                         team_model.getTeamTotalPoints(req.session.username, function(totalPoints) {
                             console.log(totalPoints);
-                            return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints });
+                            model.getCurrentWeek(function(currWeek){
+                                console.log(currWeek);
+                                return res.render((appDir + "/templates/user-dash/home.ejs"), {currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints });
+                            })
                         })
                         
                 })
