@@ -439,3 +439,6 @@ create table Team_Weekly_Points(WeekNo int,  TeamID int, WeeklyPoints int, FOREI
 
 Getting a teams weekly score given teamID and week number:
 select SUM(week_points) as team_weekly_score from Team_Driver_Link a, criteria b where a.team_id = 34 AND a.driver_id  = b.driverid and b.week_no =1;
+
+Ensuring there is only 1 criteria table entry per week for each driver
+alter table criteria add constraint UNIQUE(week_no,driverid);
