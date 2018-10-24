@@ -73,6 +73,16 @@ function getDriversSortedByTotalPoints(callback) {
 
 }
 
+function getCurrentWeek(callback) {
+    sql.query('select MAX(week_no) as current_week from criteria', function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
+}
+
 
 // Since JavaScript is a loosely typed language, you can't specify what the datatype of a function should be.
 // However, you can 'mark' the datatype of the parameters for the compiler. The format for doing so is: (refer to the readme for more reference)
@@ -119,7 +129,7 @@ getAllDrivers(function(result){
     })
 
 
-
+module.exports.getCurrentWeek = getCurrentWeek;
 module.exports.getAllDriversbyConstructor = getAllDriversbyConstructor
 module.exports.updateDriverWeeklyScore = updateDriverWeeklyScore;
 module.exports.updateDriverTotalScore = updateDriverTotalScore;

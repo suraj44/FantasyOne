@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mahirjain25/FantasyOne#readme",
   "dependencies": {
+    "async": "^2.6.1",
     "asyncawait": "^1.0.7",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
