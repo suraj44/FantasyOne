@@ -1,5 +1,8 @@
 const model = require('./admin-model');
+const team_model = require('../team/team-model')
+const driver_model = require('../drivers/driver-model')
 const sha1 = require('sha1');
+const async = require('async')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
@@ -41,6 +44,59 @@ exports.sign_in = function(req, res) {
         }
     });
 }
+
+exports.UpdateAllTeamPoints = function (req,res) {
+    team_model.getAllTeams(function(teams){
+        driver_model.getCurrentWeek(function(current_week){
+            current_week = current_week[0].current_week;
+            async.forEach(teams, function(team){
+                teamID = team.TeamID;
+                console.log(teamID)
+                team_model.getTeamScoreForAWeek(teamID, current_week, function(Score) {
+                    Score = Score[0].team_weekly_score;
+                    console.log(teamID + " " + Score)
+                    if(Score != null) {
+                        team_model.addTeamWeeklyPoints(current_week, teamID, Score, function() {
+                            team_model.setTeamWeeklyScore(teamID, Score, function() {
+                                team_model.setTeamTotalScore(teamID,function(){
+                                    console.log('done')
+                                })
+                            })
+                        })
+                    }
+                    
+
+                })
+            }, function(err){
+                if(err) {
+                    console.log(err)
+                } else{
+                    res.redirect('home')
+                }
+            })
+            // for(i = 0 ; i < teams.length; i++) {
+            //     teamID = teams[i].TeamID;
+            //     console.log(teamID)
+            //     team_model.getTeamScoreForAWeek(teamID, current_week, function(Score) {
+            //         teamID = teams[i].TeamID;
+            //         Score = Score[0].team_weekly_score;
+            //         team_model.addTeamWeeklyPoints(current_week, teamID, Score, function() {
+            //             teamID = teams[i].TeamID;
+            //             team_model.setTeamWeeklyScore(teamID, Score, function() {
+            //                 team_model.setTeamTotalScore(teamID,function(){
+            //                     if(i==teams.length-1)
+            //                         res.redirect('home');
+            //                 })
+            //             })
+            //         })
+
+            //     })
+            // }      
+        })
+    })
+}
+
+
 
 exports.loginRequired = function(req,res, next) {
     if(req.session.username && req.session.admin==1) {

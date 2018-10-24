@@ -64,7 +64,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 	}, function(req, res){
 	week_no = req.body.week_no;
 	driverID = req.body.DriverID;
-	race_finish = req.body.race_finish;
+	race_finish = parseFloat(req.body.race_finish);
 	qualifying_finish = req.body.qualifying_finish;
 	no_overtakes = req.body.no_overtakes;
 	if(req.body.beat_teammate_race=="on") {
@@ -200,6 +200,12 @@ router.post('/add_new_admin', function(req,res,next) {
 			}
 		})
 })
+
+router.get('/update_all_team_points', function(req,res,next) {
+	controller.loginRequired(req,res,next);
+}, function(req,res) {
+	controller.UpdateAllTeamPoints(req,res);
+});
 
 
 

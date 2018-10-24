@@ -305,20 +305,20 @@ alter table Drivers add column img varchar(30);
 
  update Drivers set img = "/driver-img/kimi.jpg" whereDriverID =3;
 
- update Drivers set img = "/driver-img/ricciardo.jpg" where DriverID =4;
-
-
- update Drivers set img = "/driver-img/bottas.jpg" where DriverID =5;
-
-
- update Drivers set img = "/driver-img/verstappen.jpg"where DriverID =5;
-
-
- update Drivers set img = "/driver-img/verstappen.jpg"where DriverID =6;
-
-
- update Drivers set img = "/driver-img/bottas.jpg" where DriverID =5;
-
+ update Drivers set img = "/driver-img/ricciardo.jpCREATE TABLE Teamsg" where DriverID =4;
+CREATE TABLE Teams
+CREATE TABLE Teams
+ update Drivers set img = "/driver-img/bottas.jpg" CREATE TABLE Teamswhere DriverID =5;
+CREATE TABLE Teams
+CREATE TABLE Teams
+ update Drivers set img = "/driver-img/verstappen.jCREATE TABLE Teamspg"where DriverID =5;
+CREATE TABLE Teams
+CREATE TABLE Teams
+ update Drivers set img = "/driver-img/verstappen.jCREATE TABLE Teamspg"where DriverID =6;
+CREATE TABLE Teams
+CREATE TABLE Teams
+ update Drivers set img = "/driver-img/bottas.jpg" CREATE TABLE Teamswhere DriverID =5;
+CREATE TABLE Teams
 
 
  update Drivers set img = "/driver-img/alonso.jpg" where DriverID =7;
@@ -433,7 +433,9 @@ update Drivers set constructor = "Williams" where Name = "Sergey Sirotkin";
 
 update Drivers set constructor = "Williams" where Name = "Lance Stroll";
 
-
-
-
 update Drivers set constructor = "Haas F1 Racing" where Name = "Romain Grosjean";
+
+create table Team_Weekly_Points(WeekNo int,  TeamID int, WeeklyPoints int, FOREIGN KEY (TeamID) REFERENCES Teams.TeamID);
+
+Getting a teams weekly score given teamID and week number:
+select SUM(week_points) as team_weekly_score from Team_Driver_Link a, criteria b where a.team_id = 34 AND a.driver_id  = b.driverid and b.week_no =1;
