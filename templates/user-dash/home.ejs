@@ -70,28 +70,6 @@
                                 </li>
                             </ul>
                             <!--/.widget-nav-->
-                            
-                            
-                            <ul class="widget widget-menu unstyled">
-                                <li><a href="ui-button-icon.html"><i class="menu-icon icon-bold"></i> Buttons </a></li>
-                                <li><a href="ui-typography.html"><i class="menu-icon icon-book"></i>Typography </a></li>
-                                <li><a href="form.html"><i class="menu-icon icon-paste"></i>Forms </a></li>
-                                <li><a href="table.html"><i class="menu-icon icon-table"></i>Tables </a></li>
-                                <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
-                            </ul>
-                            <!--/.widget-nav-->
-                            <ul class="widget widget-menu unstyled">
-                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
-                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
-                                </i>More Pages </a>
-                                    <ul id="togglePages" class="collapse unstyled">
-                                        <li><a href="other-login.html"><i class="icon-inbox"></i>Login </a></li>
-                                        <li><a href="other-user-profile.html"><i class="icon-inbox"></i>Profile </a></li>
-                                        <li><a href="other-user-listing.html"><i class="icon-inbox"></i>All Users </a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><i class="menu-icon icon-signout"></i>Logout </a></li>
-                            </ul>
                         </div>
                         <!--/.sidebar-->
                     </div>
@@ -100,9 +78,9 @@
                         <div class="content">
                             <div class="btn-controls">
                                 <div class="btn-box-row row-fluid">
-                                    <a href="#" class="btn-box big span4"><i class=" icon-random"></i><b>65%</b>
+                                    <a href="#" class="btn-box big span4"><i class=" icon-random"></i><b><%= totalPoints[0].total_points %></b>
                                         <p class="text-muted">
-                                            Growth</p>
+                                            Total Points</p>
                                     </a><a href="#" class="btn-box big span4"><i class="icon-user"></i><b><%= team_val %></b>
                                         <p class="text-muted">
                                             Team Value</p>
@@ -170,19 +148,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!--/#btn-controls-->
-                            <div class="module">
-                                <div class="module-head">
-                                    <h3>
-                                        Profit Chart</h3>
-                                </div>
-                                <div class="module-body">
-                                    <div class="chart inline-legend grid">
-                                        <div id="placeholder2" class="graph" style="height: 500px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!--/.module-->
                             <div class="module hide">
                                 <div class="module-head">
@@ -240,7 +205,31 @@
                                         </tbody>
                                         </tfoot>
                                     </table>
-                        </div>
+                                </div>
+                                <div class="module-body table">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display"
+                                        width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                     Sl.No
+                                                </th>
+                                                <th>
+                                                    League Name
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <% for(var i=0; i < leagueNames.length; i++) { %> 
+                                                    <tr class = "odd gradeX">
+                                                        <td> <%= i+1 %></td>
+                                                        <td class="center"> <%= leagueNames[i].LeagueName %></td>
+                                                    </tr>
+                                                   <% } %>
+                                        </tbody>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                             <!--/.module-->
                         </div>

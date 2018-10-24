@@ -79,6 +79,19 @@ function insertDriverIntoTeam(teamID, driverID, callback) {
     })
 }
 
+
+function getTeamTotalPoints(user_name, callback) {
+    sql.query('select total_points from Teams where user_name = ?', [user_name], function(err,results){
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            return callback(results);
+        }
+    })
+}
 function addTeamWeeklyPoints(weekNo, TeamID, WeeklyPoints, callback) {
     sql.query('INSERT INTO Team_Weekly_Points values(?,?,?)',[weekNo,TeamID, WeeklyPoints] ,function(err, results){
         if (err) {
@@ -116,3 +129,4 @@ module.exports.getAllTeamAvgPoints = getAllTeamAvgPoints;
 module.exports.createTeam = createTeam;
 module.exports.getTeamID = getTeamID;
 module.exports.insertDriverIntoTeam = insertDriverIntoTeam;
+module.exports.getTeamTotalPoints = getTeamTotalPoints;

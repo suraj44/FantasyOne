@@ -51,4 +51,5 @@ router.get('/join_league', function(req,res) {
 router.post('/join_league', function(req,res) {
     controller.joinLeague(req,res);
 })
+
 module.exports = router;

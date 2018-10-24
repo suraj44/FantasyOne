@@ -125,6 +125,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 			race_finish = 0;
 			break;
 	}
+	console.log("Race finish "+ race_finish)
 
 	if(qualifying_finish <=10) {
 		qualifying_finish = 11 -qualifying_finish;

@@ -149,23 +149,6 @@ exports.joinLeague = function(req, res) {
                 
             })
     })
-    // league_model.createLeague(function() {
-    //     league_model.getLeagueID(function(ID) {
-    //         ID = ID[0].league_id;
-    //         league_code = sha1(ID).slice(0,10);
-    //         league_model.insertLeagueCode(ID, league_code, function() {
-    //             league_model.insertLeagueName(ID, league_name, function() {
-    //                 team_model.getTeamIDfromUser(req.session.username, function(teamID) {
-    //                     teamID = teamID[0].TeamID
-    //                     league_model.insertTeamintoLeague(teamID, ID, function () {
-    //                         req.session.message = "Success! You have joined the league"
-    //                         res.redirect('home')
-    //                         console.log(league_code)
-    //                     })
-    //                 })
-    //             })
-    //         })
-    //     })
     })
 }
 
@@ -189,11 +172,17 @@ exports.home_page = function(req,res) {
             model.getUserTeam(result[0].TeamID, function(team) {
                 model.getTeamValue(result[0].TeamID, function(team_val) {
                     team_val = (team_val[0].team_value).toFixed(2);
-                    return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val, message: message, msg_code:msg_code });
+                    league_model.getTeamLeagues(req.session.username, function(leagueNames) {
+                        team_model.getTeamTotalPoints(req.session.username, function(totalPoints) {
+                            console.log(totalPoints);
+                            return res.render((appDir + "/templates/user-dash/home.ejs"), {team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints });
+                        })
+                        
                 })
                 
             })
-        } else {
+        } )}
+        else {
             return res.redirect('create_team1')
         }
     })
