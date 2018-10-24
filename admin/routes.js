@@ -64,7 +64,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 	}, function(req, res){
 	week_no = req.body.week_no;
 	driverID = req.body.DriverID;
-	race_finish = req.body.race_finish;
+	race_finish = parseFloat(req.body.race_finish);
 	qualifying_finish = req.body.qualifying_finish;
 	no_overtakes = req.body.no_overtakes;
 	if(req.body.beat_teammate_race=="on") {
@@ -116,6 +116,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 			race_finish = 0;
 			break;
 	}
+	console.log("Race finish "+ race_finish)
 
 	if(qualifying_finish <=10) {
 		qualifying_finish = 11 -qualifying_finish;

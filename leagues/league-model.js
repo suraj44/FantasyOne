@@ -109,6 +109,15 @@ function insertTeamintoLeague(teamID, leagueID, callback) {
     })
 }
 
+function getTeamLeagues(user_name, callback) {
+    sql.query('select a.LeagueName from Leagues a, Team_League_Link b, Teams c where c.user_name = ? and b.league_id = a.LeagueID and c.TeamID=b.team_id',[user_name] ,function(err,results) {
+        if(err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
 module.exports.getLeagueName = getLeagueName;
 module.exports.getLeagueIDfromCode = getLeagueIDfromCode;
 module.exports.insertLeagueName = insertLeagueName;
@@ -116,4 +125,5 @@ module.exports.insertTeamintoLeague = insertTeamintoLeague;
 module.exports.insertLeagueCode = insertLeagueCode;
 module.exports.getLeagueID = getLeagueID;  
 module.exports.createLeague = createLeague;
+module.exports.getTeamLeagues = getTeamLeagues;
 console.log(makeid());
