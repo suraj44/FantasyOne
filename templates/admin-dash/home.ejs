@@ -24,6 +24,14 @@
             <!-- /navbar-inner -->
         </div>
         <!-- /navbar -->
+        <% if (message != null) { %>
+            <div class="alert alert-success">
+                <% if (msg_code==1) { %>
+                    <strong>Success!</strong> <br> <%= message %> 
+                <% } %>
+            </div>
+            
+        <% }%>
         <div class="wrapper">
             <div class="container">
                 <div class="row span9">
@@ -69,7 +77,7 @@
                                         <div class="row-fluid">
                                             <div class="span12">
                                                 <a href="#" class="btn-box small span4"><i class="icon-envelope"></i><b>Messages</b>
-                                                </a><a href="#" class="btn-box small span4"><i class="icon-group"></i><b>Clients</b>
+                                                </a><a href="/admin/update_all_team_points" class="btn-box small span4"><i class="icon-group"></i><b>Update All Team's Points</b>
                                                 </a><a href="#" class="btn-box small span4"><i class="icon-exchange"></i><b>Expenses</b>
                                                 </a>
                                             </div>

@@ -25,6 +25,15 @@ router.get('/login',function(req,res)
 router.get('/home',function(req,res,next) {
 	controller.loginRequired(req,res,next);
 	}, function(req,res) {
+		if(req.session.message) {
+			message = req.session.message;
+			msg_code = req.session.message_code;
+			req.session.message = null;
+			req.session.message_code = null;
+		} else {
+			message = null;
+			msg_code = null;
+		}
 		//console.log(req.session.admin);
 		driver_model.getAllDrivers(function(result) {
 			drivers = result;
@@ -33,7 +42,7 @@ router.get('/home',function(req,res,next) {
 				team_model.getAllTeamAvgPoints(function(result) {
 					avgpts = result[0].avgpts;
 					res.render((appDir +  "/templates/admin-dash/home"),
-			{AllDrivers: drivers, userCount : userCount, avgpts: avgpts}
+			{AllDrivers: drivers, userCount : userCount, avgpts: avgpts,  message: message, msg_code:msg_code}
 			)
 				})
 				

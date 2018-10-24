@@ -49,53 +49,33 @@ exports.UpdateAllTeamPoints = function (req,res) {
     team_model.getAllTeams(function(teams){
         driver_model.getCurrentWeek(function(current_week){
             current_week = current_week[0].current_week;
-            async.forEach(teams, function(team){
+            async.each(teams, function(team,callback){
                 teamID = team.TeamID;
-                console.log(teamID)
-                team_model.getTeamScoreForAWeek(teamID, current_week, function(Score) {
+                //console.log(teamID)
+                team_model.getTeamScoreForAWeek(teamID, current_week, function(Score, teamID) {
+                    //console.log(Score)
                     Score = Score[0].team_weekly_score;
-                    console.log(teamID + " " + Score)
-                    if(Score != null) {
+                    //console.log(teamID + " " + Score)
                         team_model.addTeamWeeklyPoints(current_week, teamID, Score, function() {
                             team_model.setTeamWeeklyScore(teamID, Score, function() {
                                 team_model.setTeamTotalScore(teamID,function(){
-                                    console.log('done')
+                                    callback();
                                 })
                             })
                         })
-                    }
                     
-
                 })
-            }, function(err){
-                if(err) {
-                    console.log(err)
-                } else{
-                    res.redirect('home')
-                }
+            }, function() {
+                console.log("done!")
+                req.session.message = "The total and weekly scores of all teams have been updated.";
+                req.session.message_code = 1;
+                res.redirect('home')
             })
-            // for(i = 0 ; i < teams.length; i++) {
-            //     teamID = teams[i].TeamID;
-            //     console.log(teamID)
-            //     team_model.getTeamScoreForAWeek(teamID, current_week, function(Score) {
-            //         teamID = teams[i].TeamID;
-            //         Score = Score[0].team_weekly_score;
-            //         team_model.addTeamWeeklyPoints(current_week, teamID, Score, function() {
-            //             teamID = teams[i].TeamID;
-            //             team_model.setTeamWeeklyScore(teamID, Score, function() {
-            //                 team_model.setTeamTotalScore(teamID,function(){
-            //                     if(i==teams.length-1)
-            //                         res.redirect('home');
-            //                 })
-            //             })
-            //         })
-
-            //     })
-            // }      
         })
+
+
     })
 }
-
 
 
 exports.loginRequired = function(req,res, next) {

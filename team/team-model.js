@@ -66,7 +66,7 @@ function getTeamScoreForAWeek(TeamID,Week_No, callback) {
         if (err) {
             throw err;
         }
-        return callback(results);
+        return callback(results, TeamID);
     })
 } 
 
