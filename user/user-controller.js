@@ -152,7 +152,14 @@ exports.joinLeague = function(req, res) {
     })
 }
 
-
+exports.leaderboardPage = function(req,res) {
+    league_name = req.param('league_name');
+    console.log(league_name);
+    league_model.getLeagueLeaderboard(league_name, function(leaderboard) {
+        console.log(leaderboard);
+        return res.render((appDir + "/templates/user-dash/leaderboard.ejs"), {leaderboard:leaderboard});
+    })
+}
 exports.login_page = function(req,res) {
     res.render(appDir + "/templates/form/user-login")
 }

@@ -52,4 +52,8 @@ router.post('/join_league', function(req,res) {
     controller.joinLeague(req,res);
 })
 
+router.get('/view_leaderboard', function(req,res) {
+    controller.leaderboardPage(req,res);
+})
+
 module.exports = router;
