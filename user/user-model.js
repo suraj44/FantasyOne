@@ -26,6 +26,74 @@ function doesUserExist(username, password, callback) {
     })
 }
 
+function userCheck(username, callback) {
+    sql.query('SELECT username from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
+function getUserProfile(username, callback) {
+    sql.query('SELECT username, first_name, last_name, email_id, dob from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
+function getUserFirstName(username, callback) {
+    sql.query('SELECT first_name from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+function getUserLastName(username, callback) {
+    sql.query('SELECT last_name from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+function updateUserFirstName(username, firstname, callback) {
+    sql.query('update users set first_name = ? where username = ?',[firstname ,username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
+function updateUserLastName(username, lastname, callback) {
+    sql.query('update users set last_name = ? where username = ?',[lastname ,username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
+function updateUserName(newusername, oldusername,callback) {
+    sql.query('update users set username = ? where username = ?',[newusername, oldusername] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
 function addNewUser(username, first_name, last_name, email_id, password, dob, admin, callback) {
     sql.query('INSERT INTO users(username,first_name,last_name,email_id,password,dob,admin) values(?,?,?,?,?,?,?)',[username, first_name, last_name, email_id, password, dob, admin] ,function(err, results){
         console.log(err);
@@ -91,6 +159,14 @@ function getCurrentWeek(callback) {
     })
 }
 
+
+module.exports.updateUserFirstName = updateUserFirstName;
+module.exports.updateUserLastName = updateUserLastName;
+module.exports.getUserFirstName = getUserFirstName;
+module.exports.getUserLastName = getUserLastName;
+module.exports.updateUserName = updateUserName;
+module.exports.userCheck = userCheck;
+module.exports.getUserProfile = getUserProfile;
 module.exports.getTeamValue = getTeamValue;
 module.exports.getUserTeam = getUserTeam;
 module.exports.getUserCount = getUserCount

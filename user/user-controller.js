@@ -192,6 +192,67 @@ exports.home_page = function(req,res) {
     //res.render((appDir +  "/templates/user-dash/home"), {message:message})
 }
 
+exports.my_profile = function(req,res) {
+    username = req.session.username;
+    model.getUserProfile(username, function(result){
+        res.render(appDir + '/templates/user-dash/my_profile', {User:result});
+    })
+}
+
+exports.update_username_page = function(req,res) {
+    if(req.session.message != null) {
+        message = req.session.message;
+        req.session.message = null;
+    } else {
+        message = null;
+    }
+    username = req.session.username;
+    res.render(appDir + '/templates/form/update_username', {username: username, message:message})
+}
+
+exports.update_username = function(req,res) {
+    oldUsername = req.session.username;
+    newUsername = req.body.username;
+    if(oldUsername == newUsername){
+        req.session.message = "That is already your username!"
+        return res.redirect("update_username")
+    }
+    model.userCheck(newUsername, function(result) {
+        console.log("haahaha")
+        console.log(result)
+        console.log("^res")
+        if( result.length == 0 ) {
+            console.log('outside if')
+            model.updateUserName(newUsername, oldUsername, function(result) {
+                console.log('inside if')
+                req.session.username = newUsername;
+                res.redirect('my_profile')
+            })
+        } else {
+            console.log('else')
+            req.session.message = "That username already exists."
+            res.redirect('update_username');
+        }
+    })
+}
+
+exports.update_firstname_page = function(req,res) {
+    username = req.session.username;
+    model.getUserFirstName(username, function(result) {
+        first_name = result[0].first_name;
+        res.render(appDir + '/templates/form/update_firstname', {firstname: first_name});
+    })
+    
+}
+
+exports.update_firstname = function(req,res) {
+    newfirstname = req.body.firstname;
+    username = req.session.username;
+    model.updateUserFirstName(username, newfirstname, function(result) {
+        res.redirect('my_profile')
+    })
+}
+
 exports.logout = function(req, res) {
     req.session.destroy();
     res.redirect('login');
