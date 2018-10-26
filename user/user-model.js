@@ -36,6 +36,16 @@ function userCheck(username, callback) {
     })
 }
 
+function doesEmailExist(email, callback) {
+    sql.query('SELECT email_id from users where email_id = ?',[email] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
 function getUserProfile(username, callback) {
     sql.query('SELECT username, first_name, last_name, email_id, dob from users where username = ?',[username] ,function(err, results){
         if (err) {
@@ -64,6 +74,17 @@ function getUserLastName(username, callback) {
         return callback(results);
     })
 }
+
+function getUserEmail(username, callback) {
+    sql.query('SELECT email_id from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
 function updateUserFirstName(username, firstname, callback) {
     sql.query('update users set first_name = ? where username = ?',[firstname ,username] ,function(err, results){
         if (err) {
@@ -76,6 +97,16 @@ function updateUserFirstName(username, firstname, callback) {
 
 function updateUserLastName(username, lastname, callback) {
     sql.query('update users set last_name = ? where username = ?',[lastname ,username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
+function updateUserEmail(username, newemail, callback) {
+    sql.query('update users set email_id = ? where username = ?',[newemail ,username] ,function(err, results){
         if (err) {
             throw err;
         }
@@ -160,6 +191,9 @@ function getCurrentWeek(callback) {
 }
 
 
+module.exports.doesEmailExist = doesEmailExist;
+module.exports.updateUserEmail = updateUserEmail;
+module.exports.getUserEmail = getUserEmail;
 module.exports.updateUserFirstName = updateUserFirstName;
 module.exports.updateUserLastName = updateUserLastName;
 module.exports.getUserFirstName = getUserFirstName;
