@@ -11,6 +11,12 @@
         <link type="text/css" href="/admin-dash/images/icons/css/font-awesome.css" rel="stylesheet">
         <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
             rel='stylesheet'>
+        <script>
+            function update_player_alert()
+            {
+                    alert("Disable transfers to update team points!")
+            } 
+        </script>
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -88,6 +94,8 @@
                                                     </a>
                                                     <a href="/admin/enable_transfers" class="btn-box small span4"><i class="icon-exchange"></i><b>Enable Transfers</b></a>
                                                 <%}  else { %>
+                                                    <a href="#" onclick = "return update_player_alert();" class="btn-box small span4"><i class="icon-group"></i><b>Update All Team's Points</b>
+                                                    </a>
                                                     <a href="/admin/disable_transfers" class="btn-box small span4"><i class="icon-exchange"></i><b>Disable Transfers</b></a>
                                                 <% } %>
                                                 

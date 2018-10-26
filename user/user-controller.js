@@ -182,10 +182,11 @@ exports.home_page = function(req,res) {
                     team_val = (team_val[0].team_value).toFixed(2);
                     league_model.getTeamLeagues(req.session.username, function(leagueNames) {
                         team_model.getTeamTotalPoints(req.session.username, function(totalPoints) {
-                            console.log(totalPoints);
                             model.getCurrentWeek(function(currWeek){
-                                console.log(currWeek);
-                                return res.render((appDir + "/templates/user-dash/home.ejs"), {currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints });
+                                model.getTransferLock(function(result) {
+                                    lock = result[0].lock_val;
+                                    return res.render((appDir + "/templates/user-dash/home.ejs"), {currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                })      
                             })
                         })
                         

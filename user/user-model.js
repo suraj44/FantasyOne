@@ -201,7 +201,18 @@ function getCurrentWeek(callback) {
     })
 }
 
+function getTransferLock(callback) {
+    sql.query('select lock_val from locks where lock_name = "transfer"',function(err, results){
+        if (err) {
+            throw err;
+        }
 
+        return callback(results);
+    })
+}
+
+
+module.exports.getTransferLock = getTransferLock;
 module.exports.getUserDOB = getUserDOB;
 module.exports.doesEmailExist = doesEmailExist;
 module.exports.updateUserEmail = updateUserEmail;
