@@ -118,6 +118,19 @@ function getTeamLeagues(user_name, callback) {
     })
 }
 
+function getLeagueLeaderboard(league_name, callback) {
+    sql.query('select a.user_name,a.team_name,a.team_value,a.weekly_score,a.total_points,c.LeagueName from Teams a, Team_League_Link b, Leagues c where a.TeamID = b.team_id and b.league_id = c.LeagueID and c.LeagueName= ? order by a.total_points desc',[league_name] ,function(err,results) {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            return callback(results);
+        }
+    })
+}
+
 module.exports.getLeagueName = getLeagueName;
 module.exports.getLeagueIDfromCode = getLeagueIDfromCode;
 module.exports.insertLeagueName = insertLeagueName;
@@ -126,4 +139,5 @@ module.exports.insertLeagueCode = insertLeagueCode;
 module.exports.getLeagueID = getLeagueID;  
 module.exports.createLeague = createLeague;
 module.exports.getTeamLeagues = getTeamLeagues;
+module.exports.getLeagueLeaderboard = getLeagueLeaderboard;
 console.log(makeid());
