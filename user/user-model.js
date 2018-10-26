@@ -4,7 +4,8 @@ const sql = mysql.createConnection({
     host: "localhost",
     user: "k1ng", 
     password: "kyrgios",
-    database: "fantasyone"
+    database: "fantasyone",
+    timezone: 'Z'
 });
 
 sql.connect(function (err) {
@@ -21,7 +22,7 @@ function doesUserExist(username, password, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -31,7 +32,7 @@ function userCheck(username, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -41,17 +42,17 @@ function doesEmailExist(email, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
 
 function getUserProfile(username, callback) {
-    sql.query('SELECT username, first_name, last_name, email_id, dob from users where username = ?',[username] ,function(err, results){
+    sql.query('SELECT username, first_name, last_name, email_id, date(dob) as dob from users where username = ?',[username] ,function(err, results){
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -61,7 +62,7 @@ function getUserFirstName(username, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -70,7 +71,7 @@ function getUserLastName(username, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -80,7 +81,17 @@ function getUserEmail(username, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
+        return callback(results);
+    })
+}
+
+function getUserDOB(username, callback) {
+    sql.query('SELECT date(dob) as dob from users where username = ?',[username] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        //console.log(results);
         return callback(results);
     })
 }
@@ -90,7 +101,7 @@ function updateUserFirstName(username, firstname, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -100,7 +111,7 @@ function updateUserLastName(username, lastname, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -110,7 +121,7 @@ function updateUserEmail(username, newemail, callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
@@ -120,14 +131,14 @@ function updateUserName(newusername, oldusername,callback) {
         if (err) {
             throw err;
         }
-        console.log(results);
+        //console.log(results);
         return callback(results);
     })
 }
 
 function addNewUser(username, first_name, last_name, email_id, password, dob, admin, callback) {
     sql.query('INSERT INTO users(username,first_name,last_name,email_id,password,dob,admin) values(?,?,?,?,?,?,?)',[username, first_name, last_name, email_id, password, dob, admin] ,function(err, results){
-        console.log(err);
+        //console.log(err);
         return callback(err);
     })
 }
@@ -137,7 +148,7 @@ function doesUserHaveTeam(username, callback) {
         if(err)
             {
                 throw err;
-                console.log(err);
+                //console.log(err);
             }
         return callback(results);
     })
@@ -191,6 +202,7 @@ function getCurrentWeek(callback) {
 }
 
 
+module.exports.getUserDOB = getUserDOB;
 module.exports.doesEmailExist = doesEmailExist;
 module.exports.updateUserEmail = updateUserEmail;
 module.exports.getUserEmail = getUserEmail;

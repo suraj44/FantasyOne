@@ -195,6 +195,7 @@ exports.home_page = function(req,res) {
 exports.my_profile = function(req,res) {
     username = req.session.username;
     model.getUserProfile(username, function(result){
+        result[0].dob = result[0].dob.toDateString().slice(4);
         res.render(appDir + '/templates/user-dash/my_profile', {User:result});
     })
 }
@@ -305,6 +306,7 @@ exports.update_lastname = function(req,res) {
         res.redirect('my_profile')
     })
 }
+
 
 exports.logout = function(req, res) {
     req.session.destroy();
