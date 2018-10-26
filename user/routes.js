@@ -90,6 +90,10 @@ router.get('/update_email', function(req,res) {
 router.post('/update_email', function(req,res) {
     controller.update_email(req,res);
 
+
+router.get('/view_leaderboard', function(req,res) {
+    controller.leaderboardPage(req,res);
+
 })
 
 module.exports = router;

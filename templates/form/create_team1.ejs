@@ -28,6 +28,11 @@
 	<link rel="stylesheet" type="text/css" href="/form/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/form/css/main.css">
 <!--===============================================================================================-->
+	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="css/theme.css" rel="stylesheet">
+	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 
 <script
 src="https://code.jquery.com/jquery-3.3.1.slim.js"
@@ -123,7 +128,7 @@ $('input.single-checkbox').on('change', function(evt) {
 					<p>Available Budget:</p>
 					<input id = "budget" value = "70">	
 				</div>
-				<table>
+				<table class="table table-striped table-bordered table-condensed">
 					<tr>
 					<th> 
 						ID
@@ -241,6 +246,18 @@ $('input.single-checkbox').on('change', function(evt) {
 
   gtag('config', 'UA-23581568-13');
 </script>
-
+<script src="/user-dash/scripts/jquery-1.9.1.min.js"></script>
+	<script src="/user-dash/scripts/jquery-ui-1.10.1.custom.min.js"></script>
+	<script src="/user-dash/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/user-dash/scripts/datatables/jquery.dataTables.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('.datatable-1').dataTable();
+			$('.dataTables_paginate').addClass("btn-group datatable-pagination");
+			$('.dataTables_paginate > a').wrapInner('<span />');
+			$('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
+			$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
+		} );
+	</script>
 </body>
 </html>
