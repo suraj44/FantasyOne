@@ -442,3 +442,8 @@ select SUM(week_points) as team_weekly_score from Team_Driver_Link a, criteria b
 
 Ensuring there is only 1 criteria table entry per week for each driver
 alter table criteria add constraint UNIQUE(week_no,driverid);
+
+Transfer lock
+create table locks(lock_name varchar(20), lock_val bool default 0);
+
+insert into locks(lock_name) values("transfer");

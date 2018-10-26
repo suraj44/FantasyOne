@@ -41,9 +41,12 @@ router.get('/home',function(req,res,next) {
 				userCount = result[0].user_count;
 				team_model.getAllTeamAvgPoints(function(result) {
 					avgpts = result[0].avgpts;
-					res.render((appDir +  "/templates/admin-dash/home"),
-			{AllDrivers: drivers, userCount : userCount, avgpts: avgpts,  message: message, msg_code:msg_code}
+					model.getTransferLock(function(result) {
+						lock = result[0].lock_val;
+						res.render((appDir +  "/templates/admin-dash/home"),
+			{AllDrivers: drivers, userCount : userCount, avgpts: avgpts,  message: message, msg_code:msg_code, lock:lock}
 			)
+					})
 				})
 				
 			})
@@ -217,7 +220,19 @@ router.get('/update_all_team_points', function(req,res,next) {
 	controller.UpdateAllTeamPoints(req,res);
 });
 
+router.get('/enable_transfers', function(req,res) {
+	model.setTransferLock(0, function(result) {
+		req.session.message = "Transfers have been enabled";
+		req.session.message_code = 2;
+		res.redirect('home')
+	})
+})
 
+router.get('/disable_transfers', function(req,res) {
+	model.setTransferLock(1, function(result) {
+		res.redirect('home')
+	})
+})
 
 router.get('/logout' ,function(req, res) {
 	req.session.destroy();

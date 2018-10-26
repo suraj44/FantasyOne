@@ -43,6 +43,28 @@ function addNewAdmin(username, first_name, last_name, email_id, password, dob, a
     })
 }
 
+function getTransferLock(callback) {
+    sql.query('select lock_val from locks where lock_name = "transfer"',function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
+}
+
+function setTransferLock(newval, callback) {
+    sql.query('update locks set lock_val = ?  where lock_name = "transfer"', [newval], function(err, results){
+        if (err) {
+            throw err;
+        }
+
+        return callback(results);
+    })
+}
+
+module.exports.setTransferLock = setTransferLock;
+module.exports.getTransferLock = getTransferLock;
 module.exports.getAdminPassword = getAdminPassword;
 module.exports.doesUserExist = doesUserExist;
 module.exports.addNewAdmin = addNewAdmin;
