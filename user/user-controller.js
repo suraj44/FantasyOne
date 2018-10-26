@@ -154,10 +154,11 @@ exports.joinLeague = function(req, res) {
 
 exports.leaderboardPage = function(req,res) {
     league_name = req.param('league_name');
+    username = req.session.username;
     console.log(league_name);
     league_model.getLeagueLeaderboard(league_name, function(leaderboard) {
         console.log(leaderboard);
-        return res.render((appDir + "/templates/user-dash/leaderboard.ejs"), {leaderboard:leaderboard});
+        return res.render((appDir + "/templates/user-dash/leaderboard.ejs"), {leaderboard:leaderboard, username:username});
     })
 }
 exports.login_page = function(req,res) {

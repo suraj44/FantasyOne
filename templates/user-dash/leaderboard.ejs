@@ -75,13 +75,19 @@
                                         </thead>
                                         <tbody>
                                                 <% for(var i=0; i < leaderboard.length; i++) { %> 
-                                                    <tr class = "odd gradeX">
+                                                    <% if (leaderboard[i].user_name == username)  {%>
+                                                    <tr class = "odd gradeX" style="font-weight:bold">
+                                                    <% } %>
+
+                                                        <!-- <tr class = "odd gradeX"> -->
+
                                                         <td class = "center"> <%= leaderboard[i].user_name %></td>
                                                         <td class = "center"> <%= leaderboard[i].team_name %></td>
                                                         <td class = "center"> <%= leaderboard[i].team_value %></td>
                                                         <td class = "center"> <%= leaderboard[i].weekly_score %></td>
                                                         <td class = "center"> <%= leaderboard[i].total_points %></td>
                                                     </tr>
+                                                    
                                                    <% } %>
                                         </tbody>
                                         </tfoot>
