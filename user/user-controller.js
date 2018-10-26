@@ -200,6 +200,122 @@ exports.home_page = function(req,res) {
     //res.render((appDir +  "/templates/user-dash/home"), {message:message})
 }
 
+exports.my_profile = function(req,res) {
+    username = req.session.username;
+    model.getUserProfile(username, function(result){
+        result[0].dob = result[0].dob.toDateString().slice(4);
+        res.render(appDir + '/templates/user-dash/my_profile', {User:result});
+    })
+}
+
+exports.update_username_page = function(req,res) {
+    if(req.session.message != null) {
+        message = req.session.message;
+        req.session.message = null;
+    } else {
+        message = null;
+    }
+    username = req.session.username;
+    res.render(appDir + '/templates/form/update_username', {username: username, message:message})
+}
+
+exports.update_username = function(req,res) {
+    oldUsername = req.session.username;
+    newUsername = req.body.username;
+    if(oldUsername == newUsername){
+        req.session.message = "That is already your username!"
+        return res.redirect("update_username")
+    }
+    model.userCheck(newUsername, function(result) {
+        console.log("haahaha")
+        console.log(result)
+        console.log("^res")
+        if( result.length == 0 ) {
+            console.log('outside if')
+            model.updateUserName(newUsername, oldUsername, function(result) {
+                console.log('inside if')
+                req.session.username = newUsername;
+                res.redirect('my_profile')
+            })
+        } else {
+            console.log('else')
+            req.session.message = "That username already exists."
+            res.redirect('update_username');
+        }
+    })
+}
+
+exports.update_email_page = function(req,res) {
+    if(req.session.message != null) {
+        message = req.session.message;
+        req.session.message = null;
+    } else {
+        message = null;
+    }
+    model.getUserEmail(username, function(email) {
+        email = email[0].email_id;
+        res.render(appDir + '/templates/form/update_email', {email: email, message:message})
+    })
+}
+
+exports.update_email = function(req,res) {
+    username = req.session.username;
+
+    model.getUserEmail(username, function(result) {
+        oldemail = result[0].email_id;
+        newemail = req.body.email;
+        if(oldemail == newemail){
+            req.session.message = "That is already your email!"
+            return res.redirect("update_email")
+        }
+        model.doesEmailExist(newemail, function(result) {
+            if( result.length == 0 ) {
+                model.updateUserEmail(username, newemail, function(result) {
+                    res.redirect('my_profile')
+                })
+            } else {
+                console.log('else')
+                req.session.message = "That email is in use by another user."
+                res.redirect('update_email');
+            }
+        })
+    })
+}
+
+exports.update_firstname_page = function(req,res) {
+    username = req.session.username;
+    model.getUserFirstName(username, function(result) {
+        first_name = result[0].first_name;
+        res.render(appDir + '/templates/form/update_firstname', {firstname: first_name});
+    })
+    
+}
+
+exports.update_firstname = function(req,res) {
+    newfirstname = req.body.firstname;
+    username = req.session.username;
+    model.updateUserFirstName(username, newfirstname, function(result) {
+        res.redirect('my_profile')
+    })
+}
+
+exports.update_lastname_page = function(req,res) {
+    username = req.session.username;
+    model.getUserLastName(username, function(result) {
+        last_name = result[0].last_name;
+        res.render(appDir + '/templates/form/update_lastname', {lastname: last_name});
+    })
+}
+
+exports.update_lastname = function(req,res) {
+    newlastname = req.body.lastname;
+    username = req.session.username;
+    model.updateUserLastName(username, newlastname, function(result){
+        res.redirect('my_profile')
+    })
+}
+
+
 exports.logout = function(req, res) {
     req.session.destroy();
     res.redirect('login');

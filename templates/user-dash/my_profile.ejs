@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Home</title>
+        <link type="text/css" href="/user-dash/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="/user-dash/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link type="text/css" href="/user-dash/css/theme.css" rel="stylesheet">
+        <link type="text/css" href="/user-dash/images/icons/css/font-awesome.css" rel="stylesheet">
+        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+            rel='stylesheet'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </head>
+    <body>
+        
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                        <i class="icon-reorder shaded"></i></a><a class="brand" href="/">FantasyOne</a>
+                    <div class="nav-collapse collapse navbar-inverse-collapse">
+                        <ul class="nav pull-right">
+                            <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-user"></i>
+                                <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/user/my_profile">Your Profile</a></li>
+                                    <li><a href="#">Edit Profile</a></li>
+                                    <li><a href="#">Account Settings</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/user/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.nav-collapse -->
+                </div>
+            </div>
+            <!-- /navbar-inner -->
+        </div>
+        <!-- /navbar -->
+
+        <div class="wrapper">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">Your Profile</div>
+                    <div class="card-body">
+                        Username: <%= User[0].username %>
+                        <br>
+                        First Name: <%= User[0].first_name %> <a href = "/user/update_firstname">edit</a>
+                        <br>
+                        Last Name: <%= User[0].last_name %> <a href = "/user/update_lastname">edit</a>
+                        <br>
+                        Email: <%= User[0].email_id %> <a href = "/user/update_email">edit</a>
+                        <br>
+                        Date of Birth: <%= User[0].dob %> 
+                        <br>
+
+                    </div> 
+                    <div class="card-footer">Footer</div>
+                  </div>        
+            </div>
+        </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container">
+                <b class="copyright center">&copy; 2018 Fantasy One. </b>
+            </div>
+        </div>
+        <script src="/user-dash/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="/user-dash/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="/user-dash/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/user-dash/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="/user-dash/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="/user-dash/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="/user-dash/scripts/common.js" type="text/javascript"></script>
+      
+    </body>

@@ -52,8 +52,48 @@ router.post('/join_league', function(req,res) {
     controller.joinLeague(req,res);
 })
 
+router.get('/my_profile', function(req,res) {
+    controller.my_profile(req,res);
+})
+
+router.get('/update_username', function(req,res) {
+    controller.update_username_page(req,res);
+})
+
+router.post('/update_username', function(req,res) {
+    controller.update_username(req,res);
+
+})
+
+router.get('/update_firstname', function(req,res) {
+    controller.update_firstname_page(req,res);
+})
+
+router.post('/update_firstname', function(req,res) {
+    controller.update_firstname(req,res);
+
+})
+
+router.get('/update_lastname', function(req,res) {
+    controller.update_lastname_page(req,res);
+})
+
+router.post('/update_lastname', function(req,res) {
+    controller.update_lastname(req,res);
+
+})
+
+router.get('/update_email', function(req,res) {
+    controller.update_email_page(req,res);
+})
+
+router.post('/update_email', function(req,res) {
+    controller.update_email(req,res);
+
+
 router.get('/view_leaderboard', function(req,res) {
     controller.leaderboardPage(req,res);
+
 })
 
 module.exports = router;
