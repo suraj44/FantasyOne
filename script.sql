@@ -447,3 +447,6 @@ Transfer lock
 create table locks(lock_name varchar(20), lock_val bool default 0);
 
 insert into locks(lock_name) values("transfer");
+
+transfers page
+select driverid, SUM(race_points) as sum_race_points, SUM(quali_points) as sum_quali_points, SUM(overtakes) as sum_overtakes , SUM(beat_team_race)as sum_beat_team_race, SUM(beat_team_quali) as sum_beat_team_quali from criteria group by driverid;

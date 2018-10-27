@@ -112,4 +112,9 @@ router.get('/view_leaderboard', function(req,res,next) {
 
 })
 
+router.get('/transfers', function(req,res,next) {
+    controller.loginRequired(req,res,next);}, function(req,res) {
+    controller.make_transfers_page(req,res);
+})
+
 module.exports = router;

@@ -19,7 +19,6 @@ global.document = document;
 var $ = require("jquery")(window);
 
 
-
 app.set('views', __dirname + '/templates')
 app.set('view engine', 'ejs')
 

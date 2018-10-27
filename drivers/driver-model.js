@@ -58,6 +58,16 @@ function getDriverID(driverName, callback) {
     })
 }
 
+function getDriverAggregateStats(callback) {
+    sql.query('select b.driverid, a.Name, a.Tot_Points , a.Cost, SUM(b.race_points) as sum_race_points, SUM(b.quali_points) as sum_quali_points, SUM(b.overtakes)as sum_overtakes , SUM(b.beat_team_race) as sum_beat_team_race, SUM(b.beat_team_quali) as sum_beat_team_quali from Drivers a, criteria b where a.DriverID= b.driverid group by b.driverid', function(err, results){
+        if (err) {
+            throw err;
+        }
+        
+        return callback(results);
+    })
+}
+
 
 /**
  * Function that fetches all drivers from the database, ordered by total points
@@ -129,6 +139,7 @@ getAllDrivers(function(result){
     })
 
 
+module.exports.getDriverAggregateStats = getDriverAggregateStats;
 module.exports.getCurrentWeek = getCurrentWeek;
 module.exports.getAllDriversbyConstructor = getAllDriversbyConstructor
 module.exports.updateDriverWeeklyScore = updateDriverWeeklyScore;

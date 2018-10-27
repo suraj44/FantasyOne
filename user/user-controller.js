@@ -317,7 +317,35 @@ exports.update_lastname = function(req,res) {
     })
 }
 
+exports.make_transfers_page = function(req,res) {
+    model.doesUserHaveTeam(req.session.username, function(result) {
+        model.getUserTeam(result[0].TeamID, function(team) {
+            model.getTeamValue(result[0].TeamID, function(team_val) {
+            model.getTransferLock(function(result) {
+                driver_model.getDriverAggregateStats(function(driveragg) {
+                    team_val = 70 - team_val[0].team_value;
+                    lock = result[0].lock_val;
+                    username = req.session.username;
+                    if(lock==1) {
+                        return res.status(401).json({message : "Transfers are disabled as the raceweek is live."})
+                    } else {
 
+                        teams = [];
+                        for(i = 0 ; i < team.length ;i++) {
+                            teams.push(team[i].Name)
+                        }
+                        team  = teams;
+                        console.log(team);
+                        console.log(driveragg);
+                        return res.render((appDir + "/templates/user-dash/transfers.ejs"), {username:username, team:team, driveragg:driveragg, team_val:team_val});
+                    }
+                })
+                
+            })
+        })
+        })
+    })
+}
 exports.logout = function(req, res) {
     req.session.destroy();
     res.redirect('login');
