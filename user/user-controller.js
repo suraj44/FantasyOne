@@ -158,7 +158,7 @@ exports.leaderboardPage = function(req,res) {
     console.log(league_name);
     league_model.getLeagueLeaderboard(league_name, function(leaderboard) {
         console.log(leaderboard);
-        return res.render((appDir + "/templates/user-dash/leaderboard.ejs"), {leaderboard:leaderboard, username:username});
+        return res.render((appDir + "/templates/user-dash/leaderboard.ejs"), {username:username,leaderboard:leaderboard, username:username});
     })
 }
 exports.login_page = function(req,res) {
@@ -185,7 +185,8 @@ exports.home_page = function(req,res) {
                             model.getCurrentWeek(function(currWeek){
                                 model.getTransferLock(function(result) {
                                     lock = result[0].lock_val;
-                                    return res.render((appDir + "/templates/user-dash/home.ejs"), {currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                    username = req.session.username;
+                                    return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
                                 })      
                             })
                         })
