@@ -119,6 +119,17 @@ function setTeamTotalScore(teamID, callback) {
     })
 }
 
+function deleteUserTeam(teamID, callback) {
+    sql.query('delete from Team_Driver_Link where team_id = ?',[teamID],function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
+
+module.exports.deleteUserTeam = deleteUserTeam;
 module.exports.setTeamTotalScore = setTeamTotalScore;
 module.exports.setTeamWeeklyScore = setTeamWeeklyScore;
 module.exports.addTeamWeeklyPoints = addTeamWeeklyPoints;

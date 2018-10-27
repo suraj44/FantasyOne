@@ -29,9 +29,39 @@ crossorigin="anonymous"></script>
             }
             return this;
 };
+
+        function arr_diff (a1, a2) {
+
+var a = [], diff = [], difi =0 ;
+
+for (var i = 0; i < a1.length; i++) {
+    a[a1[i]] = true;
+}
+
+for (var i = 0; i < a2.length; i++) {
+    if (a[a2[i]]) {
+        delete a[a2[i]];
+    } else {
+        a[a2[i]] = true;
+    }
+}
+
+for (var k in a) {
+    diff.push(k);
+}
+
+return diff;
+}
+        var original  = [];
         $(function() {
 	var limit = 5;
-	var arr = [];
+    var arr =[];
+    <% for(i =0 ; i < ids.length; i++) { %>
+        console.log("hi")
+        arr.push(<%= ids[i] %>)
+        original.push(<%= ids[i] %>)
+    <% } %>
+    console.log(original)
 $('input.single-checkbox').on('change', function(evt) {
 	console.log($("#budget")[0].value)
 	console.log(this.parentNode.parentNode.cells[2].innerHTML)
@@ -58,7 +88,8 @@ $('input.single-checkbox').on('change', function(evt) {
             $("#budget").css('color','black')
 	}
 	$("#driverarr").val(arr)
-	console.log(arr)
+    difi = (arr_diff(original, arr).length-1)/2;
+    console.log(difi)
     });
 });
 
@@ -70,7 +101,12 @@ function checkForTheCondition() {
 	 if(($("input[name='driver']:checked").length) < 5) {
 		alert("You selected fewer than 5 drivers and hence this is not a valid team");
 		return false;
-	 }
+     }
+     if(difi  > 1 ){
+         alert("You are only allowed one transfer this week!")
+         return false;
+     }
+     alert(((arr_diff(original, arr).length-1)/2))
 	// if($("#budget")[0].value >=0 && ($("input[name='driver']:checked").length)) {
 	// 	return true;
 	// } else {
@@ -126,8 +162,10 @@ function checkForTheCondition() {
                                     <h3 id="mydrivers">
                                         My Drivers</h3>
                                 </div>
+                                <form class="form-signin" onsubmit="return checkForTheCondition();" action="/user/transfers" method="POST">
                                 <div class="module-body table">
-                                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display"
+                                     
+                                    <table cellpadding="0" cellspacing="0" border="0" 
                                         width="100%">
                                         <thead>
                                             <tr>
@@ -163,7 +201,7 @@ function checkForTheCondition() {
                                         <% for(i=0 ; i < driveragg.length ; i ++) { %>
                                             <% if(team.includes(driveragg[i].Name)) { %>
                                                 <tr style="font-weight:bold; color:green">
-                                                    <td> <%= driveragg[i].driver_id %> </td>
+                                                    <td> <%= driveragg[i].driverid %> </td>
                                                     <td> <%= driveragg[i].Name%> </td>
 
                                                     <td> <%= driveragg[i].Cost %> </td>
@@ -186,6 +224,7 @@ function checkForTheCondition() {
                                                 
                                             <%  }  else { %>
                                             <tr style="color:red;">
+                                                <td> <%= driveragg[i].driverid %> </td>
                                                 <td> <%= driveragg[i].Name%> </td>
                                             
                                                 <td> <%= driveragg[i].Tot_Points%> </td>
@@ -215,7 +254,19 @@ function checkForTheCondition() {
                                     </table>
 
                                     <input id = "driverarr" name = "driverarr" type = "hidden" val = "" >
+
+                                    <div class="container-contact100-form-btn">
+                                        <button class="contact100-form-btn">
+                                            <span>
+                                                Submit
+                                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    
+                                    
                                 </div>
+                                </form>
                             </div>
                             <!--/.module-->
                         </div>

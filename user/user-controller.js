@@ -331,18 +331,47 @@ exports.make_transfers_page = function(req,res) {
                     } else {
 
                         teams = [];
+                        ids = [];
                         for(i = 0 ; i < team.length ;i++) {
                             teams.push(team[i].Name)
+                            ids.push(team[i].DriverID)
                         }
                         team  = teams;
                         console.log(team);
                         console.log(driveragg);
-                        return res.render((appDir + "/templates/user-dash/transfers.ejs"), {username:username, team:team, driveragg:driveragg, team_val:team_val});
+                        return res.render((appDir + "/templates/user-dash/transfers.ejs"), {username:username, team:team, driveragg:driveragg, team_val:team_val, ids:ids});
                     }
                 })
                 
             })
         })
+        })
+    })
+}
+
+exports.make_transfers = function(req,res) {
+    username = req.session.username;
+    drivers = req.body.driverarr;
+    drivers = req.body.driverarr.split(",");
+    for(i=0 ; i < 5; i++) {
+        drivers[i] = parseFloat(drivers[i]);
+    }
+
+    team_model.getTeamIDfromUser(username, function(team_id) {
+        team_id = team_id[0].TeamID;
+        team_model.deleteUserTeam(team_id, function(result) {
+            team_model.insertDriverIntoTeam(team_id, drivers[0], function(result) {
+                team_model.insertDriverIntoTeam(team_id, drivers[1], function(result) {
+                    team_model.insertDriverIntoTeam(team_id, drivers[2], function(result) {
+                        team_model.insertDriverIntoTeam(team_id, drivers[3], function(result) {
+                            team_model.insertDriverIntoTeam(team_id, drivers[4], function(result) {
+                                res.redirect('home');
+                            })
+                        })
+                    })
+                })
+            })
+
         })
     })
 }

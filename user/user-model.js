@@ -166,7 +166,7 @@ function getUserCount(callback) {
 }
 
 function getUserTeam(teamID, callback) {
-    sql.query('select a.Name, a.Tot_Points, a.Cost, a. constructor, a.img from Drivers a, Team_Driver_Link b where a.DriverID = b.driver_id and b.team_id = ?' , [teamID], function(err, results){
+    sql.query('select a.DriverID, a.Name, a.Tot_Points, a.Cost, a. constructor, a.img from Drivers a, Team_Driver_Link b where a.DriverID = b.driver_id and b.team_id = ?' , [teamID], function(err, results){
         if(err)
             {
                 throw err;

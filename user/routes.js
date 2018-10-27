@@ -117,4 +117,9 @@ router.get('/transfers', function(req,res,next) {
     controller.make_transfers_page(req,res);
 })
 
+router.post('/transfers', function(req,res,next) {
+    controller.loginRequired(req,res,next);}, function(req,res) {
+    controller.make_transfers(req,res);
+})
+
 module.exports = router;
