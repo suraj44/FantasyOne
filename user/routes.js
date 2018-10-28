@@ -2,6 +2,8 @@ const router = require('express').Router()
 const sha1 = require('sha1')
 const model = require('./user-model')
 const controller = require('./user-controller')
+const path = require("path")
+const appDir = path.dirname(require.main.filename);
 
 router.get('/register', function(req,res) {
     controller.register_page(req,res);
@@ -120,6 +122,18 @@ router.get('/transfers', function(req,res,next) {
 router.post('/transfers', function(req,res,next) {
     controller.loginRequired(req,res,next);}, function(req,res) {
     controller.make_transfers(req,res);
+})
+
+router.get("/authorization_error", function(req,res) {
+    message = "Unauthorized User";
+    desc = "Please login to view this page.";
+    return res.render((appDir + '/templates/error/user_error.ejs'), { url: req.url, message: message , desc : desc });
+})
+
+router.get("/login_failed", function(req,res) {
+    message = "Login Failed";
+    desc = "The username or password you entered didn't match with any in our database.";
+    return res.render((appDir + '/templates/error/user_login_error.ejs'), { url: req.url, message: message , desc : desc });
 })
 
 module.exports = router;

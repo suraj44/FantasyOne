@@ -15,6 +15,9 @@ var jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
+
+
+const appDir = path.dirname(require.main.filename);
 global.document = document;
 var $ = require("jquery")(window);
 
@@ -30,6 +33,8 @@ app.use("/form", express.static(__dirname + '/templates/form'));
 app.use("/driver-img", express.static(__dirname + '/templates/driver/img'));
 app.use("/admin-dash", express.static(__dirname + '/templates/admin-dash'));
 app.use("/user-dash", express.static(__dirname + '/templates/user-dash'));
+app.use("/error", express.static(__dirname + '/templates/error'));
+
 
   
 app.use(session({secret: SECRET_KEY, resave :false, saveUninitialized: true}));
@@ -39,6 +44,21 @@ app.use('/',routes);
 app.use('/drivers', driver_routes)
 app.use('/admin', admin_routes)
 app.use('/user', user_routes)
+app.use(function(req, res, next){
+    res.status(404);
+
+    message = "We are sorry, Page not found!"
+    desc = "The page you are looking for might have been removed had its name changed or is temporarily unavailable."
+    if(req.session.message != null) {
+        message = req.session.message;
+        desc = req.session.desc;
+        req.session.message = null;
+        req.session.desc =  null;
+    }
+  
+    return res.render((appDir + '/templates/error/error.ejs'), { url: req.url, message: message , desc : desc });
+    
+  });
 
 console.log("The connection is on localhost:3000");
 app.listen(3000);

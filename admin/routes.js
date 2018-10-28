@@ -234,6 +234,24 @@ router.get('/disable_transfers', function(req,res) {
 	})
 })
 
+router.get("/authorization_error", function(req,res) {
+    message = "FORBIDDEN";
+    desc = "Only administrators are privileged to view this page.";
+    return res.render((appDir + '/templates/error/admin_error.ejs'), { url: req.url, message: message , desc : desc });
+})
+
+router.get("/login_error", function(req,res) {
+    message = "Login Error";
+    desc = "The username or password you entered did not match with our records.";
+    return res.render((appDir + '/templates/error/admin_login_error.ejs'), { url: req.url, message: message , desc : desc });
+})
+
+router.get("/privilege_error", function(req,res) {
+    message = "Access Denied";
+    desc = "You do not have the priviliges to login as admin";
+    return res.render((appDir + '/templates/error/privilege_error.ejs'), { url: req.url, message: message , desc : desc });
+})
+
 router.get('/logout' ,function(req, res) {
 	req.session.destroy();
 	res.redirect('login');

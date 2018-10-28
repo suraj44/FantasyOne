@@ -8,7 +8,7 @@ var appDir = path.dirname(require.main.filename);
 exports.sign_in = function(req, res) {
     model.doesUserExist(req.body.username, sha1(req.body.password), function(result) {
         if(result.length ==0) {
-            res.status(401).json({ message: 'Authentication failed. Username or password entered was incorrect.'});
+            res.redirect("login_failed")
         } 
         else {
             req.session.username = req.body.username;
@@ -23,7 +23,7 @@ exports.loginRequired = function(req,res, next) {
     if(req.session.username) {
         next();
     } else {
-        return res.status(401).json({ message: 'Please login to view this page'});
+            res.redirect("authorization_error")
     }
 }
 
