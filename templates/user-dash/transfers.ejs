@@ -13,6 +13,17 @@
             rel='stylesheet'>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     
+        <style>
+        .modal {
+
+
+height:500px;
+width:1000px;
+max-height:100%;
+max-width: 100%;
+
+}
+        </style>
         <script
 src="https://code.jquery.com/jquery-3.3.1.slim.js"
 integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
@@ -142,7 +153,7 @@ function checkForTheCondition() {
         var bookId = $(this).data('book-id');
         console.log(bookId)
         $(e.currentTarget).find('input[name="DriverID"]').val(bookId);
-        $(e.currentTarget).find('img[name="DriverPic"]').attr("src", <% driveragg[0].img %> )
+        $(e.currentTarget).find('img[name="DriverPic"]').attr("src", <% driveragg[i].img %> )
         console.log($(e.currentTarget).find('img[name="DriverPic"]')[0]);
     });
   
@@ -234,7 +245,7 @@ function checkForTheCondition() {
                                             <% if(team.includes(driveragg[i].Name)) { %>
                                                 <tr style="font-weight:bold; color:green">
                                                     <td> <%= driveragg[i].driverid %> </td>
-                                                     <td > <a class="btn" data-toggle="modal" data-book-id=<%= driveragg[i].driverid %> data-target = "#my_modal"><%= driveragg[i].Name%> </a></td> 
+                                                     <td > <a class="btn" data-toggle="modal" data-book-id=<%= driveragg[i].driverid %> data-target = "#my_modal<%= driveragg[i].driverid %>"><%= driveragg[i].Name%> </a></td> 
 
                                                     <td> <%= driveragg[i].Cost %> </td>
                                                 
@@ -257,11 +268,10 @@ function checkForTheCondition() {
                                             <%  }  else { %>
                                             <tr style="color:red;">
                                                 <td > <%= driveragg[i].driverid %> </td>
-                                                <td > <a class="btn" data-toggle="modal" data-book-id=<%= driveragg[i].driverid %> data-target = "#my_modal"><%= driveragg[i].Name%> </a></td> 
-                                            
-                                                <td> <%= driveragg[i].Tot_Points%> </td>
+                                                <td > <a class="btn" data-toggle="modal" data-book-id=<%= driveragg[i].driverid %> data-target = "#my_modal<%= driveragg[i].driverid %>"><%= driveragg[i].Name%> </a></td> 
                                             
                                                 <td> <%= driveragg[i].Cost %> </td>
+                                                <td> <%= driveragg[i].Tot_Points%> </td>
 
                                                 <td> <%= driveragg[i].sum_race_points %> </td>
 
@@ -310,47 +320,48 @@ function checkForTheCondition() {
         </div>
         <!--/.wrapper-->
 
-        <div class="modal hide" id="my_modal">
-            <div class="modal-dialog">
-              <div class="modal-content" >
-                
-                <div class="col-lg-4">
-                    <h2> <%= driveragg[0].Name%> </h2>
-                    <h3> <%= driveragg[0].constructor %></h3>
-                    <img class="rounded-circle"  name = "DriverPic" src= <%= driveragg[0].img %>  width="180" height="180" style = "border-radius: 50%;">
-                    
-                    <table>
-                    <tr>
-                        <th>Week Number</th>
-                        <th>Race Points</th>
-                        <th>Qualifying Points</th>
-                        <th>Overtakes</th>
-                        <th>Beat Teammate in Race?</th>
-                        <th>Beat Teammate in Qualifying?</th>
-                    </tr>
-                    <% for (j=0; j < driver_criteria[0].length; j++) { %>
-                        <tr>
-                        <td><%= driver_criteria[0][j].week_no %></td>
-                        <td><%= driver_criteria[0][j].race_points %></td>
-                        <td><%= driver_criteria[0][j].quali_points %></td>
-                        <td><%= driver_criteria[0][j].overtakes_points %></td>
-                        <td><%= driver_criteria[0][j].beat_team_race %></td>
-                        <td><%= driver_criteria[0][j].week_points %></td>
-                        </tr>    
-                        <% } %>
-                </table>
-                </div>
+        <% for (i=0; i < driver_criteria.length ;i++) { %>
 
-                <div class="modal-body">
-                  
+            <div class="modal hide  modal-lg" id="my_modal<%=driveragg[i].driverid%>">
+                <div class="modal-dialog  modal-lg">
+                  <div class="modal-content" >
+                    <div class="modal-body">
+                        <div class="card">
+                            <h2 > <%= driveragg[i].Name%> </h2>
+                            <h3> <%= driveragg[i].constructor %></h3>
+                            <img class="card-img-top"  name = "DriverPic" src= <%= driveragg[i].img %>  width="180" height="180" style = "border-radius: 50%;"> <h2 > <%= driveragg[i].Tot_Points %> Points      $<%=driveragg[i].Cost%></h2>
+                            
+                            <table class = "table table-hover table-striped table-bordered">
+                            <tr>
+                                <th>Week Number</th>
+                                <th>Race Points</th>
+                                <th>Qualifying Points</th>
+                                <th>Overtakes</th>
+                                <th>Beat Teammate in Race?</th>
+                                <th>Beat Teammate in Qualifying?</th>
+                            </tr>
+                            <% for (j=0; j < driver_criteria[i].length; j++) { %>
+                                <tr>
+                                <td><%= driver_criteria[i][j].week_no %></td>
+                                <td><%= driver_criteria[i][j].race_points %></td>
+                                <td><%= driver_criteria[i][j].quali_points %></td>
+                                <td><%= driver_criteria[i][j].overtakes %></td>
+                                <td><%= driver_criteria[i][j].beat_team_race %></td>
+                                <td><%= driver_criteria[i][j].week_points %></td>
+                                </tr>    
+                                <% } %>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                  </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-                
               </div>
-            </div>
-          </div>
+        <% } %>
+        
         <script src="/user-dash/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
         <script src="/user-dash/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
         <script src="/user-dash/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
