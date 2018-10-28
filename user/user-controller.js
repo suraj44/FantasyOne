@@ -3,6 +3,7 @@ const team_model = require('../team/team-model')
 const driver_model = require('../drivers/driver-model')
 const league_model = require('../leagues/league-model')
 const sha1 = require('sha1');
+const async = require('async')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 exports.sign_in = function(req, res) {
@@ -335,6 +336,7 @@ exports.make_transfers_page = function(req,res) {
 
                         teams = [];
                         ids = [];
+                        driver_criteria = [];
                         for(i = 0 ; i < team.length ;i++) {
                             teams.push(team[i].Name)
                             ids.push(team[i].DriverID)
@@ -342,7 +344,21 @@ exports.make_transfers_page = function(req,res) {
                         team  = teams;
                         console.log(team);
                         console.log(driveragg);
-                        return res.render((appDir + "/templates/user-dash/transfers.ejs"), {username:username, team:team, driveragg:driveragg, team_val:team_val, ids:ids});
+                        async.each(driveragg, function(driver, callback) {
+                            console.log(driver.driverid)
+                            id = parseFloat(driver.driverid)
+                            driver_model.getDriverCriteria(id,function(result) {
+                                driver_criteria.push(result);
+                                callback();
+                            })
+                            
+                        }, function() {
+                            console.log(driver_criteria)
+                            console.log("haha")
+                            return res.render((appDir + "/templates/user-dash/transfers.ejs"), {username:username, team:team, driveragg:driveragg, team_val:team_val, ids:ids, driver_criteria : driver_criteria});
+                            
+                        })
+                        
                     }
                 })
                 
