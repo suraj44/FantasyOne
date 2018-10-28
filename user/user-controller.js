@@ -162,6 +162,9 @@ exports.leaderboardPage = function(req,res) {
     })
 }
 exports.login_page = function(req,res) {
+    if(req.session.username != null && req.session.admin == 0) {
+        res.redirect('already_logged_in')
+    }
     res.render(appDir + "/templates/form/user-login")
 }
 exports.home_page = function(req,res) {
@@ -377,5 +380,5 @@ exports.make_transfers = function(req,res) {
 }
 exports.logout = function(req, res) {
     req.session.destroy();
-    res.redirect('login');
+    res.redirect('/');
 }

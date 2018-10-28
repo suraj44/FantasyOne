@@ -45,7 +45,13 @@
           <li class="menu-active"><a href="#intro">Home</a></li>
           <li><a href="#about">About The Game</a></li>
           <li><a href="#services">Rules</a></li>
+          <% if (login==false) {%>
           <li><a href="/user/login">Login</a></li>
+          <%  } else if (admin == 0  && login == true) { %>
+            <li><a href="/user/logout">Logout</a></li>
+          <% } else if (admin == 1 && login == true ) { %>
+            <li><a href="/admin/logout">Logout</a></li>
+          <% } %>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -68,7 +74,9 @@
               <div class="carousel-content">
                 <h2>A Fantasy Formula 1 Game</h2>
                 <p>Create your own team, and compete in leagues with friends as well as others all across the globe!</p>
+                <% if(login == false) {%>
                 <a href="/user/register" class="btn-get-started scrollto">Sign Up</a>
+                <% } %>
               </div>
             </div>
           </div>
@@ -79,7 +87,9 @@
               <div class="carousel-content">
                 <h2>It's Free!</h2>
                 <p>No payments, no hassle! Sign up for free now!</p>
-                <a href="/user/register" class="btn-get-started scrollto">Sign Up</a>
+                <% if(login == false) {%>
+                  <a href="/user/register" class="btn-get-started scrollto">Sign Up</a>
+                  <% } %>
               </div>
             </div>
           </div>
@@ -90,7 +100,9 @@
               <div class="carousel-content">
                 <h2>Immersive Experience</h2>
                 <p>The game takes into account several unique and interesting factors across the race weekend, and then points are awarded based on these unique criteria!</p>
-                <a href="/user/register" class="btn-get-started scrollto">Sign Up</a>
+                <% if(login == false) {%>
+                  <a href="/user/register" class="btn-get-started scrollto">Sign Up</a>
+                  <% } %>
               </div>
             </div>
           </div>
