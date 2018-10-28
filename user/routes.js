@@ -142,4 +142,11 @@ router.get("/already_logged_in", function(req,res) {
     desc = null;
     return res.render((appDir + '/templates/error/user_already_loggedin.ejs'), { url: req.url, message: message , desc : desc });
 })
+
+router.get('/transfers_locked', function(req,res,next) {
+    controller.loginRequired(req,res,next);}, function(req,res) {
+    message = "Transfers have been locked as the raceweek is live."
+    desc = "Wait for the raceweek to finish to update your team for next week's race."
+    res.render(appDir + "/templates/error/transfer_lock.ejs", {message:message, d})
+})
 module.exports = router;

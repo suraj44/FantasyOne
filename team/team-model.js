@@ -128,7 +128,28 @@ function deleteUserTeam(teamID, callback) {
     })
 }
 
+function hasUserMadeTransfer(username, callback) {
+    sql.query('select transfer_made from Teams where user_name = ?' ,[username],function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
 
+function setTransferMade(val, teamID, callback) {
+    sql.query('update Teams set transfer_made = ? where TeamID = ?' ,[val, teamID],function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
+
+
+module.exports.setTransferMade = setTransferMade;
+module.exports.hasUserMadeTransfer = hasUserMadeTransfer;
 module.exports.deleteUserTeam = deleteUserTeam;
 module.exports.setTeamTotalScore = setTeamTotalScore;
 module.exports.setTeamWeeklyScore = setTeamWeeklyScore;

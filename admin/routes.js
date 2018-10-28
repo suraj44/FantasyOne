@@ -6,6 +6,7 @@ const driver_controller = require('../drivers/driver-controller')
 const user_model = require('../user/user-model')
 const team_model = require('../team/team-model')
 const sha1 = require('sha1')
+const async = require('async');
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
@@ -234,9 +235,17 @@ router.get('/update_all_team_points', function(req,res,next) {
 
 router.get('/enable_transfers', function(req,res) {
 	model.setTransferLock(0, function(result) {
-		req.session.message = "Transfers have been enabled";
-		req.session.message_code = 2;
-		res.redirect('home')
+		team_model.getAllTeams(function(teams) {
+			async.each(teams, function(team,callback) {
+				team_model.setTransferMade(0, team.TeamID, function()  {
+					callback();
+				})
+			} , function() {
+				req.session.message = "Transfers have been enabled";
+				req.session.message_code = 2;
+				res.redirect('home')
+			})
+		})
 	})
 })
 

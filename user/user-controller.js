@@ -178,6 +178,7 @@ exports.home_page = function(req,res) {
         message = null;
         msg_code = null;
     }
+    username = req.session.username;
     model.doesUserHaveTeam(req.session.username, function(result) {
         console.log(result)
         if(result.length==1) {
@@ -188,9 +189,13 @@ exports.home_page = function(req,res) {
                         team_model.getTeamTotalPoints(req.session.username, function(totalPoints) {
                             model.getCurrentWeek(function(currWeek){
                                 model.getTransferLock(function(result) {
-                                    lock = result[0].lock_val;
-                                    username = req.session.username;
-                                    return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, currWeek:currWeek, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                    team_model.hasUserMadeTransfer(username, function(made_transfer) {
+                                        lock = result[0].lock_val;
+                                        made_transfer = made_transfer[0].transfer_made;
+                                        console.log(made_transfer)
+                                        return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, currWeek:currWeek, made_transfer:made_transfer, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                    })
+                                    
                                 })      
                             })
                         })
@@ -331,7 +336,7 @@ exports.make_transfers_page = function(req,res) {
                     lock = result[0].lock_val;
                     username = req.session.username;
                     if(lock==1) {
-                        return res.status(401).json({message : "Transfers are disabled as the raceweek is live."})
+                        return res.redirect('transfers_locked');
                     } else {
 
                         teams = [];
@@ -384,7 +389,9 @@ exports.make_transfers = function(req,res) {
                     team_model.insertDriverIntoTeam(team_id, drivers[2], function(result) {
                         team_model.insertDriverIntoTeam(team_id, drivers[3], function(result) {
                             team_model.insertDriverIntoTeam(team_id, drivers[4], function(result) {
-                                res.redirect('home');
+                                team_model.setTransferMade(1,username, function(result){
+                                    res.redirect('home');
+                                })
                             })
                         })
                     })

@@ -24,6 +24,10 @@
             {
                     alert("You cannot make transfers right now as the race week is live.")
             }
+            function made_my_transfer()
+            {
+                    alert("You've already made your transfer for the week!")
+            }
         </script>
     
     </head>
@@ -98,6 +102,8 @@
                                                 </a>
                                                 <% if (lock==1)  { %>
                                                     <button  onclick = "return make_a_transfer();" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
+                                                <% } else if(made_transfer ==1 && lock==0) {%>
+                                                    <button  onclick = "return made_my_transfer();" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
                                                 <% } else { %>
                                                     <button  onclick="return  relocate_to_transfers()" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
                                                 <% } %>
