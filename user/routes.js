@@ -136,4 +136,10 @@ router.get("/login_failed", function(req,res) {
     return res.render((appDir + '/templates/error/user_login_error.ejs'), { url: req.url, message: message , desc : desc });
 })
 
+router.get("/already_logged_in", function(req,res) {
+    message = "You're already logged in!";
+    //desc = "The username or password you entered didn't match with any in our database.";
+    desc = null;
+    return res.render((appDir + '/templates/error/user_already_loggedin.ejs'), { url: req.url, message: message , desc : desc });
+})
 module.exports = router;

@@ -10,6 +10,12 @@ var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
 router.get('/register', function(req,res) {
+	if(req.session.username != null && req.session.admin == 1) {
+        return res.redirect('already_logged_in')
+	}
+	if(req.session.username != null && req.session.admin == 0) {
+        return res.redirect('/user/already_logged_in')
+    }
     controller.register_page(req,res);
 });
 
@@ -19,6 +25,12 @@ router.post('/register', function(req,res) {
 
 router.get('/login',function(req,res)
 {
+	if(req.session.username != null && req.session.admin == 1) {
+        return res.redirect('already_logged_in')
+	}
+	if(req.session.username != null && req.session.admin == 0) {
+        return res.redirect('/user/already_logged_in')
+    }
 		res.render(appDir + "/templates/form/admin-login");
 });
 
@@ -252,9 +264,15 @@ router.get("/privilege_error", function(req,res) {
     return res.render((appDir + '/templates/error/privilege_error.ejs'), { url: req.url, message: message , desc : desc });
 })
 
+router.get("/already_logged_in", function(req,res) {
+    message = "You're already logged in!";
+    desc = null;
+    return res.render((appDir + '/templates/error/admin_already_loggedin.ejs'), { url: req.url, message: message , desc : desc });
+})
+
 router.get('/logout' ,function(req, res) {
 	req.session.destroy();
-	res.redirect('login');
+	res.redirect('/');
 })
 
 module.exports = router

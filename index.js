@@ -45,7 +45,6 @@ app.use('/drivers', driver_routes)
 app.use('/admin', admin_routes)
 app.use('/user', user_routes)
 app.use(function(req, res, next){
-    res.status(404);
 
     message = "We are sorry, Page not found!"
     desc = "The page you are looking for might have been removed had its name changed or is temporarily unavailable."
