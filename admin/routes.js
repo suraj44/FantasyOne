@@ -142,7 +142,7 @@ router.post('/update_weekly_score', function(req,res,next) {
 	}
 	console.log("Race finish "+ race_finish)
 
-	if(qualifying_finish <=10) {
+	if(qualifying_finish <=10 && qualifying_finish > 0) {
 		qualifying_finish = 11 -qualifying_finish;
 	} else {
 		qualifying_finish = 0;
@@ -164,7 +164,7 @@ router.post('/update_weekly_score', function(req,res,next) {
             console.log("Error in updating database: " + err);
         } else {
             console.log("Database was updated successfully.")
-            res.redirect("/admin/home");
+            res.redirect("/admin/update_weekly_score");
             
         }
     })
@@ -190,7 +190,7 @@ router.post('/update_driver_price', function(req,res,next) {
             console.log("Error in updating database: " + err);
         } else {
             console.log("Database was updated successfully.")
-            res.redirect("/admin/home");
+            res.redirect("/admin/update_driver_price");
             
         }
     })
