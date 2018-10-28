@@ -64,15 +64,17 @@ for (var k in a) {
 return diff;
 }
         var original  = [];
-        $(function() {
-	var limit = 5;
+        var limit = 5;
     var arr =[];
     <% for(i =0 ; i < ids.length; i++) { %>
         console.log("hi")
         arr.push(<%= ids[i] %>)
         original.push(<%= ids[i] %>)
     <% } %>
+    difi = 0;
     console.log(original)
+        $(function() {
+	
 $('input.single-checkbox').on('change', function(evt) {
 	console.log($("#budget")[0].value)
 	console.log(this.parentNode.parentNode.cells[2].innerHTML)
@@ -117,7 +119,10 @@ function checkForTheCondition() {
          alert("You are only allowed one transfer this week!")
          return false;
      }
-     alert(((arr_diff(original, arr).length-1)/2))
+     if(difi == 0 ){
+         alert("You haven't made any changes!")
+         return false;
+     }
 	// if($("#budget")[0].value >=0 && ($("input[name='driver']:checked").length)) {
 	// 	return true;
 	// } else {

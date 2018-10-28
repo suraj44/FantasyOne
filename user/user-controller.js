@@ -327,7 +327,7 @@ exports.make_transfers_page = function(req,res) {
             model.getTeamValue(result[0].TeamID, function(team_val) {
             model.getTransferLock(function(result) {
                 driver_model.getDriverAggregateStats(function(driveragg) {
-                    team_val = 70 - team_val[0].team_value;
+                    team_val = (70 - team_val[0].team_value).toFixed(2);
                     lock = result[0].lock_val;
                     username = req.session.username;
                     if(lock==1) {
