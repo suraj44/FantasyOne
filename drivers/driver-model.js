@@ -69,6 +69,7 @@ function getDriverAggregateStats(callback) {
 }
 
 
+
 /**
  * Function that fetches all drivers from the database, ordered by total points
  */

@@ -114,12 +114,29 @@
                                                 <% } else { %>
                                                     <button  onclick="return  relocate_to_transfers()" class="btn-box big span6"><i class="icon-exchange"></i><b>Make a Transfer</b><p class="text-muted">Change 1 Driver Only</p></button>
                                                 <% } %>
+
+
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="span12">
+                                                <a href="#mydrivers" class="btn-box small span4"><i class="fas fa-flag-checkered"></i><b>My Drivers</b>
+                                                </a><a href="#myleagues" class="btn-box small span4"><i class="fas fa-user-shield"></i><b>My Leagues</b>
+                                                </a><a data-toggle="modal"  data-target = "#my_modal" class="btn-box small span4"><b> <%=this_week%></b>
+                                                    <b >
+                                                        Weekly Points</b> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="btn-box-row row-fluid">
                                     <a href="#mydrivers" class="btn-box big span6"><i class="fas fa-flag-checkered"></i><b>My Drivers</b>
                                         <p class="text-muted">Your current lineup</p>
                                     </a>
                                     <a href="#myleagues" class="btn-box big span6"><i class="fas fa-user-shield"></i><b>My Leagues</b><p class="text-muted">See your progress!</p></a>
+
                                 </div>
                             </div>
                             <div class="module">
@@ -200,6 +217,34 @@
             <!--/.container-->
         </div>
         <!--/.wrapper-->
+
+        <div class="modal hide  modal-lg" id="my_modal">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content" >
+                <div class="modal-body">
+                    <div class="card">
+                        <h2 > You Week Wise Points</h2>
+                        <table class = "table table-hover table-striped table-bordered">
+                        <tr>
+                            <th>Week Number</th>
+                            <th>Week Points</th> 
+                        </tr>
+                        <% for (j=0; j < weekwise.length; j++) { %>
+                            <tr>
+                            <td><%= weekwise[j].WeekNo %></td>
+                            <td><%= weekwise[j].WeeklyPoints %></td>
+                            </tr>    
+                            <% } %>
+                    </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
         <script src="/user-dash/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
         <script src="/user-dash/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
         <script src="/user-dash/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

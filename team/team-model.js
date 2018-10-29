@@ -146,8 +146,27 @@ function setTransferMade(val, teamID, callback) {
     })
 }
 
+function getTeamWeekWisePoints(teamID, callback) {
+    sql.query('select * from Team_Weekly_Points where TeamID = ? order by WeekNo asc; ' ,[teamID],function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
+function getTeamWeekScore(teamID, callback) {
+    sql.query('select weekly_score from Teams where TeamID = ? ' ,[teamID],function(err, results){
+        if (err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
 
 
+module.exports.getTeamWeekScore = getTeamWeekScore;
+module.exports.getTeamWeekWisePoints = getTeamWeekWisePoints;
 module.exports.setTransferMade = setTransferMade;
 module.exports.hasUserMadeTransfer = hasUserMadeTransfer;
 module.exports.deleteUserTeam = deleteUserTeam;
