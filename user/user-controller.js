@@ -188,12 +188,25 @@ exports.home_page = function(req,res) {
                     league_model.getTeamLeagues(req.session.username, function(leagueNames) {
                         team_model.getTeamTotalPoints(req.session.username, function(totalPoints) {
                             model.getCurrentWeek(function(currWeek){
-                                model.getTransferLock(function(result) {
+                                model.getTransferLock(function(lock) {
                                     team_model.hasUserMadeTransfer(username, function(made_transfer) {
-                                        lock = result[0].lock_val;
-                                        made_transfer = made_transfer[0].transfer_made;
-                                        console.log(made_transfer)
-                                        return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, currWeek:currWeek, made_transfer:made_transfer, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                        team_model.getTeamWeekScore(result[0].TeamID, function(score) {
+                                            team_model.getTeamWeekWisePoints(result[0].TeamID, function(weekwise) {
+                                                console.log(weekwise)
+                                            if(score[0].weekly_score!=null)
+                                                this_week = score[0].weekly_score
+                                            else   
+                                                this_week = 0;
+                                            console.log(score)
+                                            console.log("week points")
+                                            lock = lock[0].lock_val;
+                                            made_transfer = made_transfer[0].transfer_made;
+                                            console.log(made_transfer)
+                                        return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, this_week:this_week,  currWeek:currWeek, weekwise:weekwise ,made_transfer:made_transfer, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
+                                            })
+                                            
+                                        })
+                                        
                                     })
                                     
                                 })      
