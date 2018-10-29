@@ -44,7 +44,6 @@
         <ul class="nav-menu">
           <li class="menu-active"><a href="#intro">Home</a></li>
           <li><a href="#about">About The Game</a></li>
-          <li><a href="#services">Rules</a></li>
           <% if (login==false) {%>
           <li><a href="/user/login">Login</a></li>
           <%  } else if (admin == 0  && login == true) { %>
@@ -155,27 +154,32 @@
               </p>
             </div>
           </div>
+           <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="about-col">
+                <h2 class="title">General Rules</h2>
+                <ul>
+                  <li>1 Team per User</li>
+                  <li>No Limit on Leagues Joined</li>
+                  <li>Budget of 70</li>
+                  <li>5 Drivers per Team</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="about-col">
+                <h2 class="title">Scoring System</h2>
+                <ul>
+                  <li>Championship Points Scored directly added (25-1st,18-2nd,..)</li>
+                  <li>Points awarded to top 10 in qualifying, with 1st scoring 10 and 10th scoring 1</li>
+                  <li>Each overtake made is worth 2 points</li>
+                  <li>Beating Teammate in Race/Qualifying is worth 2 points</li>
+                </ul>
+              </div>
+            </div>
         </div>
 
       </div>
     </section><!-- #about -->
-
-    <!--==========================
-      Services Section
-    ============================-->
-    <section id="services">
-      <div class="container">
-
-        <header class="section-header wow fadeInUp">
-          <h3>Rules</h3>
-          <ul>
-            <li>3 Teams per User</li>
-            <li>3 Leagues per Team</li>
-            <li>5 Drivers per Team</li>
-          </ul>
-        </header>
-      </div>
-    </section><!-- #services -->
 
     <!--==========================
       Call To Action Section

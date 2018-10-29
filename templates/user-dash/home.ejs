@@ -82,31 +82,40 @@
                         <div class="content">
                             <div class="btn-controls">
                                 <div class="btn-box-row row-fluid">
-                                    <a href="#" class="btn-box big span4"><i class="fas fa-coins"></i><b><%= totalPoints[0].total_points %></b>
+                                    <a href="#" class="btn-box big span6"><i class="fas fa-coins"></i><b><%= totalPoints[0].total_points %></b>
                                         <p class="text-muted">
                                             Total Points</p>
-                                    </a><a href="#" class="btn-box big span4"><i class="icon-user"></i><b><%= team_val %></b>
+                                    </a><a href="#" class="btn-box big span6"><i class="icon-user"></i><b><%= team_val %></b>
                                         <p class="text-muted">
                                             Team Value</p>
-                                    </a><a href="#" class="btn-box big span4"><i class="fas fa-calendar-alt"></i><b><%=currWeek[0].max_week%></b>
-                                        <p class="text-muted">
-                                            Current Raceweek</p>
                                     </a>
                                 </div>
                                 <div class="btn-box-row row-fluid">
-                                    <div class="span12">
-                                        <div class="row-fluid">
-                                            <div class="span12">
-                                                <a href="/user/create_league" class="btn-box small span4"><i class="fas fa-user-plus"></i><b>Create League</b>
-                                                </a><a href="/user/join_league" class="btn-box small span4"><i class="icon-group"></i><b>Join League</b>
-                                                </a>
-                                                <% if (lock==1)  { %>
-                                                    <button  onclick = "return make_a_transfer();" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
+                                    <a href="#" class="btn-box big span6"><i class="fas fa-calendar-alt"></i><b><%=currWeek[0].max_week%></b>
+                                        <p class="text-muted">
+                                            Current Raceweek</p>
+                                    </a>
+                                    <a href="/user/create_league" class="btn-box big span6"><i class="fas fa-user-plus"></i><b>Create League</b>
+                                        <p class="text-muted">
+                                            Share code with friends after!  
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="btn-box-row row-fluid">
+                                    <a href="/user/join_league" class="btn-box big span6"><i class="icon-group"></i><b>Join League</b>
+                                        <p class="text-muted">
+                                            Use the code shared with you!
+                                        </p>
+                                    </a> 
+                                     <% if (lock==1)  { %>
+                                                    <button  onclick = "return make_a_transfer();" class="btn-box big span6"><i class="icon-exchange"></i><b>Make a Transfer</b><p class="text-muted">Change 1 Driver Only</p></button>
                                                 <% } else if(made_transfer ==1 && lock==0) {%>
-                                                    <button  onclick = "return made_my_transfer();" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
+                                                    <button  onclick = "return made_my_transfer();" class="btn-box big span6"><i class="icon-exchange"></i><b>Make a Transfer</b><p class="text-muted">Change 1 Driver Only</p></button>
                                                 <% } else { %>
-                                                    <button  onclick="return  relocate_to_transfers()" class="btn-box small span4"><i class="icon-exchange"></i><b>Make a Transfer</b></button>
+                                                    <button  onclick="return  relocate_to_transfers()" class="btn-box big span6"><i class="icon-exchange"></i><b>Make a Transfer</b><p class="text-muted">Change 1 Driver Only</p></button>
                                                 <% } %>
+
+
                                                 
                                             </div>
                                         </div>
@@ -120,6 +129,14 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="btn-box-row row-fluid">
+                                    <a href="#mydrivers" class="btn-box big span6"><i class="fas fa-flag-checkered"></i><b>My Drivers</b>
+                                        <p class="text-muted">Your current lineup</p>
+                                    </a>
+                                    <a href="#myleagues" class="btn-box big span6"><i class="fas fa-user-shield"></i><b>My Leagues</b><p class="text-muted">See your progress!</p></a>
+
                                 </div>
                             </div>
                             <div class="module">

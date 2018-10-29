@@ -696,7 +696,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Services Section
 --------------------------------*/
 #services {
-  background: #fff;
+  background: background: url("../img/about-bg.jpg") center top no-repeat fixed;;
   background-size: cover;
   padding: 60px 0 40px 0;
 }
