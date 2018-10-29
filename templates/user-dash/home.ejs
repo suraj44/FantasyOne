@@ -114,8 +114,9 @@
                                             <div class="span12">
                                                 <a href="#mydrivers" class="btn-box small span4"><i class="fas fa-flag-checkered"></i><b>My Drivers</b>
                                                 </a><a href="#myleagues" class="btn-box small span4"><i class="fas fa-user-shield"></i><b>My Leagues</b>
-                                                </a><a href="#" class="btn-box small span4"><i class="icon-sort-down"></i><b>Bounce
-                                                    Rate</b> </a>
+                                                </a><a data-toggle="modal"  data-target = "#my_modal" class="btn-box small span4"><b> <%=this_week%></b>
+                                                    <b >
+                                                        Weekly Points</b> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -199,6 +200,34 @@
             <!--/.container-->
         </div>
         <!--/.wrapper-->
+
+        <div class="modal hide  modal-lg" id="my_modal">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content" >
+                <div class="modal-body">
+                    <div class="card">
+                        <h2 > You Week Wise Points</h2>
+                        <table class = "table table-hover table-striped table-bordered">
+                        <tr>
+                            <th>Week Number</th>
+                            <th>Week Points</th> 
+                        </tr>
+                        <% for (j=0; j < weekwise.length; j++) { %>
+                            <tr>
+                            <td><%= weekwise[j].WeekNo %></td>
+                            <td><%= weekwise[j].WeeklyPoints %></td>
+                            </tr>    
+                            <% } %>
+                    </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
         <script src="/user-dash/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
         <script src="/user-dash/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
         <script src="/user-dash/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
