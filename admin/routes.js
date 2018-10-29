@@ -14,9 +14,7 @@ router.get('/register', function(req,res) {
 	if(req.session.username != null && req.session.admin == 1) {
         return res.redirect('already_logged_in')
 	}
-	if(req.session.username != null && req.session.admin == 0) {
-        return res.redirect('/user/already_logged_in')
-    }
+
     controller.register_page(req,res);
 });
 
@@ -29,9 +27,7 @@ router.get('/login',function(req,res)
 	if(req.session.username != null && req.session.admin == 1) {
         return res.redirect('already_logged_in')
 	}
-	if(req.session.username != null && req.session.admin == 0) {
-        return res.redirect('/user/already_logged_in')
-    }
+
 		res.render(appDir + "/templates/form/admin-login");
 });
 
