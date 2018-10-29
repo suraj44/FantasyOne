@@ -18,7 +18,7 @@
 
 
 height:500px;
-width:1000px;
+width:600px;
 max-height:100%;
 max-width: 100%;
 
@@ -196,14 +196,14 @@ function checkForTheCondition() {
             <!-- /navbar-inner -->
         </div>
         <!-- /navbar -->
-        <div class="wrapper" style="background-color: silver">
+        <div class="wrapper" style="background-image: url('https://www.openwallpaper.info/wp-content/uploads/2018/04/checkerboard-wallpaper-lovely-wallpaper-checkered-flag-ac29cc293-hd-wallpapers-blog-of-checkerboard-wallpaper.jpg'); " >
             <div class="container">
                 <div class="row">
                         <div class="content">
                             <!--/.module-->
                             <div>
-                                <p>Available Budget:</p>
-                                <input id = "budget" value = <%= team_val %>>	
+                                <span style="color:white;">Available Budget ($):</span>
+                                <input class="input100"  id = "budget" value = <%= team_val %>>	
                             </div>
                             <div class="module">
                                 <div class="module-head">
@@ -333,8 +333,12 @@ function checkForTheCondition() {
                     <div class="modal-body">
                         <div class="card">
                             <h2 > <%= driveragg[i].Name%> </h2>
+                            <img class="card-img-top"  name = "DriverPic" src= <%= driveragg[i].img %>  width="180" height="180" style = "border-radius: 50%;">
                             <h3> <%= driveragg[i].constructor %></h3>
-                            <img class="card-img-top"  name = "DriverPic" src= <%= driveragg[i].img %>  width="180" height="180" style = "border-radius: 50%;"> <h2 > <%= driveragg[i].Tot_Points %> Points      $<%=driveragg[i].Cost%></h2>
+                             <h3 > Total Points: <%= driveragg[i].Tot_Points %> Points    </h3>  
+                             <h3>       Cost:$<%=driveragg[i].Cost%> </h3>
+                             <h3>       Average Weekly Score: <%= driveragg[i].avg_week_points%> </h3>
+                             <h3>       Average Overtakes per Race: <%= driveragg[i].avg_overtakes %></h3>
                             
                             <table class = "table table-hover table-striped table-bordered">
                             <tr>
@@ -344,6 +348,7 @@ function checkForTheCondition() {
                                 <th>Overtakes</th>
                                 <th>Beat Teammate in Race?</th>
                                 <th>Beat Teammate in Qualifying?</th>
+                                <th>Total Week Points</th> 
                             </tr>
                             <% for (j=0; j < driver_criteria[i].length; j++) { %>
                                 <tr>
@@ -352,6 +357,7 @@ function checkForTheCondition() {
                                 <td><%= driver_criteria[i][j].quali_points %></td>
                                 <td><%= driver_criteria[i][j].overtakes %></td>
                                 <td><%= driver_criteria[i][j].beat_team_race %></td>
+                                <td><%= driver_criteria[i][j].beat_team_quali %></td>
                                 <td><%= driver_criteria[i][j].week_points %></td>
                                 </tr>    
                                 <% } %>
