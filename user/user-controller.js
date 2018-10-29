@@ -46,7 +46,7 @@ exports.register = function(req, res) {
             res.redirect("login");
         } else {
 
-            res.status(401).json({ message: 'User with that username already exists'});
+            res.redirect('registration_failed')
         }
     });
 }
