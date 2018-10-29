@@ -59,7 +59,7 @@ function getDriverID(driverName, callback) {
 }
 
 function getDriverAggregateStats(callback) {
-    sql.query('select b.driverid, a.Name, a.Tot_Points , a.Cost, a.constructor, a.img ,SUM(b.race_points) as sum_race_points, SUM(b.quali_points) as sum_quali_points, SUM(b.overtakes)as sum_overtakes , SUM(b.beat_team_race) as sum_beat_team_race, SUM(b.beat_team_quali) as sum_beat_team_quali from Drivers a, criteria b where a.DriverID= b.driverid group by b.driverid', function(err, results){
+    sql.query('select b.driverid, a.Name, a.Tot_Points , a.Cost, a.constructor, a.img ,SUM(b.race_points) as sum_race_points, SUM(b.quali_points) as sum_quali_points, SUM(b.overtakes)as sum_overtakes , SUM(b.beat_team_race) as sum_beat_team_race, SUM(b.beat_team_quali) as sum_beat_team_quali, AVG(b.week_points) as avg_week_points, AVG(b.overtakes) as avg_overtakes from Drivers a, criteria b where a.DriverID= b.driverid group by b.driverid', function(err, results){
         if (err) {
             throw err;
         }
