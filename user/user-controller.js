@@ -45,7 +45,7 @@ exports.register = function(req, res) {
         if(err==null) {
             res.redirect("login");
         } else {
-            
+
             res.status(401).json({ message: 'User with that username already exists'});
         }
     });
@@ -201,6 +201,7 @@ exports.home_page = function(req,res) {
                                             console.log(score)
                                             console.log("week points")
                                             lock = lock[0].lock_val;
+                                            console.log("TRANSFER")
                                             made_transfer = made_transfer[0].transfer_made;
                                             console.log(made_transfer)
                                         return res.render((appDir + "/templates/user-dash/home.ejs"), {username:username, this_week:this_week,  currWeek:currWeek, weekwise:weekwise ,made_transfer:made_transfer, team: team, team_val:team_val, message: message, msg_code:msg_code, leagueNames:leagueNames, totalPoints:totalPoints, lock:lock});
@@ -403,8 +404,13 @@ exports.make_transfers = function(req,res) {
                     team_model.insertDriverIntoTeam(team_id, drivers[2], function(result) {
                         team_model.insertDriverIntoTeam(team_id, drivers[3], function(result) {
                             team_model.insertDriverIntoTeam(team_id, drivers[4], function(result) {
-                                team_model.setTransferMade(1,username, function(result){
-                                    res.redirect('home');
+                                team_model.setTransferMade(1,team_id, function(result){
+                                    team_model.hasUserMadeTransfer(username, function(check) {
+                                        console.log("HAS USER MADE TRANSFER")
+                                        console.log(check)
+                                        res.redirect('home');
+                                    })
+                                    
                                 })
                             })
                         })
